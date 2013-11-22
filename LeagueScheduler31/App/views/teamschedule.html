@@ -1,0 +1,19 @@
+﻿<section>
+    <h2 data-bind="text: title"></h2>
+
+    <table class="table table-striped">
+        <tbody data-bind="foreach: games">
+            <tr>
+                <td data-bind="shortDate: time"></td>
+                <td data-bind="shortTime: time"></td>
+                <td>
+                    <a data-bind="text: opponent, attr: { href: '#!teams/' + opponent }"></a>
+                </td>
+                <td>
+                    <a data-bind="text: location, attr: { href: '#!locations/' + location }"></a>
+                    (<a data-bind="attr: { href: locationUrl }">Map</a>)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

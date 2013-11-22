@@ -1,0 +1,16 @@
+﻿@model LeagueScheduler.Models.LoginViewModel
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">League Lineup Admin</a>
+    </div>
+</div>
+
+<h2>Log In</h2>
+<div class="row">
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>

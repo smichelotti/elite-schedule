@@ -1,0 +1,10 @@
+﻿<section>
+    <h2 class="page-title">Teams</h2>
+    <h3>Click on a team below to view schedule by team.</h3>
+
+    <div class="container" data-bind="foreach: teams">
+        <div class="row">
+            <a data-bind="text: name, attr: { href: '#!teams/'+name }"></a>
+        </div>
+    </div>
+</section>

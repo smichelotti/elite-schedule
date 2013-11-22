@@ -1,0 +1,78 @@
+﻿<section>
+    <h3 class="page-title" data-bind="text: leagueName() + ' League'"></h3>
+
+    <ul class="nav nav-tabs">
+        <li><a data-bind="attr: { href: '#leagues/' + leagueId() + '/teams' }">Teams</a></li>
+        <li class="active"><a href="#">Games</a></li>
+    </ul>
+
+    <table class="table table-bordered table-hover table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Game Time</th>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Location</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" placeholder="Select Time" data-bind="datepicker: newGameTime, datepickerOptions: { showMeridian: true, autoclose: true, todayBtn: true, format: 'mm/dd/yyyy H:ii P' }">
+                </td>
+                <td>
+                    <select class="form-control" data-bind="value: newTeam1Id, options: teams, optionsCaption: '(Select Team 1)', optionsText: 'name', optionsValue: 'id'"></select>
+                </td>
+                <td>
+                    <select class="form-control" data-bind="value: newTeam2Id, options: teams, optionsCaption: '(Select Team 2)', optionsText: 'name', optionsValue: 'id'"></select>
+                </td>
+                <td>
+                    <select class="form-control" data-bind="value: newLocationId, options: locations, optionsCaption: '(Select Location)', optionsText: 'name', optionsValue: 'id'"></select>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add</button>
+                </td>
+            </tr>
+            <!--ko template: { name: displayMode, foreach: items } -->
+            <!--/ko-->
+        </tbody>
+    </table>
+
+
+    <script id="game-itemTempl" type="text/html">
+        <tr>
+            <td data-bind="dateTime: gameTime"></td>
+            <td data-bind="text: $parent.getTeamName(team1Id())"></td>
+            <td data-bind="text: $parent.getTeamName(team2Id())"></td>
+            <td data-bind="text: $parent.getLocationName(locationId())"></td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
+                <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="game-editTempl" type="text/html">
+        <tr>
+            <td>
+                <!--<input data-bind="value: gameTime" />-->
+                <input type="text" class="form-control" placeholder="Select Time" data-bind="datepicker: gameTime, datepickerOptions: { showMeridian: true, autoclose: true, todayBtn: true, format: 'mm/dd/yyyy H:ii P' }">
+            </td>
+            <td>
+                <select class="form-control" data-bind="value: team1Id, options: $parent.teams, optionsCaption: '(Select Team 1)', optionsText: 'name', optionsValue: 'id'"></select>
+            </td>
+            <td>
+                <select class="form-control" data-bind="value: team2Id, options: $parent.teams, optionsCaption: '(Select Team 2)', optionsText: 'name', optionsValue: 'id'"></select>
+            </td>
+            <td>
+                <select class="form-control" data-bind="value: locationId, options: $parent.locations, optionsCaption: '(Select Location)', optionsText: 'name', optionsValue: 'id'"></select>
+            </td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>
+                <button class="btn btn-danger" data-bind="click: $parent.cancelEdit">Cancel</button>
+            </td>
+        </tr>
+    </script>
+
+</section>

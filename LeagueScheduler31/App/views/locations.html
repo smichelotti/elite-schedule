@@ -1,0 +1,11 @@
+﻿<section>
+    <h2 class="page-title">Locations</h2>
+    <h3>Click on a location below to view schedule by location.</h3>
+
+    <div class="container" data-bind="foreach: locations">
+        <div class="row">
+            <a data-bind="text: name, attr: { href: '#!locations/' + name }"></a>
+            (<a data-bind="attr: { href: locationUrl }">Click here for Directions</a>)
+        </div>
+    </div>
+</section>
