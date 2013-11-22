@@ -22,7 +22,9 @@ namespace LeagueScheduler
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             CloudStorageConfig.Configure();
 
-            Database.SetInitializer<SchedulerDbContext>(new SchedulerDbInitializer());
+            Database.SetInitializer<SchedulerDbContext>(null);
+
+            //Database.SetInitializer<SchedulerDbContext>(new SchedulerDbInitializer());
             //UserDataInitializer.Seed();
 
         }
