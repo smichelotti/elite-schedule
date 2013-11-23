@@ -1,9 +1,12 @@
 ﻿define(['plugins/http', 'admin-utils', 'user-data', 'plugins/router'], function (http, utils, userData, router) {
+    var app = require('durandal/app');
     var self = this;
 
     var leagueViewModel = {
         apiUrl: "/api/leagues",
         newName: ko.observable(""),
+        //publishEnabled: ko.observable(true),
+        publishVisible: ko.observable(true),
 
 
         addItem: function (item) {
@@ -38,14 +41,22 @@
         this.id = ko.observable();
         this.name = ko.observable();
 
+        this.publishEnabled = ko.observable(true);
+
         utils.addEditableMembers(this);
         this.update(data);
     };
 
     self.publish = function (item) {
-        console.log("***inside publish", item.id());
-        http.post("/api/leagues/" + item.id() + "/publish").then(function (data) {
-            console.log("***PUBLISH RESULTS", data);
+        app.showMessage('Are you sure you want to Publish?', 'Publish?', ['Yes', 'No']).then(function (response) {
+            if (response === "Yes") {
+                item.publishEnabled(false);
+                http.post("/api/leagues/" + item.id() + "/publish").then(function (data) {
+                    console.log("***PUBLISH RESULTS", data);
+                    item.publishEnabled(true);
+                    app.showMessage("Publish complete!");
+                });
+            }
         });
     };
 

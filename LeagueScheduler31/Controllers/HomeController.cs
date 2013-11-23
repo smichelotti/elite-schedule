@@ -18,7 +18,6 @@ namespace LeagueScheduler.Controllers
 
         public ActionResult League(int id)
         {
-            //return View("Index");
             return View();
         }
 

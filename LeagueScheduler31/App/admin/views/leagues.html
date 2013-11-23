@@ -27,9 +27,9 @@
         <tr>
             <td data-bind="text: name"></td>
             <td>
-                <button class="btn btn-info" data-bind="click: $parent.editItem">Edit</button>
                 <a data-bind="attr: { href: '#leagues/' + id() + '/teams' }" class="btn btn-success">Configure</a>
-                <button class="btn btn-warning" data-bind="click: publish">Publish</button>
+                <button class="btn btn-info" data-bind="click: $parent.editItem">Edit</button>
+                <button class="btn btn-warning" data-bind="click: publish, enable: publishEnabled">Publish</button>
                 <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
                 <a class="btn btn-link" target="_blank" data-bind="attr: { href: '/home/league/' + id() }">View League Site</a>
             </td>
@@ -39,7 +39,7 @@
     <script id="league-editTempl" type="text/html">
         <tr>
             <td>
-                <input data-bind="value: name" />
+                <input type="text" class="form-control" data-bind="value: name" />
             </td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>
