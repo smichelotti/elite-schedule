@@ -346,6 +346,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\Index-orig.cshtml" />
     <Content Include="Views\Shared\_splash.cshtml" />
+    <Content Include="Views\Home\League.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

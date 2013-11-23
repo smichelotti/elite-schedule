@@ -1,6 +1,26 @@
-﻿@Html.Partial("_splash")
+﻿@model List<LeagueScheduler.Models.League>
 
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">Elite Schedule</a>
+    </div>
+</div>
 
-@section Scripts {
-    <script type="text/javascript" src="~/Scripts/require.js" data-main="/App/main"></script>
-}
+<div class="jumbotron">
+    <h1>Welcome to Elite Schedule!</h1>
+    <p>
+        This site contains the schedules for all active leagues and tournaments. 
+        Please select a league/tournament below to go to their site.
+    </p>
+</div>
+
+<div>
+    <table class="table table-bordered table-hover table-striped table-condensed">
+        @foreach (var league in this.Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(league.Name, "League", new { id = league.Id }, new { @class = "btn btn-link" })</td>
+            </tr>
+        }
+    </table>
+</div>

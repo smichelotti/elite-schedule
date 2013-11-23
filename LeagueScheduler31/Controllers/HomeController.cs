@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeagueScheduler.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,15 @@ namespace LeagueScheduler.Controllers
     {
         public ActionResult Index()
         {
+            ILeagueRepository repository = new LeagueRepository();
+            this.ViewData.Model = repository.All.OrderBy(x => x.Name).ToList();
             return View();
         }
 
         public ActionResult League(int id)
         {
-            ViewBag.Msg = "Hello from league index";
-            return View("Index");
+            //return View("Index");
+            return View();
         }
 
         public ActionResult About()
