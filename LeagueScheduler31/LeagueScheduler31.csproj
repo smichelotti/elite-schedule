@@ -221,6 +221,7 @@
     <Content Include="App\admin\viewmodels\teams.js" />
     <Content Include="App\admin\views\adminhome.html" />
     <Content Include="App\admin\views\games.html" />
+    <Content Include="App\admin\views\league-tabs.html" />
     <Content Include="App\admin\views\leagues.html" />
     <Content Include="App\admin\views\locations.html" />
     <Content Include="App\admin\views\shell.html" />

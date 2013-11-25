@@ -14,6 +14,7 @@
             app.showMessage('Search not yet implemented...');
         },
 
+
         adminLinks: ko.computed(function () {
             return ko.utils.arrayFilter(router.navigationModel(), function (route) {
                 return route.adminLink === true;
@@ -84,7 +85,8 @@
                 { route: 'leagues', moduleId: 'viewmodels/leagues', title: 'Leagues', nav: true },
                 { route: 'locations', moduleId: 'viewmodels/locations', title: 'Locations', nav: true },
                 { route: 'leagues/:leagueId/teams', moduleId: 'viewmodels/teams', title: 'Teams', nav: false },
-                { route: 'leagues/:leagueId/games', moduleId: 'viewmodels/games', title: 'Games', nav: false }
+                { route: 'leagues/:leagueId/games', moduleId: 'viewmodels/games', title: 'Games', nav: false },
+            { route: 'leagues/:leagueId/scores', moduleId: 'viewmodels/scores', title: 'Scores', nav: false }
             ]).buildNavigationModel();
 
 

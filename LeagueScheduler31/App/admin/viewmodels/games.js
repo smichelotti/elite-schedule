@@ -21,6 +21,9 @@
         newTeam1Id: ko.observable(),
         newTeam2Id: ko.observable(),
         newLocationId: ko.observable(),
+        isTabActive: function (tab) {
+            return (tab === "games" ? "active" : "");
+        },
 
         teams: ko.observableArray(),
         locations: ko.observableArray(),
@@ -60,13 +63,48 @@
             return result.name;
         },
 
+        editScore: function (item) {
+            console.log("insdie editScore", item);
+            //gamesViewModel.displayModeOverride("game-scoreTempl");
+            gamesViewModel.selectedScoreItem(item);
+        },
+
         activate: activate,
         leagueId: ko.observable(),
-        leagueName: ko.observable()
+        leagueName: ko.observable(),
+
+        //a little hacky
+        //displayModeOverride: ko.observable(),
+        selectedScoreItem: ko.observable(),
+
+        saveScore: function (item) {
+            console.log("inside saveScore");
+            item.commit();
+            gamesViewModel.beforeSave(item);
+            http.put(gamesViewModel.apiUrl + "/" + item.id(), item).then(function (response) {
+                gamesViewModel.selectedScoreItem(null);
+                gamesViewModel.afterSave(response);
+            });
+        },
+
+        cancelSaveScore: function (item) {
+            gamesViewModel.selectedScoreItem(null);
+            item.revert();
+        }
     };
 
     utils.extendWithCrudBehaviors("game", gamesViewModel);
 
+    gamesViewModel.displayMode = function (item) {
+        var isEditingScore = (gamesViewModel.selectedScoreItem() && item.id === gamesViewModel.selectedScoreItem().id);
+        if (isEditingScore) {
+            return "game-scoreTempl";
+        }
+        else {
+            var isEditing = (gamesViewModel.selectedItem() && item.id === gamesViewModel.selectedItem().id);
+            return isEditing ? gamesViewModel.uniqueName + "-editTempl" : gamesViewModel.uniqueName + "-itemTempl";
+        }
+    };
 
     gamesViewModel.beforeSave = function (item) {
         item.gameTime(formatDate(item.gameTime()));
@@ -112,9 +150,15 @@
         this.team2Id = ko.observable();
         this.locationId = ko.observable();
         this.leagueId = ko.observable();
+        this.team1Score = ko.observable();
+        this.team2Score = ko.observable();
 
         utils.addEditableMembers(this);
         this.update(data);
+    };
+
+    function GameScoreItem(data) {
+
     };
 
     //return {

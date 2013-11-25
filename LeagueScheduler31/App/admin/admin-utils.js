@@ -49,9 +49,8 @@
         //};
 
         itemToExtend.displayMode = function (item) {
-            //var isEditing = (itemToExtend.selectedItem() && item.rowKey === itemToExtend.selectedItem().rowKey);
             var isEditing = (itemToExtend.selectedItem() && item.id === itemToExtend.selectedItem().id);
-            return isEditing ? itemToExtend.uniqueName + "-editTempl" : itemToExtend.uniqueName + "-itemTempl";;;
+            return isEditing ? itemToExtend.uniqueName + "-editTempl" : itemToExtend.uniqueName + "-itemTempl";
         };
 
         itemToExtend.editItem = function (item) {
@@ -62,7 +61,6 @@
             var itemName = item.name ? item.name() : "this item";
             app.showMessage("Are you sure you want to delete " + itemName + "?", "Delete?", ['Yes', 'No']).then(function (response) {
                 if (response === 'Yes') {
-                    //http.delete(itemToExtend.apiUrl + "/" + item.rowKey()).then(function (response) {
                     http.delete(itemToExtend.apiUrl + "/" + item.id()).then(function (response) {
                         itemToExtend.items.remove(item);
                     });
@@ -75,7 +73,6 @@
 
         itemToExtend.saveItem = function (item) {
             item.commit();
-            //http.put(itemToExtend.apiUrl + "/" + item.rowKey(), item).then(function (response) {
             itemToExtend.beforeSave(item);
             http.put(itemToExtend.apiUrl + "/" + item.id(), item).then(function (response) {
                 itemToExtend.selectedItem(null);

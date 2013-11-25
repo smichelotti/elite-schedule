@@ -10,6 +10,10 @@
         newTeamName: ko.observable(""),
         newLeagueId: ko.observable(""),
         //leagues: ko.observableArray(),
+        foo: ko.observable(22),
+        isTabActive: function (tab) {
+            return (tab === "teams" ? "active" : "");
+        },
 
         addItem: function (item) {
             var _this = this;

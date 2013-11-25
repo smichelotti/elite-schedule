@@ -1,10 +1,7 @@
 ﻿<section>
     <h3 class="page-title" data-bind="text: leagueName() + ' League'"></h3>
 
-    <ul class="nav nav-tabs">
-        <li><a data-bind="attr: { href: '#leagues/' + leagueId() + '/teams' }">Teams</a></li>
-        <li class="active"><a href="#">Games</a></li>
-    </ul>
+    <div data-bind="compose:'league-tabs.html'"></div>
 
     <table class="table table-bordered table-hover table-striped table-condensed">
         <thead>
@@ -43,11 +40,18 @@
     <script id="game-itemTempl" type="text/html">
         <tr>
             <td data-bind="dateTime: gameTime"></td>
-            <td data-bind="text: $parent.getTeamName(team1Id())"></td>
-            <td data-bind="text: $parent.getTeamName(team2Id())"></td>
+            <td>
+                <span data-bind="text: $parent.getTeamName(team1Id()), css: { 'text-success': team1Score() > team2Score() }"></span>
+                <b><span data-bind="visible: team1Score(), text: '(' + team1Score() + ')'"></span></b>
+            </td>
+            <td>
+                <span data-bind="text: $parent.getTeamName(team2Id()), css: { 'text-success': team1Score() < team2Score() }"></span>
+                <b><span data-bind="visible: team2Score(), text: '(' + team2Score() + ')'"></span></b>
+            </td>
             <td data-bind="text: $parent.getLocationName(locationId())"></td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
+                <button class="btn btn-success" data-bind="click: $parent.editScore">Scores</button>
                 <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
             </td>
         </tr>
@@ -71,6 +75,24 @@
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>
                 <button class="btn btn-danger" data-bind="click: $parent.cancelEdit">Cancel</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="game-scoreTempl" type="text/html">
+        <tr>
+            <td data-bind="text: $parent.getTeamName(team1Id())"></td>
+            <td>
+                <input class="form-control" data-bind="value: team1Score" />
+            </td>
+
+            <td data-bind="text: $parent.getTeamName(team2Id())"></td>
+            <td>
+                <input class="form-control" data-bind="value: team2Score" />
+            </td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: $parent.saveScore">Save</button>
+                <button class="btn btn-danger" data-bind="click: $parent.cancelSaveScore">Cancel</button>
             </td>
         </tr>
     </script>

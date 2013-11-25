@@ -1,11 +1,11 @@
 ﻿<section>
     <h3 class="page-title" data-bind="text: leagueName() + ' League'"></h3>
 
-    <ul class="nav nav-tabs">
+    <div data-bind="compose:'league-tabs.html'"></div>
+    <!--<ul class="nav nav-tabs">
         <li class="active"><a href="#">Teams</a></li>
-        <!--<li><a data-bind="attr: { href: '#leagues/' + leagueId() + '/games' }">Games</a></li>-->
         <li><a data-bind="attr: { href: gamesUrl }">Games</a></li>
-    </ul>
+    </ul>-->
 
     <table class="table table-bordered table-hover table-striped">
         <thead>
