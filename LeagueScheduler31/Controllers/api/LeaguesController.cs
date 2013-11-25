@@ -49,18 +49,20 @@ namespace LeagueScheduler.Controllers
         }
 
         [Route("api/leagues/{id}/publish")]
-        public HttpResponseMessage PostPublish(int id)
+        public IHttpActionResult PostPublish(int id)
         {
             var publisher = new LeaguePublisher();
-            var json = publisher.Publish(id);
+            //var json = publisher.Publish(id);
 
-            //TODO: need to send back sensible code depending on publishing success
-            //return this.Ok();
+            ////TODO: need to send back sensible code depending on publishing success
+            ////return this.Ok();
 
-            var response = this.Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            //var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            //response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return response;
+            //return response;
+
+            return this.Ok();
         }
 
     }

@@ -53,19 +53,17 @@
             var result = ko.utils.arrayFirst(this.teams(), function (item) {
                 return item.id == teamId;
             });
-            return result.name;
+            return result ? result.name : "";
         },
 
         getLocationName: function (locationId) {
             var result = ko.utils.arrayFirst(this.locations(), function (item) {
                 return item.id == locationId;
             });
-            return result.name;
+            return result ? result.name : "";
         },
 
         editScore: function (item) {
-            console.log("insdie editScore", item);
-            //gamesViewModel.displayModeOverride("game-scoreTempl");
             gamesViewModel.selectedScoreItem(item);
         },
 
@@ -73,12 +71,9 @@
         leagueId: ko.observable(),
         leagueName: ko.observable(),
 
-        //a little hacky
-        //displayModeOverride: ko.observable(),
         selectedScoreItem: ko.observable(),
 
         saveScore: function (item) {
-            console.log("inside saveScore");
             item.commit();
             gamesViewModel.beforeSave(item);
             http.put(gamesViewModel.apiUrl + "/" + item.id(), item).then(function (response) {

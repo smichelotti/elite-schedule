@@ -41,11 +41,11 @@
         <tr>
             <td data-bind="dateTime: gameTime"></td>
             <td>
-                <span data-bind="text: $parent.getTeamName(team1Id()), css: { 'text-success': team1Score() > team2Score() }"></span>
+                <span data-bind="text: $parent.getTeamName(team1Id()), css: { 'text-success': team1Score() && team1Score() > team2Score() }"></span>
                 <b><span data-bind="visible: team1Score(), text: '(' + team1Score() + ')'"></span></b>
             </td>
             <td>
-                <span data-bind="text: $parent.getTeamName(team2Id()), css: { 'text-success': team1Score() < team2Score() }"></span>
+                <span data-bind="text: $parent.getTeamName(team2Id()), css: { 'text-success': team1Score() && team1Score() < team2Score() }"></span>
                 <b><span data-bind="visible: team2Score(), text: '(' + team2Score() + ')'"></span></b>
             </td>
             <td data-bind="text: $parent.getLocationName(locationId())"></td>

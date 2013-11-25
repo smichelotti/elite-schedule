@@ -12,8 +12,17 @@ namespace LeagueScheduler.Models
     {
         private SchedulerDbContext dbContext = new SchedulerDbContext();
 
+        public void Publish(int leagueId)
+        {
+            var jsonBuilder = new LeagueJsonBuilder();
+            var json = jsonBuilder.CreateJson(leagueId);
+            var repository = new ScheduleRepository();
 
-        public string Publish(int leagueId)
+            var league = dbContext.Leagues.Single(x => x.Id == leagueId);
+            repository.Save(league.Id, league.Name, json);
+        }
+
+        public string xPublish(int leagueId)
         {
             //var games = dbContext.Games.Include("Location").Where(g => g.LeagueId == leagueId).OrderBy(g => g.GameTime).ToList();
             //var games = dbContext.Games.Where(g => g.LeagueId == leagueId).OrderBy(g => g.GameTime).ToList();
@@ -125,24 +134,24 @@ namespace LeagueScheduler.Models
        
     }
 
-    static class JsonExtensions
-    {
-        public static void WriteProperty(this JsonWriter writer, string propertyName, string propertyValue)
-        {
-            writer.WritePropertyName(propertyName);
-            writer.WriteValue(propertyValue);
-        }
+    //static class JsonExtensions
+    //{
+    //    public static void WriteProperty(this JsonWriter writer, string propertyName, string propertyValue)
+    //    {
+    //        writer.WritePropertyName(propertyName);
+    //        writer.WriteValue(propertyValue);
+    //    }
 
-        public static void WriteProperty(this JsonWriter writer, string propertyName, bool propertyValue)
-        {
-            writer.WritePropertyName(propertyName);
-            writer.WriteValue(propertyValue);
-        }
+    //    public static void WriteProperty(this JsonWriter writer, string propertyName, bool propertyValue)
+    //    {
+    //        writer.WritePropertyName(propertyName);
+    //        writer.WriteValue(propertyValue);
+    //    }
 
-        public static void WriteProperty(this JsonWriter writer, string propertyName, int propertyValue)
-        {
-            writer.WritePropertyName(propertyName);
-            writer.WriteValue(propertyValue);
-        }
-    }
+    //    public static void WriteProperty(this JsonWriter writer, string propertyName, int propertyValue)
+    //    {
+    //        writer.WritePropertyName(propertyName);
+    //        writer.WriteValue(propertyValue);
+    //    }
+    //}
 }

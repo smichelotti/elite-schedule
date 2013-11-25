@@ -193,6 +193,7 @@
     <Compile Include="Models\GameRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\League.cs" />
+    <Compile Include="Models\LeagueJsonBuilder.cs" />
     <Compile Include="Models\LeaguePublisher.cs" />
     <Compile Include="Models\LeagueRepository.cs" />
     <Compile Include="Models\Location.cs" />

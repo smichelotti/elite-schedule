@@ -33,5 +33,15 @@ namespace LeagueScheduler.Controllers
 
             return response;
         }
+
+        [Route("api/leaguedata/{id}/preview")]
+        public HttpResponseMessage GetPreview(int id)
+        {
+            var jsonBuilder = new LeagueJsonBuilder();
+            var json = jsonBuilder.CreateJson(id);
+            var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            return response;
+        }
     }
 }
