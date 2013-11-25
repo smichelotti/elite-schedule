@@ -52,6 +52,7 @@ namespace LeagueScheduler.Controllers
         public IHttpActionResult PostPublish(int id)
         {
             var publisher = new LeaguePublisher();
+            publisher.Publish(id);
             //var json = publisher.Publish(id);
 
             ////TODO: need to send back sensible code depending on publishing success
@@ -62,7 +63,7 @@ namespace LeagueScheduler.Controllers
 
             //return response;
 
-            return this.Ok();
+            return this.Ok(new { result = "success" });
         }
 
     }

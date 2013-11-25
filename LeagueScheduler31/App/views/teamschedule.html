@@ -13,6 +13,9 @@
                     <a data-bind="text: location, attr: { href: '#!locations/' + location }"></a>
                     (<a data-bind="attr: { href: locationUrl }">Map</a>)
                 </td>
+                <td data-bind="text: $parent.scoreDisplay($data)">
+
+                </td>
             </tr>
         </tbody>
     </table>

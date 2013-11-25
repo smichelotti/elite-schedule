@@ -2,7 +2,13 @@
     var vm = {
         activate: activate,
         title: ko.observable(),
-        games: ko.observableArray()
+        games: ko.observableArray(),
+
+        scoreDisplay: function (item) {
+            console.log("inside score display", item);
+
+            return "";
+        }
     };
 
     return vm;

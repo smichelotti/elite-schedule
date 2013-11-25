@@ -11,6 +11,7 @@
                 leagueData.games = response.games;
                 leagueData.locations = response.locations;
                 leagueData.league = response.league;
+                leagueData.standings = response.standings;
             });
         },
 

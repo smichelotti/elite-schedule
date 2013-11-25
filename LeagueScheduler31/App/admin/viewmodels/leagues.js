@@ -51,8 +51,8 @@
         app.showMessage('Are you sure you want to Publish?', 'Publish?', ['Yes', 'No']).then(function (response) {
             if (response === "Yes") {
                 item.publishEnabled(false);
-                http.post("/api/leagues/" + item.id() + "/publish").then(function (data) {
-                    console.log("***PUBLISH RESULTS", data);
+                http.post("/api/leagues/" + item.id() + "/publish").then(function () {
+                    //console.log("***PUBLISH COMPLETE");
                     item.publishEnabled(true);
                     app.showMessage("Publish complete!");
                 });
