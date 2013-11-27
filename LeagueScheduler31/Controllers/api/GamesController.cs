@@ -14,7 +14,7 @@ namespace LeagueScheduler.Controllers
 
         public List<Game> Get(int leagueId)
         {
-            return this.repository.All.Where(x => x.LeagueId == leagueId).OrderBy(x => x.GameTime).ThenBy(x => x.LeagueId).ToList();
+            return this.repository.All.Where(x => x.LeagueId == leagueId).OrderBy(x => x.GameTime).ThenBy(x => x.LocationId).ToList();
         }
 
         public Game Post(Game item)
