@@ -44,7 +44,7 @@
                 _this.newGameTime(nextTime);
                 _this.newTeam1Id("");
                 _this.newTeam2Id("");
-                _this.newLocationId("");
+                //_this.newLocationId("");
                 _this.items.sort(sortByDate);
             });
         },

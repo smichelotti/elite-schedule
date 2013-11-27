@@ -10,12 +10,14 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
+                <th></th>
                 <th>Team Name</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td></td>
                 <td>
                     <input type="text" class="form-control" placeholder="New Team Name" data-bind="value: newTeamName">
                 </td>
@@ -30,6 +32,7 @@
 
     <script id="team-itemTempl" type="text/html">
         <tr>
+            <td data-bind="text: $index() + 1"></td>
             <td data-bind="text: name"></td>
             <!--<td data-bind="text: leagueName"></td>-->
             <!--<td data-bind="text: $parent.getLeagueName($data)"></td>-->

@@ -4,6 +4,12 @@
     //self.leagueName = ko.observable();
     //self.gamesUrl = ko.observable();
 
+    function sortByName(left, right) {
+        var leftName = left.name(),
+            rightName = right.name();
+        var result = leftName == rightName ? 0 : (leftName < rightName ? -1 : 1);
+        //console.log("***sort", leftName, rightName, result);
+    }
 
     var teamViewModel = {
         apiUrl: "/api/teams",
@@ -22,6 +28,7 @@
                 _this.items.push(new TeamItem(data));
                 _this.newTeamName("");
                 _this.newLeagueId(0);
+                //_this.items.sort(sortByName)
             });
         },
 
