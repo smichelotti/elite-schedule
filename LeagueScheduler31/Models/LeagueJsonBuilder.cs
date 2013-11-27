@@ -137,6 +137,10 @@ namespace LeagueScheduler.Models
             foreach (var game in games)
             {
                 //TODO: defer implementation for a tie
+                if (!game.Team1Score.HasValue && !game.Team2Score.HasValue)
+                {
+                    continue;
+                }
                 var winningTeamId = game.Team1Score.GetValueOrDefault() > game.Team2Score.GetValueOrDefault() ? game.Team1Id : game.Team2Id;
                 PopulateSingleStanding(standings[game.Team1Id], game.Team1Score.GetValueOrDefault(), game.Team2Score.GetValueOrDefault(), winningTeamId);
                 PopulateSingleStanding(standings[game.Team2Id], game.Team2Score.GetValueOrDefault(), game.Team1Score.GetValueOrDefault(), winningTeamId);
