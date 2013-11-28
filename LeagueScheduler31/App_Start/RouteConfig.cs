@@ -13,11 +13,19 @@ namespace LeagueScheduler
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute(
-            //    name: "LeagueDefault",
-            //    url: "{id}",
-            //    defaults: new { controller = "Home", action = "LeagueIndex" }
-            //);
+            routes.MapRoute(
+                name: "LeagueDefault",
+                url: "{id}",
+                defaults: new { controller = "Home", action = "League" },
+                constraints: new { id = @"\d+" }
+            );
+
+            routes.MapRoute(
+                name: "LeaguePreview",
+                url: "{id}/preview",
+                defaults: new { controller = "Home", action = "League" },
+                constraints: new { id = @"\d+" }
+            );
 
             routes.MapRoute(
                 name: "Default",

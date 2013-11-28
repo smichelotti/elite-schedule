@@ -3,10 +3,13 @@
     var leagueData = {};
 
     return {
-        primeData: function (leagueId) {
-            //console.log("***in primeData");
-            return http.get("/api/leaguedata/" + leagueId).then(function (response) {
-                //console.log("***primeData results", response);
+        primeData: function (leagueId, isPreview) {
+            var url = "/api/leaguedata/" + leagueId;
+            if (isPreview) {
+                url += "/preview";
+            }
+
+            return http.get(url).then(function (response) {
                 leagueData.teams = response.teams;
                 leagueData.games = response.games;
                 leagueData.locations = response.locations;

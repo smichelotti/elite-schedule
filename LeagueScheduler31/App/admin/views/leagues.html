@@ -31,7 +31,8 @@
                 <button class="btn btn-info" data-bind="click: $parent.editItem">Edit</button>
                 <button class="btn btn-warning" data-bind="visible: isDirty, click: publish, enable: publishEnabled">Publish</button>
                 <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
-                <a class="btn btn-link" target="_blank" data-bind="attr: { href: '/home/league/' + id() }">View League Site</a>
+                <a class="btn btn-link" target="_blank" data-bind="visible: isDirty, attr: { href: id() + '/preview' }">Preview League Site</a>
+                <a class="btn btn-link" target="_blank" data-bind="attr: { href: id }">View League Site</a>
             </td>
         </tr>
     </script>

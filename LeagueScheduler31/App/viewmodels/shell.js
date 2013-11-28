@@ -94,11 +94,11 @@
             ]).buildNavigationModel();
             
             //return router.activate();
-            console.log("***location in shell", document.location.pathname, document.location);
             var segments = document.location.pathname.split("/");
-            var leagueId = segments[segments.length - 1];
+            var leagueId = segments[1];
+            var isPreview = (segments.length === 3 && segments[2] === "preview");
 
-            return leagueData.primeData(leagueId).then(function () {
+            return leagueData.primeData(leagueId, isPreview).then(function () {
                 return router.activate();
             });
         }
