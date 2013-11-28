@@ -43,12 +43,17 @@ namespace LeagueScheduler.Models
                 // Existing entity
                 context.Entry(team).State = EntityState.Modified;
             }
+
+            var leagueRepository = new LeagueRepository();
+            leagueRepository.MarkDirty(team.LeagueId);
         }
 
         public void Delete(int id)
         {
-            var drill = context.Teams.Find(id);
-            context.Teams.Remove(drill);
+            var team = context.Teams.Find(id);
+            context.Teams.Remove(team);
+            var leagueRepository = new LeagueRepository();
+            leagueRepository.MarkDirty(team.LeagueId);
         }
 
         public void Save()

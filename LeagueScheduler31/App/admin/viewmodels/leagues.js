@@ -5,7 +5,6 @@
     var leagueViewModel = {
         apiUrl: "/api/leagues",
         newName: ko.observable(""),
-        //publishEnabled: ko.observable(true),
         publishVisible: ko.observable(true),
 
 
@@ -40,6 +39,7 @@
     var LeagueItem = function (data) {
         this.id = ko.observable();
         this.name = ko.observable();
+        this.isDirty = ko.observable();
 
         this.publishEnabled = ko.observable(true);
 
@@ -52,12 +52,16 @@
             if (response === "Yes") {
                 item.publishEnabled(false);
                 http.post("/api/leagues/" + item.id() + "/publish").then(function () {
-                    //console.log("***PUBLISH COMPLETE");
                     item.publishEnabled(true);
+                    item.isDirty(false);
                     app.showMessage("Publish complete!");
                 });
             }
         });
+    };
+
+    leagueViewModel.beforeSave = function (item) {
+        item.isDirty(true);
     };
 
     return {

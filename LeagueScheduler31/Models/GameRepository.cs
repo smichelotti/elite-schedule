@@ -31,24 +31,29 @@ namespace LeagueScheduler.Models
             return context.Games.Find(id);
         }
 
-        public void InsertOrUpdate(Game Game)
+        public void InsertOrUpdate(Game game)
         {
-            if (Game.Id == default(int))
+            if (game.Id == default(int))
             {
                 // New entity
-                context.Games.Add(Game);
+                context.Games.Add(game);
             }
             else
             {
                 // Existing entity
-                context.Entry(Game).State = EntityState.Modified;
+                context.Entry(game).State = EntityState.Modified;
             }
+
+            var leagueRepository = new LeagueRepository();
+            leagueRepository.MarkDirty(game.LeagueId);
         }
 
         public void Delete(int id)
         {
-            var drill = context.Games.Find(id);
-            context.Games.Remove(drill);
+            var game = context.Games.Find(id);
+            context.Games.Remove(game);
+            var leagueRepository = new LeagueRepository();
+            leagueRepository.MarkDirty(game.LeagueId);
         }
 
         public void Save()

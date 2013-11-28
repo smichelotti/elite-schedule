@@ -33,6 +33,8 @@ namespace LeagueScheduler.Models
 
         public void InsertOrUpdate(League league)
         {
+            league.IsDirty = true;
+
             if (league.Id == default(int))
             {
                 // New entity
@@ -45,10 +47,20 @@ namespace LeagueScheduler.Models
             }
         }
 
+        public void MarkDirty(int id)
+        {
+            context.Database.ExecuteSqlCommand("UPDATE Leagues SET IsDirty = 1 WHERE Id = @p0", id);
+        }
+
+        public void MarkClean(int id)
+        {
+            context.Database.ExecuteSqlCommand("UPDATE Leagues SET IsDirty = 0 WHERE Id = @p0", id);
+        }
+
         public void Delete(int id)
         {
-            var drill = context.Leagues.Find(id);
-            context.Leagues.Remove(drill);
+            var league = context.Leagues.Find(id);
+            context.Leagues.Remove(league);
         }
 
         public void Save()
@@ -69,6 +81,8 @@ namespace LeagueScheduler.Models
         League Find(int id);
         void InsertOrUpdate(League league);
         void Delete(int id);
+        void MarkDirty(int id);
+        void MarkClean(int id);
         void Save();
     }
 }

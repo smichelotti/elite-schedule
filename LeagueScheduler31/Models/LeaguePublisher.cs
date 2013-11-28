@@ -16,16 +16,16 @@ namespace LeagueScheduler.Models
         {
             var jsonBuilder = new LeagueJsonBuilder();
             var json = jsonBuilder.CreateJson(leagueId);
-            var repository = new ScheduleRepository();
+            var scheduleRepository = new ScheduleRepository();
+            var leagueRepository = new LeagueRepository();
 
-            var league = dbContext.Leagues.Single(x => x.Id == leagueId);
-            repository.Save(league.Id, league.Name, json);
+            var league = leagueRepository.Find(leagueId);
+            scheduleRepository.Save(league.Id, league.Name, json);
+            leagueRepository.MarkClean(leagueId);
         }
 
         public string xPublish(int leagueId)
         {
-            //var games = dbContext.Games.Include("Location").Where(g => g.LeagueId == leagueId).OrderBy(g => g.GameTime).ToList();
-            //var games = dbContext.Games.Where(g => g.LeagueId == leagueId).OrderBy(g => g.GameTime).ToList();
             var games = (from g in dbContext.Games.Include("Location")
                          where g.LeagueId == leagueId
                          orderby g.GameTime, g.LeagueId
@@ -60,11 +60,6 @@ namespace LeagueScheduler.Models
             }
         }
 
-        //private void PersistSchedule(string leagueName, string json)
-        //{
-
-        //}
-
         private void WriteLeague(JsonWriter json, League league)
         {
             json.WritePropertyName("league");
@@ -73,8 +68,6 @@ namespace LeagueScheduler.Models
             json.WriteProperty("name", league.Name);
             json.WriteProperty("id", league.Id);
             json.WriteEnd();
-
-            //json.WriteEnd();
         }
 
         private void WriteTeams(JsonWriter json, List<Team> teams)
@@ -87,8 +80,6 @@ namespace LeagueScheduler.Models
             {
                 json.WriteStartObject();
                 json.WriteProperty("name", team.Name);
-                //json.WritePropertyName("name");
-                //json.WriteValue(team.Name);
                 json.WriteEnd();
             }
             json.WriteEnd();
@@ -102,10 +93,6 @@ namespace LeagueScheduler.Models
             foreach (var location in locations)
             {
                 json.WriteStartObject();
-                //json.WritePropertyName("name");
-                //json.WriteValue(location.Name);
-                //json.WritePropertyName("locationUrl");
-                //json.WriteValue(location.Link);
                 json.WriteProperty("name", location.Name);
                 json.WriteProperty("locationUrl", location.Link);
                 json.WriteEnd();
@@ -133,25 +120,4 @@ namespace LeagueScheduler.Models
         }
        
     }
-
-    //static class JsonExtensions
-    //{
-    //    public static void WriteProperty(this JsonWriter writer, string propertyName, string propertyValue)
-    //    {
-    //        writer.WritePropertyName(propertyName);
-    //        writer.WriteValue(propertyValue);
-    //    }
-
-    //    public static void WriteProperty(this JsonWriter writer, string propertyName, bool propertyValue)
-    //    {
-    //        writer.WritePropertyName(propertyName);
-    //        writer.WriteValue(propertyValue);
-    //    }
-
-    //    public static void WriteProperty(this JsonWriter writer, string propertyName, int propertyValue)
-    //    {
-    //        writer.WritePropertyName(propertyName);
-    //        writer.WriteValue(propertyValue);
-    //    }
-    //}
 }
