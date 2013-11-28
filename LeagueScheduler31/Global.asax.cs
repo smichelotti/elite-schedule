@@ -1,6 +1,7 @@
 ﻿using LeagueScheduler.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,8 @@ namespace LeagueScheduler
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static bool forceSSLForAdmin = Convert.ToBoolean(ConfigurationManager.AppSettings["forceSSL"]);
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,6 +30,15 @@ namespace LeagueScheduler
             //Database.SetInitializer<SchedulerDbContext>(new SchedulerDbInitializer());
             //UserDataInitializer.Seed();
 
+        }
+
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
+            var request = HttpContext.Current.Request;
+            if (forceSSLForAdmin && !request.IsLocal && request.RawUrl == "/admin")
+            {
+                Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"] + request.RawUrl);
+            }
         }
     }
 }
