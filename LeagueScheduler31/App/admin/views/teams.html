@@ -22,6 +22,9 @@
                     <input type="text" class="form-control" placeholder="New Team Name" data-bind="value: newTeamName">
                 </td>
                 <td>
+                    <input type="text" class="form-control" placeholder="Division Name" maxlength="50" data-bind="value: newDivisionName">
+                </td>
+                <td>
                     <button type="submit" class="btn btn-primary" data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add</button>
                 </td>
             </tr>
@@ -34,8 +37,7 @@
         <tr>
             <td data-bind="text: $index() + 1"></td>
             <td data-bind="text: name"></td>
-            <!--<td data-bind="text: leagueName"></td>-->
-            <!--<td data-bind="text: $parent.getLeagueName($data)"></td>-->
+            <td data-bind="text: division"></td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
                 <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
@@ -49,9 +51,9 @@
             <td>
                 <input class="form-control" data-bind="value: name"/>
             </td>
-            <!--<td>
-                <select class="form-control" data-bind="value: leagueId, options: $root.leagues, optionsCaption: '(Select League)', optionsText: 'name', optionsValue: 'id'"></select>
-            </td>-->
+            <td>
+                <input class="form-control" data-bind="value: division" maxlength="50" />
+            </td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>
                 <button class="btn btn-danger" data-bind="click: $parent.cancelEdit">Cancel</button>

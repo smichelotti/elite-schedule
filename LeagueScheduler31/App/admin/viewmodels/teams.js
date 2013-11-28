@@ -1,8 +1,4 @@
 ﻿define(['plugins/http', 'durandal/app', 'admin-utils'], function (http, app, utils) {
-    //var self = this;
-    //self.leagueId = ko.observable();
-    //self.leagueName = ko.observable();
-    //self.gamesUrl = ko.observable();
 
     function sortByName(left, right) {
         var leftName = left.name(),
@@ -14,8 +10,8 @@
     var teamViewModel = {
         apiUrl: "/api/teams",
         newTeamName: ko.observable(""),
+        newDivisionName: ko.observable(""),
         newLeagueId: ko.observable(""),
-        //leagues: ko.observableArray(),
         foo: ko.observable(22),
         isTabActive: function (tab) {
             return (tab === "teams" ? "active" : "");
@@ -24,9 +20,10 @@
         addItem: function (item) {
             var _this = this;
             //http.post(this.apiUrl, { name: _this.newTeamName(), leagueId: _this.newLeagueId() }).then(function (data) {
-            http.post(this.apiUrl, { name: _this.newTeamName(), leagueId: _this.leagueId }).then(function (data) {
+            http.post(this.apiUrl, { name: _this.newTeamName(), division: _this.newDivisionName(), leagueId: _this.leagueId }).then(function (data) {
                 _this.items.push(new TeamItem(data));
                 _this.newTeamName("");
+                _this.newDivisionName("");
                 _this.newLeagueId(0);
                 //_this.items.sort(sortByName)
             });
@@ -54,6 +51,7 @@
     function TeamItem(data) {
         this.id = ko.observable();
         this.name = ko.observable();
+        this.division = ko.observable();
         this.leagueId = ko.observable();
 
         utils.addEditableMembers(this);

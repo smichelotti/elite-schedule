@@ -64,14 +64,26 @@ namespace LeagueScheduler.Models
         {
             json.WritePropertyName("teams");
             json.WriteStartArray();
-            teams = teams.OrderBy(x => x.Name).ToList();
 
-            foreach (var team in teams)
+            var divisions = teams.OrderBy(x => x.Name).GroupBy(x => x.Division);
+
+            foreach (var division in divisions)
             {
                 json.WriteStartObject();
-                json.WriteProperty("name", team.Name);
-                json.WriteEnd();
+                json.WriteProperty("divisionName", division.Key);
+                json.WritePropertyName("divisionTeams");
+                json.WriteStartArray();
+                
+                foreach (var team in division)
+                {
+                    json.WriteStartObject();
+                    json.WriteProperty("name", team.Name);
+                    json.WriteEnd();
+                }
+                json.WriteEndArray();//end divisionTeams array
+                json.WriteEnd();//end division object
             }
+            
             json.WriteEnd();
         }
 
@@ -117,24 +129,37 @@ namespace LeagueScheduler.Models
             json.WritePropertyName("standings");
             json.WriteStartArray();
 
-            foreach (var standing in standings)
+            var divisionStandings = standings.GroupBy(x => x.Division);
+
+            foreach (var division in divisionStandings)
             {
                 json.WriteStartObject();
-                json.WriteProperty("teamName", standing.TeamName);
-                json.WriteProperty("wins", standing.Wins);
-                json.WriteProperty("losses", standing.Losses);
-                json.WriteProperty("winningPct", standing.WinningPct.ToString("#.000"));
-                json.WriteProperty("pointsFor", standing.PointsFor);
-                json.WriteProperty("pointsAgainst", standing.PointsAgainst);
-                json.WriteProperty("pointsDiff", standing.PointsDiff);
-                json.WriteEnd();
+                json.WriteProperty("divisionName", division.Key);
+                json.WritePropertyName("divisionStandings");
+                json.WriteStartArray();
+
+                foreach (var standing in division)
+                {
+                    json.WriteStartObject();
+                    json.WriteProperty("teamName", standing.TeamName);
+                    json.WriteProperty("wins", standing.Wins);
+                    json.WriteProperty("losses", standing.Losses);
+                    json.WriteProperty("winningPct", standing.WinningPct.ToString("#.000"));
+                    json.WriteProperty("pointsFor", standing.PointsFor);
+                    json.WriteProperty("pointsAgainst", standing.PointsAgainst);
+                    json.WriteProperty("pointsDiff", standing.PointsDiff);
+                    json.WriteEnd();
+                }
+                json.WriteEndArray();//end divisionStandings array
+                json.WriteEnd();//end division object
             }
+
             json.WriteEnd();
         }
 
         private static List<StandingsItem> ConstructStandings(List<Game> games, Dictionary<int, Team> teams)
         {
-            var standings = teams.Values.ToDictionary(x => x.Id, x => new StandingsItem { TeamId = x.Id, TeamName = x.Name });
+            var standings = teams.Values.ToDictionary(x => x.Id, x => new StandingsItem { TeamId = x.Id, TeamName = x.Name, Division = x.Division });
 
             foreach (var game in games)
             {
@@ -175,6 +200,7 @@ namespace LeagueScheduler.Models
         public int Ties { get; set; }
         public int PointsFor { get; set; }
         public int PointsAgainst { get; set; }
+        public string Division { get; set; }
 
         // Read-Only
         public decimal WinningPct

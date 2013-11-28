@@ -1,7 +1,4 @@
 ﻿define(['data/leagueData'], function (leagueData) {
-    //return {
-    //    teams: leagueData.teams
-    //};
     var self = this;
     self.teams = ko.observableArray();
 
