@@ -8,14 +8,10 @@
                 <td data-bind="shortTime: time"></td>
                 <td>
                     <a data-bind="text: team1, attr: { href: '#!teams/' + team1 }"></a>
-                    <!--<span data-bind="if: team1TakesScoreboard">
-                        <a data-bind="click: $parent.scoreboardAlert"><i class="icon-briefcase"></i></a>
-                    </span>-->
+                    <span data-bind="visible: team1Score, text: '(' + team1Score + ')', css: { 'bold-text text-success': team1Score > team2Score }"></span>
                     <span> vs. </span>
                     <a data-bind="text: team2, attr: { href: '#/teams/' + team2 }"></a>
-                    <!--<span data-bind="if: team2TakesScoreboard">
-                        <a data-bind="click: $parent.scoreboardAlert"><i class="icon-briefcase"></i></a>
-                    </span>-->
+                    <span data-bind="visible: team2Score, text: '(' + team2Score + ')', css: { 'bold-text text-success': team2Score > team1Score }"></span>
                 </td>
                 <td>
                     <a data-bind="text: location, attr: { href: '#!locations/' + location }"></a>

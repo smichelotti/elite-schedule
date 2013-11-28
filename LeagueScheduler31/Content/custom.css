@@ -109,3 +109,7 @@ body {
         float: none;
         vertical-align: middle;
     }
+
+.bold-text {
+    font-weight: bold;
+}
