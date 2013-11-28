@@ -35,7 +35,7 @@ namespace LeagueScheduler
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
             var request = HttpContext.Current.Request;
-            if (forceSSLForAdmin && !request.IsLocal && request.RawUrl == "/admin")
+            if (forceSSLForAdmin && !request.IsSecureConnection && !request.IsLocal && request.RawUrl == "/admin")
             {
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"] + request.RawUrl);
             }
