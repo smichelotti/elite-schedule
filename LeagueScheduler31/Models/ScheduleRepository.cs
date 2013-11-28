@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Services.Client;
 using System.Linq;
 using System.Web;
@@ -8,13 +9,16 @@ namespace LeagueScheduler.Models
 {
     public class ScheduleRepository
     {
+        private static readonly string environment = ConfigurationManager.AppSettings["environment"];
+        private static readonly string currentScheduleName = environment + "-CURRENT";
+
         public void Save(int leagueId, string leagueName, string jsonSchedule)
         {
             var context = ScheduleTableContext.CreateContext();
             Schedule schedule = new Schedule
             {
                 PartitionKey = leagueId.ToString(),
-                RowKey = Guid.NewGuid().ToString(),
+                RowKey = environment + "-" + Guid.NewGuid().ToString(),
                 Timestamp = DateTime.Now,
                 LeagueName = leagueName,
                 JsonSchedule = jsonSchedule
@@ -23,9 +27,9 @@ namespace LeagueScheduler.Models
             context.AddObject("LeagueSchedules", schedule);
             context.SaveChangesWithRetries();
 
-            // Now update *current8
+            // Now update *current*
             context.Detach(schedule);
-            schedule.RowKey = "CURRENT";
+            schedule.RowKey = currentScheduleName;
             context.AttachTo("LeagueSchedules", schedule);
             context.UpdateObject(schedule);
             context.SaveChangesWithRetries(SaveChangesOptions.ReplaceOnUpdate);
@@ -40,7 +44,7 @@ namespace LeagueScheduler.Models
 
         public Schedule FindCurrent(int leagueId)
         {
-            return this.Find(leagueId, "CURRENT");
+            return this.Find(leagueId, currentScheduleName);
         }
     }
 }
