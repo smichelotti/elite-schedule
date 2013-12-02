@@ -13,6 +13,7 @@ namespace LeagueScheduler.Controllers
         // GET: /Admin/
         public ActionResult Index()
         {
+            this.ViewBag.ExtraAppHostCss = "admin-appHost";
             return View();
         }
 	}

@@ -18,7 +18,7 @@
 <body>
     @Html.AntiForgeryToken()
 
-    <div id="applicationHost" class="container body-content">
+    <div id="applicationHost" class="container body-content @ViewBag.ExtraAppHostCss">
         @RenderBody()
     </div>
 
