@@ -2,6 +2,13 @@
     <h2 data-bind="text: title"></h2>
 
     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Teams (Home team first)</th>
+            </tr>
+        </thead>
         <tbody data-bind="foreach: games">
             <tr>
                 <td data-bind="shortDate: time"></td>

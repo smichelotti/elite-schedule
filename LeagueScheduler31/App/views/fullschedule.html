@@ -2,6 +2,14 @@
     <h2>Full Schedule</h2>
 
     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Teams (Home team first)</th>
+                <th>Location</th>
+            </tr>
+        </thead>
         <tbody data-bind="foreach: games">
             <tr>
                 <td data-bind="shortDate: time"></td>
