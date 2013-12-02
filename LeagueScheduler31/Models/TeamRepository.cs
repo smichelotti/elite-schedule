@@ -33,6 +33,11 @@ namespace LeagueScheduler.Models
 
         public void InsertOrUpdate(Team team)
         {
+            if (string.IsNullOrEmpty(team.Division))
+            {
+                team.Division = null;
+            }
+
             if (team.Id == default(int))
             {
                 // New entity
