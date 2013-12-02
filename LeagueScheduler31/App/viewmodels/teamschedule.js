@@ -22,7 +22,7 @@
                 var isTeam1 = (item.team1 === name ? true : false);
                 var opponentName = isTeam1 ? item.team2 : item.team1;
                 var scoreDisplay = getScoreDisplay(isTeam1, item.team1Score, item.team2Score);
-                return { opponent: opponentName, time: item.time, location: item.location, locationUrl: item.locationUrl, scoreDisplay: scoreDisplay };
+                return { opponent: opponentName, time: item.time, location: item.location, locationUrl: item.locationUrl, scoreDisplay: scoreDisplay, isHomeTeam: isTeam1 };
             }).value();
 
         vm.games(teamGames);

@@ -6,6 +6,7 @@
             <tr>
                 <td data-bind="shortDate: time"></td>
                 <td data-bind="shortTime: time"></td>
+                <td><span data-bind="ifnot: isHomeTeam">at</span></td>
                 <td>
                     <a data-bind="text: opponent, attr: { href: '#!teams/' + opponent }"></a>
                 </td>
