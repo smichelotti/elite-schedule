@@ -84,6 +84,7 @@
                 { route: '!locations', title: 'Locations', moduleId: 'viewmodels/locations', nav: true },
                 { route: '!locations/:name', title: 'Locations', moduleId: 'viewmodels/locationschedule', nav: false },
                 { route: '!rules', title: 'Rules', moduleId: 'viewmodels/rules', nav: true },
+                { route: '/leagues', hash: '/', title: 'Switch Leagues', nav: true }
                 //{ route: 'admin*details', title: 'Admin', moduleId: 'admin/index', nav: false, hash: "#admin" }
                 //{ route: '!admin', title: 'Admin', moduleId: 'admin/index', nav: true }
 
