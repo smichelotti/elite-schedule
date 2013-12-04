@@ -78,6 +78,7 @@ namespace LeagueScheduler.Models
                 {
                     json.WriteStartObject();
                     json.WriteProperty("name", team.Name);
+                    json.WriteProperty("coach", team.Coach);
                     json.WriteEnd();
                 }
                 json.WriteEndArray();//end divisionTeams array

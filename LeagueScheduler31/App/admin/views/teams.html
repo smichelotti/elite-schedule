@@ -12,7 +12,8 @@
             <tr>
                 <th></th>
                 <th>Team Name</th>
-                <th></th>
+                <th>Coach Name</th>
+                <th>Division Name</th>
                 <th></th>
             </tr>
         </thead>
@@ -21,6 +22,9 @@
                 <td></td>
                 <td>
                     <input type="text" class="form-control" placeholder="New Team Name" data-bind="value: newTeamName">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Coach Name" maxlength="50" data-bind="value: newCoachName">
                 </td>
                 <td>
                     <input type="text" class="form-control" placeholder="Division Name" maxlength="50" data-bind="value: newDivisionName">
@@ -38,6 +42,7 @@
         <tr>
             <td data-bind="text: $index() + 1"></td>
             <td data-bind="text: name"></td>
+            <td data-bind="text: coach"></td>
             <td data-bind="text: division"></td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
@@ -51,6 +56,9 @@
             <td data-bind="text: $index() + 1"></td>
             <td>
                 <input class="form-control" data-bind="value: name"/>
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: coach" maxlength="50" />
             </td>
             <td>
                 <input class="form-control" data-bind="value: division" maxlength="50" />

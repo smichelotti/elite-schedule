@@ -217,6 +217,7 @@
     <Content Include="App\admin\viewmodels\games.js" />
     <Content Include="App\admin\viewmodels\leagues.js" />
     <Content Include="App\admin\viewmodels\locations.js" />
+    <Content Include="App\admin\viewmodels\rules.js" />
     <Content Include="App\admin\viewmodels\shell.js" />
     <Content Include="App\admin\viewmodels\teams-old.js" />
     <Content Include="App\admin\viewmodels\teams.js" />
@@ -225,6 +226,7 @@
     <Content Include="App\admin\views\league-tabs.html" />
     <Content Include="App\admin\views\leagues.html" />
     <Content Include="App\admin\views\locations.html" />
+    <Content Include="App\admin\views\rules.html" />
     <Content Include="App\admin\views\shell.html" />
     <Content Include="App\admin\views\teams.html" />
     <Content Include="App\data\leagueData.js" />

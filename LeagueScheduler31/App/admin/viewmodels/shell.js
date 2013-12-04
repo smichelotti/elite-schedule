@@ -86,7 +86,7 @@
                 { route: 'locations', moduleId: 'viewmodels/locations', title: 'Locations', nav: true },
                 { route: 'leagues/:leagueId/teams', moduleId: 'viewmodels/teams', title: 'Teams', nav: false },
                 { route: 'leagues/:leagueId/games', moduleId: 'viewmodels/games', title: 'Games', nav: false },
-            { route: 'leagues/:leagueId/scores', moduleId: 'viewmodels/scores', title: 'Scores', nav: false }
+                { route: 'leagues/:leagueId/rules', moduleId: 'viewmodels/rules', title: 'Rules', nav: false }
             ]).buildNavigationModel();
 
 
