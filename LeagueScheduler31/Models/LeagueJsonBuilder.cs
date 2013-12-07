@@ -174,7 +174,12 @@ namespace LeagueScheduler.Models
                 PopulateSingleStanding(standings[game.Team2Id], game.Team2Score.GetValueOrDefault(), game.Team1Score.GetValueOrDefault(), winningTeamId);
             }
 
-            return standings.Values.OrderByDescending(x => x.WinningPct).ThenByDescending(x => x.Wins).ThenByDescending(x => x.PointsDiff).ToList(); ;
+            return standings.Values
+                .OrderByDescending(x => x.WinningPct)
+                .ThenByDescending(x => x.Wins)
+                .ThenByDescending(x => x.PointsDiff)
+                .ThenByDescending(x => x.PointsFor)
+                .ToList(); ;
         }
 
         private static void PopulateSingleStanding(StandingsItem standing, int teamScore, int opponentScore, int winningTeamId)
