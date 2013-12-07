@@ -48,8 +48,7 @@
                 init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     var value = valueAccessor();
                     var valueUnwrapped = ko.unwrap(value);
-                    //console.log("dateTime handler", valueUnwrapped);
-                    $(element).text(moment(valueUnwrapped).format('MM/DD/YYYY h:mm a'));
+                    $(element).text(moment(valueUnwrapped).utc().format('MM/DD/YYYY h:mm a'));
                 }
             };
 
@@ -73,7 +72,7 @@
                     if (widget) {
                         var value = ko.utils.unwrapObservable(valueAccessor());
                         if (value) {
-                            widget.date = new Date(ko.utils.unwrapObservable(valueAccessor()));
+                            widget.date = new Date(value);
                             widget.setValue();
                         }
                     }

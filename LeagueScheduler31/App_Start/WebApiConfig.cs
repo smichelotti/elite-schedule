@@ -25,6 +25,9 @@ namespace LeagueScheduler
             var settings = new JsonSerializerSettings();
             //settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //settings.DateTimeZoneHandling = DateTimeZoneHandling.Local;// "2013-11-29T18:00:00-05:00"
+            //settings.DateTimeZoneHandling = DateTimeZoneHandling.Unspecified;// "2013-11-29T18:00:00"
+            settings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;// "2013-11-29T18:00:00Z"
             config.Formatters.JsonFormatter.SerializerSettings = settings;
         }
     }

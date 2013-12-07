@@ -102,7 +102,7 @@
     };
 
     gamesViewModel.beforeSave = function (item) {
-        item.gameTime(formatDate(item.gameTime()));
+        //item.gameTime(formatDate(item.gameTime()));
     };
 
     gamesViewModel.afterSave = function (data) {
