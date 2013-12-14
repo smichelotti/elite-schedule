@@ -30,6 +30,15 @@
 
         leagueId: ko.observable(),
         leagueName: ko.observable(),
+        activate: activate,
+        leagueId: ko.observable(),
+        leagueName: ko.observable(),
+        selectedScoreItem: ko.observable(),
+
+        filterTeamId: ko.observable(),
+        filterLocationId: ko.observable(),
+
+        
 
         addItem: function (item) {
             var _this = this;
@@ -67,11 +76,7 @@
             gamesViewModel.selectedScoreItem(item);
         },
 
-        activate: activate,
-        leagueId: ko.observable(),
-        leagueName: ko.observable(),
-
-        selectedScoreItem: ko.observable(),
+        
 
         saveScore: function (item) {
             item.commit();
@@ -89,6 +94,23 @@
     };
 
     utils.extendWithCrudBehaviors("game", gamesViewModel);
+
+    gamesViewModel.filteredGames = ko.computed(function () {
+        var filterTeamId = gamesViewModel.filterTeamId(),
+            filterLocationId = gamesViewModel.filterLocationId();
+        //console.log("teamId, locationId", filterTeamId, filterLocationId);
+        
+        var filteredItems = ko.utils.arrayFilter(gamesViewModel.items(), function (item) {
+            var noFilter = (filterTeamId === undefined && filterLocationId === undefined),
+                locationFilter = (filterLocationId && item.locationId() === filterLocationId),
+                teamFilter = (filterTeamId && (item.team1Id() === filterTeamId || item.team2Id() === filterTeamId));
+
+            return (noFilter || (locationFilter || teamFilter));
+        });
+        return filteredItems;
+    });
+
+    
 
     gamesViewModel.displayMode = function (item) {
         var isEditingScore = (gamesViewModel.selectedScoreItem() && item.id === gamesViewModel.selectedScoreItem().id);
@@ -152,9 +174,7 @@
         this.update(data);
     };
 
-    function GameScoreItem(data) {
-
-    };
+   
 
     //return {
     //    activate: self.activate,

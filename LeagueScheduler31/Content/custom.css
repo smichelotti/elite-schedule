@@ -114,3 +114,7 @@ body {
 .bold-text {
     font-weight: bold;
 }
+
+.filter-control {
+    margin-left: 10px;
+}

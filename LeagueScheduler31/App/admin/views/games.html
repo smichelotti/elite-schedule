@@ -3,6 +3,20 @@
 
     <div data-bind="compose:'league-tabs.html'"></div>
 
+    <table class="table table-bordered table-condensed">
+        <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <h4 class="pull-left">Filter:</h4>
+                        <select class="form-control pull-left filter-control" data-bind="value: filterTeamId, options: teams, optionsCaption: '(Selet Team Filter)', optionsText: 'name', optionsValue: 'id'"></select>
+                        <select class="form-control pull-left filter-control" data-bind="value: filterLocationId, options: locations, optionsCaption: '(Select Location Filter)', optionsText: 'name', optionsValue: 'id'"></select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <table class="table table-bordered table-hover table-striped table-condensed">
         <thead>
             <tr>
@@ -31,7 +45,8 @@
                     <button type="submit" class="btn btn-primary" data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add</button>
                 </td>
             </tr>
-            <!--ko template: { name: displayMode, foreach: items } -->
+            <!--items-->
+            <!--ko template: { name: displayMode, foreach: filteredGames } -->
             <!--/ko-->
         </tbody>
     </table>
