@@ -14,14 +14,22 @@ namespace LeagueScheduler.Models
 
         public void Publish(int leagueId)
         {
-            var jsonBuilder = new LeagueJsonBuilder();
-            var json = jsonBuilder.CreateJson(leagueId);
-            var scheduleRepository = new ScheduleRepository();
-            var leagueRepository = new LeagueRepository();
+            try
+            {
+                var jsonBuilder = new LeagueJsonBuilder();
+                var json = jsonBuilder.CreateJson(leagueId);
+                var scheduleRepository = new ScheduleRepository();
+                var leagueRepository = new LeagueRepository();
 
-            var league = leagueRepository.Find(leagueId);
-            scheduleRepository.Save(league.Id, league.Name, json);
-            leagueRepository.MarkClean(leagueId);
+                var league = leagueRepository.Find(leagueId);
+                scheduleRepository.Save(league.Id, league.Name, json);
+                leagueRepository.MarkClean(leagueId);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(ex.ToString());
+                throw;
+            }
         }
 
         //public string xPublish(int leagueId)

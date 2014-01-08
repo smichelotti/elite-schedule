@@ -79,13 +79,24 @@
                 }
             };
 
+            ko.bindingHandlers.markdown = {
+                update: function (element, valueAccessor) {
+                    var markdownValue = ko.utils.unwrapObservable(valueAccessor());
+                    var htmlValue = markdownValue && new Showdown.converter().makeHtml(markdownValue);
+                    $(element).html(htmlValue || "");
+                }
+            };
+
+
             router.map([
                 { route: '', title: 'Home', moduleId: 'viewmodels/adminhome', nav: true },
                 { route: 'leagues', moduleId: 'viewmodels/leagues', title: 'Leagues', nav: true },
                 { route: 'locations', moduleId: 'viewmodels/locations', title: 'Locations', nav: true },
                 { route: 'leagues/:leagueId/teams', moduleId: 'viewmodels/teams', title: 'Teams', nav: false },
                 { route: 'leagues/:leagueId/games', moduleId: 'viewmodels/games', title: 'Games', nav: false },
-                { route: 'leagues/:leagueId/rules', moduleId: 'viewmodels/rules', title: 'Rules', nav: false }
+                //{ route: 'leagues/:leagueId/rules', moduleId: 'viewmodels/rules', title: 'Rules', nav: false }
+                { route: 'leagues/:leagueId/:contentType', moduleId: 'viewmodels/content-edit', title: 'Home', nav: false },
+                { route: 'leagues/:leagueId/:contentType', moduleId: 'viewmodels/content-edit', title: 'Rules', nav: false }
             ]).buildNavigationModel();
 
 

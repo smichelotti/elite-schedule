@@ -66,5 +66,46 @@ namespace LeagueScheduler.Controllers
             return this.Ok(new { result = "success" });
         }
 
+        [Route("api/leagues/{id}/home-screen")]
+        public IHttpActionResult GetHomeScreen(int id)
+        {
+            var league = this.repository.Find(id);
+            var resource = new ContentResource { Text = league.HomeScreen };
+            return this.Ok(resource);
+        }
+
+        [Route("api/leagues/{id}/home-screen")]
+        public IHttpActionResult PutHomeScreen(int id, ContentResource resource)
+        {
+            var league = this.repository.Find(id);
+            league.HomeScreen = resource.Text;
+            this.repository.InsertOrUpdate(league);
+            this.repository.Save();
+            return this.Ok(resource);
+        }
+
+        [Route("api/leagues/{id}/rules-screen")]
+        public IHttpActionResult GetRulesScreen(int id)
+        {
+            var league = this.repository.Find(id);
+            var resource = new ContentResource { Text = league.RulesScreen };
+            return this.Ok();
+        }
+
+        [Route("api/leagues/{id}/rules-screen")]
+        public IHttpActionResult PutRulesScreen(int id, ContentResource resource)
+        {
+            var league = this.repository.Find(id);
+            league.RulesScreen = resource.Text;
+            this.repository.InsertOrUpdate(league);
+            this.repository.Save();
+            return this.Ok(resource);
+        }
+
+    }
+
+    public class ContentResource
+    {
+        public string Text { get; set; }
     }
 }

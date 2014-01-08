@@ -7,10 +7,22 @@ define(['plugins/http'], function (http) {
             activate: activate,
             leagueId: ko.observable(),
             leagueName: ko.observable(),
+            rulesText: ko.observable(),
+            origText: "",
             isTabActive: function (tab) {
                 return (tab === "rules" ? "active" : "");
             },
+            reset: function () {
+                this.rulesText(this.origText);
+            },
+            save: function () {
+                alert("about to save");
+            }
         };
+
+        rulesViewModel.isDirty = ko.computed(function () {
+            return rulesViewModel.rulesText() !== rulesViewModel.origText;
+        });
 
         return rulesViewModel;
         
@@ -21,6 +33,10 @@ define(['plugins/http'], function (http) {
 
             return http.get("/api/leagues/" + rulesViewModel.leagueId()).then(function (data) {
                 rulesViewModel.leagueName(data.name);
+                var text = "This is my **rules** text.";
+                rulesViewModel.origText = text;
+                rulesViewModel.rulesText(text);
+                
 
                 //return http.get("/api/teams?leagueId=" + gamesViewModel.leagueId())
             });

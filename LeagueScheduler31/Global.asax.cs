@@ -40,5 +40,11 @@ namespace LeagueScheduler
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"] + request.RawUrl);
             }
         }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+            System.Diagnostics.Trace.TraceError(ex.ToString());
+        }
     }
 }

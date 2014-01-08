@@ -10,5 +10,7 @@ namespace LeagueScheduler.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDirty { get; set; }
+        public string HomeScreen { get; set; }
+        public string RulesScreen { get; set; }
     }
 }

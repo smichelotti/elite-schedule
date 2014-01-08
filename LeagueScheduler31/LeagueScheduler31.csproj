@@ -214,6 +214,7 @@
     <Content Include="App\admin\index.js" />
     <Content Include="App\admin\user-data.js" />
     <Content Include="App\admin\viewmodels\adminhome.js" />
+    <Content Include="App\admin\viewmodels\content-edit.js" />
     <Content Include="App\admin\viewmodels\games.js" />
     <Content Include="App\admin\viewmodels\leagues.js" />
     <Content Include="App\admin\viewmodels\locations.js" />
@@ -222,6 +223,7 @@
     <Content Include="App\admin\viewmodels\teams-old.js" />
     <Content Include="App\admin\viewmodels\teams.js" />
     <Content Include="App\admin\views\adminhome.html" />
+    <Content Include="App\admin\views\content-edit.html" />
     <Content Include="App\admin\views\games.html" />
     <Content Include="App\admin\views\league-tabs.html" />
     <Content Include="App\admin\views\leagues.html" />
@@ -294,6 +296,9 @@
     <Content Include="Scripts\durandal\viewLocator.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
+    <Content Include="Scripts\markdown.js" />
+    <Content Include="Scripts\showdown.js" />
+    <Content Include="Scripts\showdown.min.js" />
     <Content Include="weyland-config.js" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
