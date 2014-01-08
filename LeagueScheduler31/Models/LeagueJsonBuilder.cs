@@ -32,7 +32,7 @@ namespace LeagueScheduler.Models
             using (StringWriter sw = new StringWriter(sb))
             using (var writer = new JsonTextWriter(sw))
             {
-                writer.Formatting = Formatting.Indented;
+                //writer.Formatting = Formatting.Indented;
 
                 writer.WriteStartObject();
                 WriteLeague(writer, league);

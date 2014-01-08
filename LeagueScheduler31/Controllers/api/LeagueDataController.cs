@@ -29,7 +29,8 @@ namespace LeagueScheduler.Controllers
             var scheduleRepo = new ScheduleRepository();
             var schedule = scheduleRepo.FindCurrent(id);
             var response = this.Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(schedule.JsonSchedule, Encoding.UTF8, "application/json");
+            //response.Content = new StringContent(schedule.JsonSchedule, Encoding.UTF8, "application/json");
+            response.Content = new StringContent(schedule , Encoding.UTF8, "application/json");
 
             return response;
         }

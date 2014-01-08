@@ -10,8 +10,6 @@ namespace LeagueScheduler.Models
 {
     public class LeaguePublisher
     {
-        private SchedulerDbContext dbContext = new SchedulerDbContext();
-
         public void Publish(int leagueId)
         {
             try
