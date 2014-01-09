@@ -1,0 +1,1 @@
+define(["data/leagueData"],function(a){return{leagueName:a.data.league.name,rulesContent:a.data.league.rulesScreen}});

@@ -1,0 +1,1 @@
+define(["plugins/http"],function(a){var e={};return{primeData:function(t,n){var i="/api/leaguedata/"+t;return n&&(i+="/preview"),a.get(i).then(function(a){e.teams=a.teams,e.games=a.games,e.locations=a.locations,e.league=a.league,e.standings=a.standings})},data:e}});

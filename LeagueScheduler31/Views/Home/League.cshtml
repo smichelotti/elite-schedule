@@ -2,5 +2,12 @@
 
 
 @section Scripts {
-    <script type="text/javascript" src="~/Scripts/require.js" data-main="/App/main"></script>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="~/Scripts/require.js" data-main="/App/main"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="/app/main-built.js"></script>
+    }
 }

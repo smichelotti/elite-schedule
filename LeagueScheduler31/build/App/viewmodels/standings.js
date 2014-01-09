@@ -1,0 +1,1 @@
+define(["data/leagueData"],function(e){function a(){t.standings(e.data.standings),t.leagueName(e.data.league.name)}var t={activate:a,standings:ko.observableArray(),leagueName:ko.observable()};return t});

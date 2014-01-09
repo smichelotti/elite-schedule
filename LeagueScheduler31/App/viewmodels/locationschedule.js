@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'data/leagueData', 'lodash'], function (app, leagueData, _) {
+﻿define(['durandal/app', 'data/leagueData'], function (app, leagueData) {
     var vm = {
         activate: activate,
         title: ko.observable(),

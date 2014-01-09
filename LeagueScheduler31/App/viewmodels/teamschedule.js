@@ -1,4 +1,4 @@
-﻿define(['data/leagueData', 'lodash'], function (leagueData, _) {
+﻿define(['data/leagueData'], function (leagueData) {
     var vm = {
         activate: activate,
         title: ko.observable(),

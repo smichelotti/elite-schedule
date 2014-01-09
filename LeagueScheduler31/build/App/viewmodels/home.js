@@ -1,0 +1,1 @@
+define(["data/leagueData"],function(e){return{leagueName:e.data.league.name,homeContent:e.data.league.homeScreen}});

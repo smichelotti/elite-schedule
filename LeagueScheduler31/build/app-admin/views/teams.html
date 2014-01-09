@@ -1,0 +1,72 @@
+﻿<section>
+    <h3 class="page-title" data-bind="text: leagueName() + ' League'"></h3>
+
+    <div data-bind="compose:'league-tabs.html'"></div>
+    <!--<ul class="nav nav-tabs">
+        <li class="active"><a href="#">Teams</a></li>
+        <li><a data-bind="attr: { href: gamesUrl }">Games</a></li>
+    </ul>-->
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Team Name</th>
+                <th>Coach Name</th>
+                <th>Division Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="text" class="form-control" placeholder="New Team Name" data-bind="value: newTeamName">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Coach Name" maxlength="50" data-bind="value: newCoachName">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Division Name" maxlength="50" data-bind="value: newDivisionName">
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add</button>
+                </td>
+            </tr>
+            <!--ko template: { name: displayMode, foreach: items } -->
+            <!--/ko-->
+        </tbody>
+    </table>
+
+    <script id="team-itemTempl" type="text/html">
+        <tr>
+            <td data-bind="text: $index() + 1"></td>
+            <td data-bind="text: name"></td>
+            <td data-bind="text: coach"></td>
+            <td data-bind="text: division"></td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
+                <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="team-editTempl" type="text/html">
+        <tr>
+            <td data-bind="text: $index() + 1"></td>
+            <td>
+                <input class="form-control" data-bind="value: name"/>
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: coach" maxlength="50" />
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: division" maxlength="50" />
+            </td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>
+                <button class="btn btn-danger" data-bind="click: $parent.cancelEdit">Cancel</button>
+            </td>
+        </tr>
+    </script>
+</section>

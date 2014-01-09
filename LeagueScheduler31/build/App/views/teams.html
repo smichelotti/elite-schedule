@@ -1,0 +1,27 @@
+﻿<section>
+    <!--<h2 class="page-title">Teams</h2>-->
+    <h2 class="page-title" data-bind="text: 'Teams - ' + leagueName()"></h2>
+    <h3>Click on a team below to view schedule by team.</h3>
+
+    <div class="container" data-bind="foreach: teams">
+        <h3 data-bind="text: divisionName"></h3>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Coach</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: divisionTeams">
+                <tr>
+                    <td>
+                        <a class="btn btn-link" data-bind="text: name, attr: { href: '#!teams/'+name }"></a>
+                    </td>
+                    <td data-bind="text: coach"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
