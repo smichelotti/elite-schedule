@@ -57,6 +57,8 @@ namespace LeagueScheduler.Models
             json.WriteStartObject();
             json.WriteProperty("name", league.Name);
             json.WriteProperty("id", league.Id);
+            json.WriteProperty("homeScreen", league.HomeScreen);
+            json.WriteProperty("rulesScreen", league.RulesScreen);
             json.WriteEnd();
         }
 

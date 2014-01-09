@@ -18,6 +18,7 @@ namespace LeagueScheduler
                   .Include("~/Scripts/bootstrap.js")
                   .Include("~/Scripts/knockout-{version}.js")
                   .Include("~/Scripts/moment.js")
+                  .Include("~/Scripts/showdown.js")
                   .Include("~/Scripts/bootstrap-datetimepicker.min.js")
               );
 

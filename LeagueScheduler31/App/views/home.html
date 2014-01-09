@@ -1,33 +1,5 @@
 ﻿<section>
     <h2 class="page-title" data-bind="text: 'Welcome to ' + leagueName"></h2>
     <h3 data-bind="text: 'This site contains complete schedule information for the ' + leagueName"></h3>
-
-    <div>
-        <p>&nbsp;</p>
-        <p>
-            Use the nav bar at the top to view the <a href="#!teams">schedule by team</a> and <a href="#!locations">schedule by location</a> (as well as directions).
-        </p>
-        
-        <p>
-            The schedule (and divisions) is organized to ensure as much parity as possible and to avoid blowouts by the weakest teams having to play against the strongest teams.
-            The last regular season games will be the weekend of February 21-22. The playoffs will be the weekends of Feburary 28-March 1 and March 7-8.
-        </p>
-        
-        <p>
-            All questions should be directed towards your coach.
-        </p>
-        
-        <p>
-            Have a great season!
-        </p>
-        <p>
-            <b><u>Inclement weather: </u></b>
-            Inclement weather procedure depends on your location. Based on your game location, call one of these numbers:
-            <ul>
-                <li>Meadowbrook, Roger Carter, and North Laurel: 410-313-4452 (option 2)</li>
-                <li>One of the Howard County Schools: 410-313-6827</li>
-            </ul>
-        </p>
-    </div>
-
+    <div data-bind="markdown: homeContent"></div>
 </section>

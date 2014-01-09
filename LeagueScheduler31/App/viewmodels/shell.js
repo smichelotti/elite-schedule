@@ -73,6 +73,14 @@
                 }
             };
 
+            ko.bindingHandlers.markdown = {
+                update: function (element, valueAccessor) {
+                    var markdownValue = ko.utils.unwrapObservable(valueAccessor());
+                    var htmlValue = markdownValue && new Showdown.converter().makeHtml(markdownValue);
+                    $(element).html(htmlValue || "");
+                }
+            };
+
 
 
             router.map([
