@@ -34,7 +34,7 @@
         if (team1Score && team2Score) {
             var teamScore = (isTeam1 ? team1Score : team2Score);
             var opponentScore = (isTeam1 ? team2Score : team1Score);
-            var winIndicator = teamScore > opponentScore ? "W: " : "L: ";
+            var winIndicator = Number(teamScore) > Number(opponentScore) ? "W: " : "L: ";
             return winIndicator + teamScore + "-" + opponentScore;
         }
         else {
