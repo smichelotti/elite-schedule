@@ -1,1 +1,1 @@
-define(["data/leagueData"],function(a){return{leagueName:a.data.league.name,rulesContent:a.data.league.rulesScreen}});
+define(["data/leagueData"],function(e){return{leagueName:e.data.league.name,rulesContent:e.data.league.rulesScreen}});

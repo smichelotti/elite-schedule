@@ -1,1 +1,1 @@
-define(["data/leagueData"],function(e){var a=this;return a.teams=ko.observableArray(),a.leagueName=ko.observable(),a.activate=function(){a.teams(e.data.teams),a.leagueName(e.data.league.name)},{activate:a.activate,teams:a.teams}});
+define(["data/leagueData"],function(e){var t=this;return t.teams=ko.observableArray(),t.leagueName=ko.observable(),t.activate=function(){t.teams(e.data.teams),t.leagueName(e.data.league.name)},{activate:t.activate,teams:t.teams}});
