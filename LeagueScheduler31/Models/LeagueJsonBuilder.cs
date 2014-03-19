@@ -67,7 +67,7 @@ namespace LeagueScheduler.Models
             json.WritePropertyName("teams");
             json.WriteStartArray();
 
-            var divisions = teams.OrderBy(x => x.Name).GroupBy(x => x.Division);
+            var divisions = teams.OrderBy(x => x.Division).ThenBy(x => x.Name).GroupBy(x => x.Division);
 
             foreach (var division in divisions)
             {
@@ -132,7 +132,7 @@ namespace LeagueScheduler.Models
             json.WritePropertyName("standings");
             json.WriteStartArray();
 
-            var divisionStandings = standings.GroupBy(x => x.Division);
+            var divisionStandings = standings.OrderBy(x => x.Division).GroupBy(x => x.Division);
 
             foreach (var division in divisionStandings)
             {
