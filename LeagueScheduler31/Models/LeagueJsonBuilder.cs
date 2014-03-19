@@ -116,8 +116,8 @@ namespace LeagueScheduler.Models
                 json.WriteProperty("id", game.Id);
                 json.WriteProperty("location", game.Location.Name);
                 json.WriteProperty("locationUrl", game.Location.Link);
-                json.WriteProperty("team1", teams[game.Team1Id].Name);
-                json.WriteProperty("team2", teams[game.Team2Id].Name);
+                json.WriteProperty("team1", (game.Team1Id == 0 ? "" : teams[game.Team1Id].Name));
+                json.WriteProperty("team2", (game.Team2Id == 0 ? "" : teams[game.Team2Id].Name));
                 json.WriteProperty("team1Score", game.Team1Score.HasValue ? game.Team1Score.Value.ToString() : "");
                 json.WriteProperty("team2Score", game.Team2Score.HasValue ? game.Team2Score.Value.ToString() : "");
                 json.WriteProperty("time", game.GameTime.ToString("yyyy-MM-ddTHH:mm:00"));
