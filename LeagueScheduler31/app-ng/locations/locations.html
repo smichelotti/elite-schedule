@@ -1,0 +1,11 @@
+﻿<section ng-controller="locations as vm">
+    <h2 class="page-title">Locations - {{vm.leagueName}}</h2>
+    <h3>Click on a location below to view schedule by location.</h3>
+
+    <div class="container"> <!--data-bind="foreach: locations">-->
+        <div class="row" ng-repeat="location in vm.locations">
+            <a ng-href="#locations/{{location.name | spaceToPlus}}">{{location.name}}</a>
+            (<a ng-href="{{location.locationUrl}}" target="_blank">Click here for Directions</a>)
+        </div>
+    </div>
+</section>

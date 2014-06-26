@@ -1,0 +1,31 @@
+﻿<section ng-controller="teamschedule as vm">
+    <h2>Team Schedule - {{vm.teamName}}</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th></th>
+                <th>Opponent</th>
+                <th>Location</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="game in vm.games">
+                <td>{{game.time | date:'M/d/yyyy'}}</td>
+                <td>{{game.time | date:'shortTime'}}</td>
+                <td>{{game.homeAway}}</td>
+                <td>
+                    <a ng-href="#/teams/{{game.opponent}}">{{game.opponent}}</a>
+                </td>
+                <td>
+                    <a ng-href="#!locations/{{location}}">{{game.location}}</a>
+                    (<a data-bind="attr: { href: locationUrl }">Map</a>)
+                </td>
+                <td>{{game.scoreDisplay}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

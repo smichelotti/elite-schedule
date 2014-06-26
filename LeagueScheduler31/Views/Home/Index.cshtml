@@ -22,5 +22,18 @@
                 <td>@Html.ActionLink(league.Name, "League", new { id = league.Id }, new { @class = "btn btn-link" })</td>
             </tr>
         }
+        <tr>
+            <td>
+                @if (this.ViewBag.IsArchived)
+                {
+                    @Html.ActionLink("View Current Tournaments/Leagues", "Index", null, new { @class = "btn btn-primary" })
+                }
+                else
+                {
+                    @Html.ActionLink("View Archived Tournaments/Leagues", "Index", new { archived = true }, new { @class = "btn btn-default" })
+                }
+            </td>
+
+        </tr>
     </table>
 </div>

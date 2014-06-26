@@ -1,0 +1,30 @@
+﻿<section ng-controller="fullschedule as vm">
+    <h2>Full Schedule - {{vm.leagueName}}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Teams (Home team first)</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="game in vm.games">
+                <td>{{game.time | date:'M/d/yyyy'}}</td>
+                <td>{{game.time | date:'shortTime'}}</td>
+                <td>
+                    <a ng-href="#teams/{{game.team1}}">{{game.team1}}</a>
+                    <span>({{game.team1Score}})</span>
+                    <span> vs. </span>
+                    <a ng-href="#teams/{{game.team2Id}}">{{game.team2}}</a>
+                    <span>({{game.team2Score}})</span>
+                </td>
+                <td>
+                    <a ng-href="#!locations/{{game.location}}">{{game.location}}</a>
+                    (<a ng-href="{{game.locationUrl}}">Map</a>)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

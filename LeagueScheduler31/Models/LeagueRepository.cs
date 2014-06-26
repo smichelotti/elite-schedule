@@ -47,6 +47,20 @@ namespace LeagueScheduler.Models
             }
         }
 
+        public void InsertOrUpdateClean(League league)
+        {
+            if (league.Id == default(int))
+            {
+                // New entity
+                context.Leagues.Add(league);
+            }
+            else
+            {
+                // Existing entity
+                context.Entry(league).State = EntityState.Modified;
+            }
+        }
+
         public void MarkDirty(int id)
         {
             context.Database.ExecuteSqlCommand("UPDATE Leagues SET IsDirty = 1 WHERE Id = @p0", id);
@@ -80,6 +94,7 @@ namespace LeagueScheduler.Models
         IQueryable<League> AllIncluding(params Expression<Func<League, object>>[] includeProperties);
         League Find(int id);
         void InsertOrUpdate(League league);
+        void InsertOrUpdateClean(League league);
         void Delete(int id);
         void MarkDirty(int id);
         void MarkClean(int id);

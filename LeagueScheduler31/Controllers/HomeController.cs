@@ -9,16 +9,18 @@ namespace LeagueScheduler.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(bool archived = false)
         {
+            this.ViewBag.IsArchived = archived;
             ILeagueRepository repository = new LeagueRepository();
-            this.ViewData.Model = repository.All.OrderBy(x => x.Name).ToList();
+            this.ViewData.Model = repository.All.Where(x => x.IsArchived == archived).OrderBy(x => x.Name).ToList();
             return View();
         }
 
         public ActionResult League(int id)
         {
             return View();
+            //return View("LeagueNG");
         }
 
         public ActionResult About()

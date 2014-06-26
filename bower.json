@@ -1,0 +1,28 @@
+{
+  "name": "LeagueScheduler31",
+  "version": "0.0.0",
+  "authors": [
+    "Steve Michelotti <steve.michelotti@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/libs",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.16",
+    "lodash": "~2.4.1",
+    "angular-route": "~1.2.16",
+    "angular-animate": "~1.2.16",
+    "angular-sanitize": "~1.2.16",
+    "bootstrap": "~3.1.1",
+    "showdown": "~0.3.1",
+    "angular-bootstrap": "~0.10.0",
+    "spin.js": "~2.0.1"
+  }
+}

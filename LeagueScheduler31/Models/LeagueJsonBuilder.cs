@@ -100,6 +100,9 @@ namespace LeagueScheduler.Models
                 json.WriteStartObject();
                 json.WriteProperty("name", location.Name);
                 json.WriteProperty("locationUrl", location.Link);
+                json.WriteProperty("address", location.Address);
+                json.WriteProperty("latitude", location.Latitude);
+                json.WriteProperty("longitude", location.Longitude);
                 json.WriteEnd();
             }
             json.WriteEnd();
@@ -253,6 +256,12 @@ namespace LeagueScheduler.Models
         }
 
         public static void WriteProperty(this JsonWriter writer, string propertyName, int propertyValue)
+        {
+            writer.WritePropertyName(propertyName);
+            writer.WriteValue(propertyValue);
+        }
+
+        public static void WriteProperty(this JsonWriter writer, string propertyName, decimal? propertyValue)
         {
             writer.WritePropertyName(propertyName);
             writer.WriteValue(propertyValue);

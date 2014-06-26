@@ -1,0 +1,30 @@
+﻿<section ng-controller="locationSchedule as vm">
+    <h2>{{vm.title | plusToSpace}}</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Teams (Home team first)</th>
+            </tr>
+        </thead>
+        <tbody> <!--data-bind="foreach: games">-->
+            <tr ng-repeat="game in vm.games">
+                <td>{{game.time | date:'M/d/yyyy'}}</td>
+                <td>{{game.time | date:'shortTime'}}</td>
+                <td>
+                    <a ng-href="#teams/{{game.team1}}">{{game.team1}}</a>
+                    <!--<span data-bind="if: team1TakesScoreboard">
+                        <a data-bind="click: $parent.scoreboardAlert"><i class="icon-briefcase"></i></a>
+                    </span>-->
+                    <span> vs. </span>
+                    <a ng-href="#teams/{{game.team2}}">{{game.team2}}</a>
+                    <!--<span data-bind="if: team2TakesScoreboard">
+                        <a data-bind="click: $parent.scoreboardAlert"><i class="icon-briefcase"></i></a>
+                    </span>-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

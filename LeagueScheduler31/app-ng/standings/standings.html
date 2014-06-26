@@ -1,0 +1,35 @@
+﻿<section ng-controller="standings as vm">
+    <h2 class="page-title">Standings - {{vm.leagueName}}</h2>
+
+    <div class="container">
+        <div ng-repeat="division in vm.standings">
+            <h3>{{division.divisionName}}</h3>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Won</th>
+                        <th>Lost</th>
+                        <th>Pct</th>
+                        <th>PF</th>
+                        <th>PA</th>
+                        <th>Diff</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--data-bind="foreach: divisionStandings">-->
+                    <tr ng-repeat="team in division.divisionStandings">
+                        <td><a ng-href="#!teams/{{team.teamName}}">{{team.teamName}}</a></td>
+                        <td>{{team.wins}}</td>
+                        <td>{{team.losses}}</td>
+                        <td>{{team.winningPct}}</td>
+                        <td>{{team.pointsFor}}</td>
+                        <td>{{team.pointsAgainst}}</td>
+                        <td>{{team.pointsDiff}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

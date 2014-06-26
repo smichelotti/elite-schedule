@@ -5,14 +5,27 @@
         apiUrl: "/api/locations",
         newLocationName: ko.observable(""),
         newLocationLink: ko.observable(""),
+        newLocationAddress: ko.observable(""),
+        newLocationLat: ko.observable(""),
+        newLocationLng: ko.observable(""),
 
 
         addItem: function (item) {
             var self = this;
-            http.post(this.apiUrl, { name: this.newLocationName(), link: this.newLocationLink() }).then(function (data) {
+            var newLocation = { 
+                name: this.newLocationName(),
+                link: this.newLocationLink(),
+                address: this.newLocationAddress(),
+                latitude: this.newLocationLat(),
+                longitude: this.newLocationLng()
+            };
+            http.post(this.apiUrl, newLocation).then(function (data) {
                 self.items.push(new LocatonItem(data));
                 self.newLocationName("");
                 self.newLocationLink("");
+                self.newLocationAddress("");
+                self.newLocationLat("");
+                self.newLocationLng("");
             });
         }
     };
@@ -37,6 +50,9 @@
         this.id = ko.observable();
         this.name = ko.observable();
         this.link = ko.observable();
+        this.address = ko.observable();
+        this.latitude = ko.observable();
+        this.longitude = ko.observable();
         //this.timestamp = ko.observable();
         //this.partitionKey = ko.observable();
         //this.rowKey = ko.observable();
@@ -56,6 +72,9 @@
         displayMode: locationViewModel.displayMode,
         newLocationName: locationViewModel.newLocationName,
         newLocationLink: locationViewModel.newLocationLink,
+        newLocationAddress: locationViewModel.newLocationAddress,
+        newLocationLat: locationViewModel.newLocationLat,
+        newLocationLng: locationViewModel.newLocationLng,
         apiUrl: locationViewModel.apiUrl
     };
 });

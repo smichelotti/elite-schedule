@@ -30,7 +30,9 @@
                 <a data-bind="attr: { href: '#leagues/' + id() + '/teams' }" class="btn btn-success">Configure</a>
                 <button class="btn btn-info" data-bind="click: $parent.editItem">Edit</button>
                 <button class="btn btn-warning" data-bind="visible: isDirty, click: publish, enable: publishEnabled">Publish</button>
-                <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
+                <!--<button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>-->
+                <button class="btn btn-warning" data-bind="click: archive, visible: !isArchived()">Archive</button>
+                <button class="btn btn-warning" data-bind="click: unarchive, visible: isArchived">Un-Archive</button>
                 <a class="btn btn-link" target="_blank" data-bind="visible: isDirty, attr: { href: id() + '/preview' }">Preview League Site</a>
                 <a class="btn btn-link" target="_blank" data-bind="attr: { href: id }">View League Site</a>
             </td>

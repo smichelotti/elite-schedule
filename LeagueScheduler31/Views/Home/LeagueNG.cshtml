@@ -1,0 +1,35 @@
+﻿@{
+    this.Layout = "~/Views/Shared/_LayoutNG.cshtml";
+}
+@*@Html.Partial("_splash")*@
+
+<div>
+    <div data-ng-include="'/app-ng/layout/shell.html'"></div>
+
+    <!--
+        1. Attach controller to splash page
+        2. Raise loaded event when loadin complete
+        3. subscribe to this even in splash page controler and set ng-show to false
+    -->
+    <div id="splash-page" data-ng-show="false">
+        <div class="page-splash">
+            <div class="page-splash-message">Elite Schedule</div>
+            <div class="progress progress-striped active page-progress-bar">
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts {
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="~/Scripts/require.js" data-main="/App/main"></script>
+        
+    }
+    else
+    {
+        <script type="text/javascript" src="/app-ng/app-built.js"></script>
+    }
+}
+*@

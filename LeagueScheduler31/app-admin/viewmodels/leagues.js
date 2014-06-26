@@ -40,6 +40,7 @@
         this.id = ko.observable();
         this.name = ko.observable();
         this.isDirty = ko.observable();
+        this.isArchived = ko.observable();
 
         this.publishEnabled = ko.observable(true);
 
@@ -55,6 +56,28 @@
                     item.publishEnabled(true);
                     item.isDirty(false);
                     app.showMessage("Publish complete!");
+                });
+            }
+        });
+    };
+
+    self.archive = function (item) {
+        app.showMessage('Are you sure you want to Archive?', 'Archive?', ['Yes', 'No']).then(function (response) {
+            if (response === "Yes") {
+                http.post("/api/leagues/" + item.id() + "/archive").then(function () {
+                    item.isArchived(true);
+                    app.showMessage("Archive complete!");
+                });
+            }
+        });
+    };
+
+    self.unarchive = function (item) {
+        app.showMessage('Are you sure you want to Un-archive?', 'Un-archive?', ['Yes', 'No']).then(function (response) {
+            if (response === "Yes") {
+                http.post("/api/leagues/" + item.id() + "/unarchive").then(function () {
+                    item.isArchived(false);
+                    app.showMessage("Un-archive complete!");
                 });
             }
         });

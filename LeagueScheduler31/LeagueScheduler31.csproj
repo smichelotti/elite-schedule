@@ -231,6 +231,30 @@
     <Content Include="app-admin\views\rules.html" />
     <Content Include="app-admin\views\shell.html" />
     <Content Include="app-admin\views\teams.html" />
+    <Content Include="app-ng\app.js" />
+    <Content Include="app-ng\common\common.js" />
+    <Content Include="app-ng\directives\ccSpinner.js" />
+    <Content Include="app-ng\directives\markdown.js" />
+    <Content Include="app-ng\filters\filters.js" />
+    <Content Include="app-ng\fullschedule\fullschedule.html" />
+    <Content Include="app-ng\fullschedule\fullschedule.js" />
+    <Content Include="app-ng\home\home.html" />
+    <Content Include="app-ng\home\home.js" />
+    <Content Include="app-ng\layout\shell.html" />
+    <Content Include="app-ng\layout\shell.js" />
+    <Content Include="app-ng\locations\locations.html" />
+    <Content Include="app-ng\locations\locations.js" />
+    <Content Include="app-ng\locations\locationSchedule.html" />
+    <Content Include="app-ng\locations\locationSchedule.js" />
+    <Content Include="app-ng\rules\rules.html" />
+    <Content Include="app-ng\rules\rules.js" />
+    <Content Include="app-ng\services\leagueApi.js" />
+    <Content Include="app-ng\standings\standings.html" />
+    <Content Include="app-ng\standings\standings.js" />
+    <Content Include="app-ng\teamschedule\teamschedule.html" />
+    <Content Include="app-ng\teamschedule\teamschedule.js" />
+    <Content Include="app-ng\teams\teams.html" />
+    <Content Include="app-ng\teams\teams.js" />
     <Content Include="App\data\leagueData.js" />
     <Content Include="App\main-built.js" />
     <Content Include="App\main.js" />
@@ -355,6 +379,8 @@
     <Content Include="Views\Home\Index-orig.cshtml" />
     <Content Include="Views\Shared\_splash.cshtml" />
     <Content Include="Views\Home\League.cshtml" />
+    <Content Include="Views\Home\LeagueNG.cshtml" />
+    <Content Include="Views\Shared\_LayoutNG.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -75,6 +75,26 @@ namespace LeagueScheduler.Controllers
             return this.Ok(new { result = "success" });
         }
 
+        [Route("api/leagues/{id}/archive")]
+        public IHttpActionResult PostArchive(int id)
+        {
+            var league = this.repository.Find(id);
+            league.IsArchived = true;
+            this.repository.InsertOrUpdateClean(league);
+            this.repository.Save();
+            return this.Ok(new { result = "success" });
+        }
+
+        [Route("api/leagues/{id}/unarchive")]
+        public IHttpActionResult PostUnarchive(int id)
+        {
+            var league = this.repository.Find(id);
+            league.IsArchived = false;
+            this.repository.InsertOrUpdateClean(league);
+            this.repository.Save();
+            return this.Ok(new { result = "success" });
+        }
+
         [Route("api/leagues/{id}/home-screen")]
         public IHttpActionResult GetHomeScreen(int id)
         {

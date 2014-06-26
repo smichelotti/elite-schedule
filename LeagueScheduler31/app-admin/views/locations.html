@@ -6,6 +6,9 @@
             <tr>
                 <th>Location Name</th>
                 <th>Link</th>
+                <th>Address</th>
+                <th>Lat.</th>
+                <th>Long.</th>
                 <th></th>
             </tr>
         </thead>
@@ -17,6 +20,15 @@
                 </td>
                 <td>
                     <input type="url" class="form-control" placeholder="New Location Link" data-bind="value: newLocationLink">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="New Location Address" data-bind="value: newLocationAddress">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="New Location Lat." data-bind="value: newLocationLat">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="New Location Long." data-bind="value: newLocationLng">
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary" data-bind="click: addItem"><i class="icon-plus icon-white"></i> Add</button>
@@ -35,6 +47,9 @@
             <td>
                 <a target="_blank" data-bind="text: link, attr: { href: link }"></a>
             </td>
+            <td data-bind="text: address"></td>
+            <td data-bind="text: latitude"></td>
+            <td data-bind="text: longitude"></td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.editItem">Edit</button>
                 <button class="btn btn-danger" data-bind="click: $parent.deleteItem">Delete</button>
@@ -49,6 +64,15 @@
             </td>
             <td>
                 <input class="form-control" data-bind="value: link" />
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: address" />
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: latitude" />
+            </td>
+            <td>
+                <input class="form-control" data-bind="value: longitude" />
             </td>
             <td>
                 <button class="btn btn-primary" data-bind="click: $parent.saveItem">Save</button>

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html ng-app="leagueApp">
+<head>
+    <title>Elite Schedule</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elite Scheduling" />
+
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    @*IE10 mobile section?*@
+</head>
+<body>
+    @Html.AntiForgeryToken()
+
+    <div id="applicationHost" class="container body-content @ViewBag.ExtraAppHostCss">
+        @RenderBody()
+    </div>
+
+    <!--[if lt IE 9]>
+                <div class="alert alert-danger" style="position: absolute; top: 50px;">
+                    We're sorry, your browser is outdated and not supported by this site. :( Please use a later version of Internet Explorer, Google Chrome, Firefox, or Safari.
+                </div>
+              <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: absolute; top: 100px;'>
+                  <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a>
+              </div>
+            <![endif]-->
+
+    <div id="footer">
+        <div class="container">
+            <span class="pull-right text-info credit">Elite Schedule - © @DateTime.Now.Year Steve Michelotti</span>
+        </div>
+    </div>
+
+    @*@Scripts.Render("~/Scripts/vendor.js")
+        @RenderSection("scripts", required: false)*@
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <!-- 3rd party libraries -->
+        <script src="/resources/libs/angular/angular.js"></script>
+        <script src="/resources/libs/angular-animate/angular-animate.js"></script>
+        <script src="/resources/libs/angular-route/angular-route.js"></script>
+        <script src="/resources/libs/angular-sanitize/angular-sanitize.js"></script>
+
+        <script src="/resources/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="/resources/libs/lodash/dist/lodash.js"></script>
+        <script src="/resources/libs/showdown/src/showdown.js"></script>
+        <script src="/resources/libs/spin.js/spin.js"></script>
+
+        <!-- Bootstrapping -->
+        <script src="/app-ng/app.js"></script>
+
+        <!-- Common Modules -->
+        <script src="/app-ng/common/common.js"></script>
+        <script src="/app-ng/directives/markdown.js"></script>
+        <script src="/app-ng/directives/ccSpinner.js"></script>
+        <script src="/app-ng/filters/filters.js"></script>
+
+        <!-- App -->
+        <script src="/app-ng/home/home.js"></script>
+        <script src="/app-ng/fullschedule/fullschedule.js"></script>
+        <script src="/app-ng/standings/standings.js"></script>
+        <script src="/app-ng/teams/teams.js"></script>
+        <script src="/app-ng/teamschedule/teamschedule.js"></script>
+        <script src="/app-ng/locations/locations.js"></script>
+        <script src="/app-ng/locations/locationSchedule.js"></script>
+        <script src="/app-ng/rules/rules.js"></script>
+        <script src="/app-ng/layout/shell.js"></script>
+
+        <!-- App Services -->
+        <script src="/app-ng/services/leagueApi.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="/app-ng/app-built.js"></script>
+    }
+</body>
+</html>

@@ -12,5 +12,6 @@ namespace LeagueScheduler.Models
         public bool IsDirty { get; set; }
         public string HomeScreen { get; set; }
         public string RulesScreen { get; set; }
+        public bool IsArchived { get; set; }
     }
 }
