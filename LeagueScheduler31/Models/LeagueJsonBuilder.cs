@@ -79,6 +79,7 @@ namespace LeagueScheduler.Models
                 foreach (var team in division)
                 {
                     json.WriteStartObject();
+                    json.WriteProperty("id", team.Id);
                     json.WriteProperty("name", team.Name);
                     json.WriteProperty("coach", team.Coach);
                     json.WriteEnd();
@@ -98,6 +99,7 @@ namespace LeagueScheduler.Models
             foreach (var location in locations)
             {
                 json.WriteStartObject();
+                json.WriteProperty("id", location.Id);
                 json.WriteProperty("name", location.Name);
                 json.WriteProperty("locationUrl", location.Link);
                 json.WriteProperty("address", location.Address);
@@ -119,8 +121,11 @@ namespace LeagueScheduler.Models
                 json.WriteProperty("id", game.Id);
                 json.WriteProperty("location", game.Location.Name);
                 json.WriteProperty("locationUrl", game.Location.Link);
+                json.WriteProperty("locationId", game.LocationId);
                 json.WriteProperty("team1", (game.Team1Id == 0 ? "" : teams[game.Team1Id].Name));
+                json.WriteProperty("team1Id", game.Team1Id);
                 json.WriteProperty("team2", (game.Team2Id == 0 ? "" : teams[game.Team2Id].Name));
+                json.WriteProperty("team2Id", game.Team2Id);
                 json.WriteProperty("team1Score", game.Team1Score.HasValue ? game.Team1Score.Value.ToString() : "");
                 json.WriteProperty("team2Score", game.Team2Score.HasValue ? game.Team2Score.Value.ToString() : "");
                 json.WriteProperty("time", game.GameTime.ToString("yyyy-MM-ddTHH:mm:00"));
@@ -147,6 +152,7 @@ namespace LeagueScheduler.Models
                 foreach (var standing in division)
                 {
                     json.WriteStartObject();
+                    json.WriteProperty("teamId", standing.TeamId);
                     json.WriteProperty("teamName", standing.TeamName);
                     json.WriteProperty("wins", standing.Wins);
                     json.WriteProperty("losses", standing.Losses);

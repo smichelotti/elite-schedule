@@ -44,9 +44,16 @@ namespace LeagueScheduler.Controllers
         public League Put(League item)
         {
             //TODO: need check to ensure league name is unique
-            this.repository.InsertOrUpdate(item);
+            //this.repository.InsertOrUpdate(item);
+            //this.repository.Save();
+            //return item;
+
+            // Only allow overwriting name
+            var league = this.repository.Find(item.Id);
+            league.Name = item.Name;
+            this.repository.InsertOrUpdate(league);
             this.repository.Save();
-            return item;
+            return league;
         }
 
         public HttpResponseMessage Delete(int id)
