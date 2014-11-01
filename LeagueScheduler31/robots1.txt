@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin/
 
 # The sitemap must be an absolute URL
-#sitemap: http://mysite.com/sitemap.xml
+#sitemap: http://mysite.com/sitemap.xml2
