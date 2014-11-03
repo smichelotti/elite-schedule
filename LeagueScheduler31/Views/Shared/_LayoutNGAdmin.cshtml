@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Elite Schedule Admin</title>
+    <!-- inject:css -->
+    @*<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">*@
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css-themes/bootstrap.united.min.css" />
+    @*<link rel="stylesheet" href="/lib/angular-ui-select/dist/select.min.css">*@
+    @*<link rel="stylesheet" href="~/lib/angular-ui-grid/ui-grid.min.css"/>*@
+    <link rel="stylesheet" href="~/lib/angular-ui-grid/ui-grid.v3.0.0-rc.12-c280b35.min.css" />
+    <link rel="stylesheet" href="/Content/font-awesome.min.css" />
+    <link rel="stylesheet" href="/content/site.css">
+    <link rel="stylesheet" href="/content/custom.css">
+    <!-- endinject -->
+</head>
+<body ng-app="eliteApp">
+    <div id="applicationHost" class="container body-content admin-appHost">
+        @RenderBody()
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <span class="pull-right text-info credit">Elite Schedule - &copy; @DateTime.Now.Year Steve Michelotti</span>
+        </div>
+    </div>
+
+    <!-- inject:js -->
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script src="/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="~/lib/angular-touch/angular-touch.min.js"></script>
+    @*<script src="/lib/angular-sanitize/angular-sanitize.min.js"></script>*@
+    @*<script src="/lib/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>*@
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    @*<script src="~/lib/angular-ui-grid/ui-grid.min.js"></script>*@
+    <script src="~/lib/angular-ui-grid/ui-grid.v3.0.0-rc.12-c280b35.min.js"></script>
+    <script src="~/lib/csv-js/csv.js"></script>
+
+    @*<script src="/lib/angular-ui-select/dist/select.min.js"></script>*@
+    <script src="/lib/showdown/compressed/showdown.js"></script>
+    <script src="/lib/spin.js/spin.js"></script>
+    <script src="/lib/lodash/dist/lodash.min.js"></script>
+    <script src="/lib/moment/min/moment.min.js"></script>
+    <script src="/app-ngadmin/app.js"></script>
+    <script src="/app-ngadmin/generation/generation-initial-data.service.js"></script>
+    <script src="/app-ngadmin/generation/generation.ctrl.js"></script>
+    <script src="~/app-ngadmin/home/home.controller.js"></script>
+    <script src="~/app-ngadmin/layout/league-shell.controller.js"></script>
+    <script src="~/app-ngadmin/layout/shell.controller.js"></script>
+    <script src="~/app-ngadmin/leagues/leagues.controller.js"></script>
+    <script src="/app-ngadmin/services/elite-api.service.js"></script>
+    <script src="~/app-ngadmin/services/dialogs.service.js"></script>
+    <script src="~/app-ngadmin/services/app-spinner.service.js"></script>
+    <script src="~/app-ngadmin/shared/confirm-modal.controller.js"></script>
+    <script src="~/app-ngadmin/directives/spinner.directive.js"></script>
+    <script src="~/app-ngadmin/directives/automaticfocus.directive.js"></script>
+
+    <script src="/app-ngadmin/slots/slots.ctrl.js"></script>
+    <script src="~/app-ngadmin/teams/teams.controller.js"></script>
+    <script src="~/app-ngadmin/teams/edit-team.controller.js"></script>
+    <script src="~/app-ngadmin/teams/import-teams.controller.js"></script>
+    <!-- endinject -->
+</body>
+</html>

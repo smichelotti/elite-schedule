@@ -118,3 +118,18 @@ body {
 .filter-control {
     margin-left: 10px;
 }
+
+
+
+.admin-content {
+    width: auto;
+    max-width: 1150px;
+    padding: 0px 0px 0px 0px;
+    /*15px;*/
+}
+
+
+.import-area {
+    width: 840px;
+    height: 250px;
+}

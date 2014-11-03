@@ -1,0 +1,81 @@
+﻿<div>
+    <div class="row" style="padding-top:20px;padding-bottom:20px;">
+        <!--<div class="col-md-3">
+            <h2>Time Slots</h2>
+        </div>-->
+        <div class="col-md-3">
+            <input type="text" placeholder="Location Filter" ng-model="vm.locationFilter" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <!--<button class="btn btn-primary" ng-click="vm.generateSlots()">Generate</button>-->
+            <button class="btn btn-success" ng-click="vm.saveLocal()">Save Local</button>
+        </div>
+    </div>
+    <div class="row">
+        <alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+    
+    <form name="userForm">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Game Duration</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header-input">
+                    <td></td>
+                    <td>
+                        <select class="form-control" ng-model="vm.newLocation" ng-options="loc.name for loc in vm.locations"></select>
+                    </td>
+                    <td>
+                        <!--<input type="text" class="form-control" placeholder="Date" maxlength="50">-->
+                        <input type="text" class="form-control" placeholder="Date" datepicker-popup="MM/dd/yyyy" ng-model="vm.newDate" is-open="vm.opened" ng-click="vm.open($event)" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" />
+
+                        <!--<p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="vm.newDate" is-open="vm.opened" ng-click="vm.open($event)" min-date="minDate" max-date="'2015-06-22'" datepicker-options="vm.dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>-->
+                    </td>
+                    <td>
+                        <!--<input type="text" class="form-control" placeholder="Start Time" maxlength="50">-->
+                        <timepicker ng-model="vm.newStartTime" ng-change="changed()" minute-step="15" show-meridian="true"></timepicker>
+                    </td>
+                    <td>
+                        <!--<input type="text" class="form-control" placeholder="End Time" maxlength="50">-->
+                        <timepicker ng-model="vm.newEndTime" ng-change="changed()" minute-step="15" show-meridian="true"></timepicker>
+                    </td>
+                    <td>
+                        <input type="text" name="duration" class="form-control" placeholder="(in minutes)" maxlength="50" ng-model="vm.newDuration" required>
+                        <p ng-show="userForm.duration.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" ng-click="vm.add()"><i class="icon-plus icon-white"></i> Add</button>
+                    </td>
+                </tr>
+
+                <tr ng-repeat="slot in vm.slots | filter:vm.locationFilter">
+                    <td>{{$index + 1}}</td>
+                    <td>{{slot.locationName}}</td>
+                    <td>{{slot.startTime | date: 'M/d/yyyy'}}</td>
+                    <td>{{slot.startTime | date: 'shortTime'}}</td>
+                    <td>{{slot.endTime | date: 'shortTime'}}</td>
+                    <td>{{slot.gameDuration}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="vm.removeSlot(slot)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -20,6 +20,7 @@ namespace LeagueScheduler.Models
                 var leagueRepository = new LeagueRepository();
 
                 var league = leagueRepository.Find(leagueId);
+                league.IsActive = true;
                 scheduleRepository.Save(league.Id, league.Name, json);
                 leagueRepository.MarkClean(leagueId);
             }

@@ -13,7 +13,11 @@ namespace LeagueScheduler.Controllers
         {
             this.ViewBag.IsArchived = archived;
             ILeagueRepository repository = new LeagueRepository();
-            this.ViewData.Model = repository.All.Where(x => x.IsArchived == archived).OrderBy(x => x.Name).ToList();
+            this.ViewData.Model = (from l in repository.All
+                                  where l.IsArchived == archived &&
+                                        l.IsActive == true
+                                  orderby l.Name
+                                  select l).ToList();
             return View();
         }
 

@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h2>Import Teams</h2>
+    <alert type="info">
+        Click the menu button in the upper right of the grid and import your CSV file.
+        The CSV file must have these column headings in this order:
+        1) "Team Name", 2) "Coach", 3) "Division".
+        You can then freely edit the data in the grid as desired.
+        Then click Import button to save the data.
+    </alert>
+</div>
+<div class="modal-body">
+    <!--<textarea cols="30" rows="10" ng-model="vm.importText" class="import-area"></textarea>
+    <button class="btn btn-success" ng-click="vm.parse()">Parse</button>-->
+    <!--<div ui-grid="{ data: vm.parsedData }" ui-grid-edit ui-grid-importer class="import-area"></div>-->
+    <div ui-grid="vm.gridOptions" ui-grid-edit ui-grid-importer class="import-area"></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="vm.importData()">Import</button>
+    <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+</div>

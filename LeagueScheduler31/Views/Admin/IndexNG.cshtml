@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutNGAdmin.cshtml";
+}
+
+<div>
+    <div data-ng-include="'/app-ngadmin/layout/shell.html'"></div>
+
+    <!--
+        1. Attach controller to splash page
+        2. Raise loaded event when loadin complete
+        3. subscribe to this even in splash page controler and set ng-show to false
+    -->
+
+    <div class="splash" data-ng-show="false">
+        <div class="message">
+            Elite Schedule Admin
+        </div>
+        <i class="fa fa-spinner fa-spin fa-4x"></i>
+    </div>
+</div>

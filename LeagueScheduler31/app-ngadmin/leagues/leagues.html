@@ -1,0 +1,53 @@
+﻿<div>
+    <h2 class="page-title">Leagues</h2>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>League Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" placeholder="New League Name" ng-model="vm.newLeagueName" ui-keypress="{13:'vm.addItem()'}">
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" ng-disabled="!vm.newLeagueName" ng-click="vm.addItem()"
+                            tooltip="Click here to add new league" tooltip-placement="right">
+                        <span class="glyphicon glyphicon-plus"></span> Add
+                    </button>
+                </td>
+            </tr>
+
+            <tr ng-repeat="league in vm.leagues">
+                <td ng-hide="vm.currentEdit[league.id]">{{league.name}}</td>
+                <td ng-show="vm.currentEdit[league.id]">
+                    <input type="text" class="form-control" ng-model="vm.itemToEdit.name" />
+                </td>
+                <td>
+                    <div class="btn-group" dropdown ng-hide="vm.currentEdit[league.id]">
+                        <button class="btn btn-success dropdown-toggle" type="button">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ui-sref="league.teams({leagueId: league.id})">Configure</a></li>
+                            <li><a ng-click="vm.editItem(league)">Edit</a></li>
+                            <li><a ng-click="vm.deleteItem(league.id)">Delete</a></li>
+                        </ul>
+                    </div>
+
+                    <!--<a class="btn btn-success" ng-href="#/leagues/{{league.id}}/teams" ng-hide="vm.currentEdit[league.id]">Configure</a>-->
+                    <!--<button class="btn btn-info"   ng-hide="vm.currentEdit[league.id]" ng-click="vm.editItem(league)">Edit</button>-->
+                    <!--<button class="btn btn-danger" ng-hide="vm.currentEdit[league.id]" ng-click="vm.deleteItem(league.id)">Delete</button>-->
+
+                    <button class="btn btn-success" ng-show="vm.currentEdit[league.id]" ng-click="vm.saveItem(league)">Save</button>
+                    <button class="btn btn-danger" ng-show="vm.currentEdit[league.id]" ng-click="vm.cancelEdit(league.id)">Cancel</button>
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

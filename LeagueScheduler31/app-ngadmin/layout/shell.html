@@ -1,0 +1,57 @@
+﻿<div ng-controller="ShellCtrl as vm">
+
+    <div id="adminNavBar" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <i class="icon-home"></i>
+                    <span>Elite Schedule Admin</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/">Home</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" ui-sref="leagues">Leagues</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/locations">Locations</a></li>
+                </ul>
+                <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                </div>
+
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
+                    <input type="hidden" name="__RequestVerificationToken" id="__RequestVerificationToken" data-bind="value: requestVer" />
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-bind="text: user().name"></a>
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div ng-show="vm.showSpinner" class="page-splash dissolve-animation">
+        <div data-spinner="vm.spinnerOptions"></div>
+        <div class="page-splash-message page-splash-message-subtle">{{vm.spinnerMessage}}</div>
+    </div>
+
+    <div ui-view id="ng-view" class="container slide-animation admin-content"></div>
+
+    <!--<div id="splash-page" data-ng-show="false">
+        <div class="page-splash">
+            <div class="page-splash-message">Pandora Welcome Home</div>
+            <div class="progress progress-striped active page-progress-bar">
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>-->
+</div>

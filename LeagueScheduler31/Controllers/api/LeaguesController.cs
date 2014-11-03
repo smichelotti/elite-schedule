@@ -16,7 +16,6 @@ namespace LeagueScheduler.Controllers
 
         public List<League> Get()
         {
-            System.Diagnostics.Trace.TraceInformation("about to call Leagues Controller GET");
             try
             {
                 return this.repository.All.OrderBy(x => x.Name).ToList();
