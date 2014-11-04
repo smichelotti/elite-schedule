@@ -10,7 +10,6 @@
         var vm = this;
 
         vm.showSpinner = false;
-        vm.spinnerMessage = 'Retrieving data...';
 
         vm.spinnerOptions = {
             radius: 40,
@@ -29,6 +28,9 @@
 
         $rootScope.$on('spinner.toggle', function (event, args) {
             vm.showSpinner = args.show;
+            if (args.message) {
+                vm.spinnerMessage = args.message;
+            }
         });
     }
 })();

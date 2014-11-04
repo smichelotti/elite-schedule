@@ -9,11 +9,15 @@
         var service = {
             addLeague: addLeague,
             deleteLeague: deleteLeague,
+            deleteSlot: deleteSlot,
             deleteTeam: deleteTeam,
+            getLeague: getLeague,
             getLeagues: getLeagues,
             getLocations: getLocations,
+            getSlots: getSlots,
             getTeams: getTeams,
             saveLeague: saveLeague,
+            saveSlot: saveSlot,
             saveTeam: saveTeam
         };
 
@@ -28,8 +32,16 @@
             return httpDelete('/api/leagues/' + id);
         }
 
+        function deleteSlot(id) {
+            return httpDelete('/api/slots/' + id);
+        }
+
         function deleteTeam(id) {
             return httpDelete('/api/teams/' + id);
+        }
+
+        function getLeague(leagueId) {
+            return httpGet('/api/leagues/' + leagueId);
         }
 
         function getLeagues() {
@@ -38,6 +50,10 @@
 
         function getLocations() {
             return httpGet('/api/locations');
+        }
+
+        function getSlots(leagueId) {
+            return httpGet('/api/slots?leagueId=' + leagueId);
         }
 
         function getTeams(leagueId) {
@@ -56,6 +72,10 @@
             return saveItem('/api/leagues', league);
         }
 
+        function saveSlot(slot) {
+            return saveItem('/api/slots', slot);
+        }
+
         function saveTeam(team) {
             return saveItem('/api/teams', team);
         }
@@ -67,12 +87,12 @@
         }
 
         function httpExecute(requestUrl, method, data) {
-            appSpinner.showSpinner();
+            var spinnerMsg = (method === 'GET' ? 'Retrieving Data...' : 'Saving Changes...');
+            appSpinner.showSpinner(spinnerMsg);
             return $http({
                 url: requestUrl,
                 method: method,
                 data: data
-                //headers: requestConfig.headers
             }).then(function (response) {
 
                 appSpinner.hideSpinner();

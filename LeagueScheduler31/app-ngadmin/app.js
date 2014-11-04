@@ -54,13 +54,12 @@
             abstract: true,
             controller: 'LeagueShellCtrl',
             controllerAs: 'vm',
-            templateUrl: '/app-ngadmin/layout/league-shell.html'
-            //resolve: {
-            //    initialData: ['$stateParams', function ($stateParams) {
-            //        console.log("$stateParams in league resolve", $stateParams);
-            //        return true;
-            //    }]
-            //}
+            templateUrl: '/app-ngadmin/layout/league-shell.html',
+            resolve: {
+                currentLeague: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
+                    return eliteApi.getLeague($stateParams.leagueId);
+                }]
+            }
         })
 
         .state('league.teams', {
@@ -87,9 +86,10 @@
                     controller: 'SlotsCtrl',
                     controllerAs: 'vm',
                     resolve: {
-                        initialData: ['eliteApi', function (eliteApi) {
-                            return eliteApi.getLocations();
-                        }]
+                        initialData: ['$stateParams', 'slotsInitialDataService',
+                                function ($stateParams, slotsInitialDataService) {
+                                    return slotsInitialDataService.getData($stateParams.leagueId);
+                                }]
                     }
                 }
             }

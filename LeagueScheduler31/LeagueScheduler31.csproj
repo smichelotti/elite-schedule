@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\GamesController.cs" />
     <Compile Include="Controllers\api\IdentityController.cs" />
+    <Compile Include="Controllers\api\SlotsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\api\LeagueDataController.cs" />
     <Compile Include="Controllers\api\LeaguesController.cs" />
@@ -205,6 +206,8 @@
     <Compile Include="Models\SchedulerDbInitializer.cs" />
     <Compile Include="Models\ScheduleRepository.cs" />
     <Compile Include="Models\ScheduleTableContext.cs" />
+    <Compile Include="Models\Slot.cs" />
+    <Compile Include="Models\SlotRepository.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -252,7 +255,8 @@
     <Content Include="app-ngadmin\services\elite-api.service.js" />
     <Content Include="app-ngadmin\shared\confirm-modal.controller.js" />
     <Content Include="app-ngadmin\shared\confirm-modal.html" />
-    <Content Include="app-ngadmin\slots\slots.ctrl.js" />
+    <Content Include="app-ngadmin\slots\slots-initial-data.service.js" />
+    <Content Include="app-ngadmin\slots\slots.controller.js" />
     <Content Include="app-ngadmin\slots\slots.html" />
     <Content Include="app-ngadmin\teams\edit-team.controller.js" />
     <Content Include="app-ngadmin\teams\edit-team.html" />

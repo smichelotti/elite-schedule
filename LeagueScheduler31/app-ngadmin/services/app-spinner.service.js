@@ -18,12 +18,12 @@
             toggleSpinner(false);
         }
 
-        function showSpinner() {
-            toggleSpinner(true);
+        function showSpinner(message) {
+            toggleSpinner(true, message);
         }
 
-        function toggleSpinner(show) {
-            $rootScope.$broadcast('spinner.toggle', { show: show });
+        function toggleSpinner(show, message) {
+            $rootScope.$broadcast('spinner.toggle', { show: show, message: message });
         }
     }
 })();

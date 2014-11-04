@@ -1,5 +1,5 @@
 ﻿<div>
-    <h2>Configuration</h2>
+    <h2>{{vm.league.name}}</h2>
     <tabset>
         <tab ng-repeat="tab in vm.tabs" heading="{{tab.text}}" ui-sref="{{tab.state}}"
              active="tab.active" disabled="tab.disabled"></tab>

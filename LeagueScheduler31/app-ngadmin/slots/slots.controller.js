@@ -3,9 +3,9 @@
 
     angular.module('eliteApp').controller('SlotsCtrl', SlotsCtrl);
 
-    SlotsCtrl.$inject = ['$stateParams', 'initialData'];
+    SlotsCtrl.$inject = ['$stateParams', 'initialData', 'eliteApi', 'dialogsService'];
 
-    function SlotsCtrl($stateParams, initialData) {
+    function SlotsCtrl($stateParams, initialData, eliteApi, dialogs) {
         /* jshint validthis:true */
         var vm = this;
         console.log('in slotsCtrl', initialData);
@@ -15,8 +15,9 @@
         vm.add = add;
         vm.closeAlert = closeAlert;
         vm.generateSlots = generateSlots;
-        vm.locations = initialData.data;
-        vm.newDate = new Date();// {};
+        vm.locations = initialData.locations;
+        vm.locationsLookup = {};
+        vm.newDate = moment().format('MM/DD/YYYY');
         vm.newDuration = 60;
         vm.newLocation = {};
         vm.newEndTime = moment('22:00', 'HH:mm').toDate();
@@ -24,22 +25,15 @@
         vm.open = openDatePicker;
         vm.opened = false;
         vm.removeSlot = removeSlot;
-        vm.saveLocal = saveLocal;
-        vm.slots = [];
+        vm.slots = initialData.slots;
         vm.alerts = [];
-        
+
         activate();
 
         function activate() {
-            var ranges = window.localStorage.getItem('slotRanges-' + $stateParams.leagueId);
-            if (ranges) {
-                ranges = JSON.parse(ranges);
-                _.each(ranges, function (range) {
-                    range.startTime = new Date(range.startTime);
-                    range.endTime = new Date(range.endTime);
-                });
-                vm.slots = ranges;
-            }
+            _.forEach(vm.locations, function (location) {
+                vm.locationsLookup[location.id] = location.name;
+            });
         }
 
         function openDatePicker($event) {
@@ -52,15 +46,17 @@
         function add() {
             var slot = {
                 locationId: vm.newLocation.id,
-                locationName: vm.newLocation.name,
                 startTime: combine(vm.newDate, vm.newStartTime),
                 endTime: combine(vm.newDate, vm.newEndTime),
-                gameDuration: vm.newDuration
+                gameDuration: vm.newDuration,
+                leagueId: $stateParams.leagueId
             };
 
             if (isAddValid(slot)) {
-                vm.slots.push(slot);
-                vm.slots = _.sortBy(vm.slots, ['startTime', 'locationName']);
+                eliteApi.saveSlot(slot).then(function (data) {
+                    vm.slots.push(data);
+                    vm.slots = _.sortBy(vm.slots, ['startTime', 'locationId']);
+                });
             }
         }
 
@@ -90,7 +86,7 @@
 
         function combine(date, time) {
             var dateString = moment(date).format('MM/DD/YYYY');
-            return moment(dateString + ' ' + moment(time).format('HH:mm')).toDate()
+            return moment(dateString + ' ' + moment(time).format('HH:mm')).toDate();
         }
 
         function generateSlots() {
@@ -123,13 +119,18 @@
             return generatedSlots;
         }
 
-        function removeSlot(slot) {
-            _.remove(vm.slots, slot);
+        function removeSlot(id) {
+            dialogs.confirm('Are you sure you want to Delete this item?', 'Delete?', ['OK', 'Cancel'])
+                .then(function () {
+                    eliteApi.deleteSlot(id).then(function (data) {
+                        _.remove(vm.slots, { 'id': id });
+                    });
+                });
         }
 
-        function saveLocal() {
-            window.localStorage.setItem('slotRanges-' + $stateParams.leagueId, JSON.stringify(vm.slots));
-            vm.alerts.push({ type: 'success', msg: 'Slot ranges successfully saved.' });
-        }
+        //function saveLocal() {
+        //    window.localStorage.setItem('slotRanges-' + $stateParams.leagueId, JSON.stringify(vm.slots));
+        //    vm.alerts.push({ type: 'success', msg: 'Slot ranges successfully saved.' });
+        //}
     }
 })();

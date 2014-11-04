@@ -19,5 +19,7 @@ namespace LeagueScheduler.Models
         public DbSet<Team> Teams { get; set; }
 
         public DbSet<Game> Games { get; set; }
+
+        public DbSet<Slot> Slots { get; set; }
     }
 }

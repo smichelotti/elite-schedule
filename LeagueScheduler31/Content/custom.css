@@ -133,3 +133,7 @@ body {
     width: 840px;
     height: 250px;
 }
+
+.header-input>td{
+    vertical-align: middle !important;
+}

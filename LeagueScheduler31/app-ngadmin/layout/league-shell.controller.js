@@ -3,15 +3,16 @@
 
     angular.module('eliteApp').controller('LeagueShellCtrl', LeagueShellCtrl);
 
-    LeagueShellCtrl.$inject = ['$state', '$stateParams']; 
+    LeagueShellCtrl.$inject = ['$state', '$stateParams', 'currentLeague']; 
 
-    function LeagueShellCtrl($state, $stateParams) {
+    function LeagueShellCtrl($state, $stateParams, currentLeague) {
         /* jshint validthis:true */
         var vm = this;
+        vm.league = currentLeague;
         vm.leagueId = $stateParams.leagueId;
         vm.tabs = [
             { text: 'Teams', state: 'league.teams' },
-            { text: 'Time Slots', state: 'league.slotsx', disabled: true },
+            { text: 'Time Slots', state: 'league.slots' },
             { text: 'Generation', state: 'league.generationx', disabled: true },
             { text: 'Games', state: 'league.games', disabled: true },
             { text: 'Games Calendar', state: 'league.games-calendar', disabled: true },
