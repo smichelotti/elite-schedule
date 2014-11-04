@@ -242,6 +242,7 @@
     <Content Include="app-ngadmin\generation\generation-initial-data.service.js" />
     <Content Include="app-ngadmin\generation\generation.ctrl.js" />
     <Content Include="app-ngadmin\generation\generation.html" />
+    <Content Include="app-ngadmin\generation\generation.service.js" />
     <Content Include="app-ngadmin\home\home.controller.js" />
     <Content Include="app-ngadmin\home\home.html" />
     <Content Include="app-ngadmin\layout\league-shell.controller.js" />

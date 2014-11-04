@@ -13,7 +13,7 @@
         vm.tabs = [
             { text: 'Teams', state: 'league.teams' },
             { text: 'Time Slots', state: 'league.slots' },
-            { text: 'Generation', state: 'league.generationx', disabled: true },
+            { text: 'Generation', state: 'league.generation' },
             { text: 'Games', state: 'league.games', disabled: true },
             { text: 'Games Calendar', state: 'league.games-calendar', disabled: true },
             { text: 'Home', state: 'league.home', disabled: true },

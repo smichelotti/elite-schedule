@@ -104,7 +104,6 @@
                     controllerAs: 'vm',
                     resolve: {
                         initialData: ['$stateParams', 'generationInitialDataService', function ($stateParams, generationInitialDataService) {
-                            //return eliteApi.getTeams($stateParams.leagueId);
                             return generationInitialDataService.getData($stateParams.leagueId);
                         }]
                     }

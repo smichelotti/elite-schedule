@@ -14,30 +14,18 @@
 
         function getData(leagueId) {
             // Show spinner
-            var teams = eliteApi.getTeams(leagueId);
-
-            var promisesList = [teams];
-            return $q.all(promisesList).then(function (results) {
+            return $q.all([
+                eliteApi.getTeams(leagueId),
+                eliteApi.getSlots(leagueId),
+                eliteApi.getLocations()
+            ]).then(function (results) {
                 // Hide spinner
                 return {
-                    teams: results[0].data,
-                    slotRanges: getSlotRanges(leagueId)
+                    teams: results[0],
+                    slotRanges: results[1],
+                    locations: results[2]
                 };
             });
-        }
-
-        function getSlotRanges(leagueId) {
-            var slotRanges = [];
-            var ranges = window.localStorage.getItem('slotRanges-' + leagueId);
-            if (ranges) {
-                ranges = JSON.parse(ranges);
-                _.each(ranges, function (range) {
-                    range.startTime = new Date(range.startTime);
-                    range.endTime = new Date(range.endTime);
-                });
-                slotRanges = ranges;
-            }
-            return slotRanges;
         }
     }
 })();
