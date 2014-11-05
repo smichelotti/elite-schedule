@@ -176,7 +176,7 @@
             var validations = leagueValidator.validateAll(vm.teams, vm.games, 4);
 
             if (validations.length > 0) {
-                dialogs.alert(validations, 'Invalid!');
+                dialogs.alert(validations, 'Violations Detected!');
             } else {
                 dialogs.alert(['All tests passed.'], 'Valid!');
             }
