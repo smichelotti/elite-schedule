@@ -3,9 +3,9 @@
 
     angular.module('eliteApp').controller('GenerationCtrl', GenerationCtrl);
 
-    GenerationCtrl.$inject = ['initialData', 'generationService', 'uiGridConstants'];
+    GenerationCtrl.$inject = ['$q', '$stateParams', 'initialData', 'generationService', 'uiGridConstants', 'eliteApi', 'dialogsService'];
 
-    function GenerationCtrl(initialData, generationService, uiGridConstants) {
+    function GenerationCtrl($q, $stateParams, initialData, generationService, uiGridConstants, eliteApi, dialogs) {
         /* jshint validthis:true */
         var vm = this;
         vm.alerts = [];
@@ -17,7 +17,7 @@
         vm.locationsLookup = {};
         vm.onGameSlotClicked = onGameSlotClicked;
         vm.numberOfRounds = 4;
-        //vm.saveLocal = saveLocal;
+        vm.saveAll = saveAll;
         vm.slotRanges = initialData.slotRanges;
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
@@ -147,9 +147,31 @@
             }
         }
 
-        //function saveLocal() {
-        //    //window.localStorage.setItem('genOptions-' + $stateParams.leagueId, JSON.stringify(vm.slots));
-        //    vm.alerts.push({ type: 'success', msg: 'Generation options successfully saved.' });
-        //}
+        function saveAll() {
+            var promises = [];
+
+            eliteApi.resetGames($stateParams.leagueId).then(function () {
+                _.forEach(vm.allGames, function (gameRow) {
+                    var deferred = $q.defer();
+                    promises.push(deferred.promise);
+
+                    var game = {
+                        leagueId: $stateParams.leagueId,
+                        locationId: gameRow.locationId,
+                        gameTime: gameRow.startTime,
+                        team1Id: gameRow.team1Id,
+                        team2Id: gameRow.team2Id
+                    };
+
+                    eliteApi.saveGame(game).then(function (data) {
+                        deferred.resolve();
+                    });
+                });
+
+                $q.all(promises).then(function () {
+                    dialogs.alert(['All games have been successfully saved.'], 'Complete!');
+                });
+            });
+        }
     }
 })();

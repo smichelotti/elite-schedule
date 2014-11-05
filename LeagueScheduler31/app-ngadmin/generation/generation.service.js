@@ -28,7 +28,9 @@
                     locationName: locationsLookup[slot.locationId],
                     division: mu.division,
                     round: mu.round,
-                    display: mu.display
+                    display: mu.display,
+                    team1Id: mu.team1,
+                    team2Id: mu.team2
                 };
                 games.push(game);
             });

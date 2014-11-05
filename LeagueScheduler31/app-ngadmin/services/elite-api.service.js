@@ -18,6 +18,7 @@
             getLocations: getLocations,
             getSlots: getSlots,
             getTeams: getTeams,
+            resetGames: resetGames,
             saveGame: saveGame,
             saveLeague: saveLeague,
             saveSlot: saveSlot,
@@ -69,6 +70,10 @@
 
         function getTeams(leagueId) {
             return httpGet('/api/teams?leagueId=' + leagueId);
+        }
+
+        function resetGames(leagueId) {
+            return httpPost('/api/leagues/' + leagueId + '/reset-games');
         }
 
         function saveItem(url, item) {

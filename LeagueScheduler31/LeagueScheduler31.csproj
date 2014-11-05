@@ -262,7 +262,9 @@
     <Content Include="app-ngadmin\services\app-spinner.service.js" />
     <Content Include="app-ngadmin\services\dialogs.service.js" />
     <Content Include="app-ngadmin\services\elite-api.service.js" />
+    <Content Include="app-ngadmin\services\league-validator.service.js" />
     <Content Include="app-ngadmin\services\utils.service.js" />
+    <Content Include="app-ngadmin\shared\alert-modal.html" />
     <Content Include="app-ngadmin\shared\confirm-modal.controller.js" />
     <Content Include="app-ngadmin\shared\confirm-modal.html" />
     <Content Include="app-ngadmin\slots\slots-initial-data.service.js" />

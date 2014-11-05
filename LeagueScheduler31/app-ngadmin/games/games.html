@@ -1,13 +1,9 @@
 <div>
     <p></p>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-4">
             <button class="btn btn-primary" ng-click="vm.editItem()">Add New Game</button>
-            <!--<div>
-                <h4 class="pull-left">Filter:</h4>
-                <select class="form-control pull-left filter-control" data-bind="value: filterTeamId, options: teams, optionsCaption: '(Selet Team Filter)', optionsText: 'name', optionsValue: 'id'"></select>
-                <select class="form-control pull-left filter-control" data-bind="value: filterLocationId, options: locations, optionsCaption: '(Select Location Filter)', optionsText: 'name', optionsValue: 'id'"></select>
-            </div>-->
+            <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
         </div>
         <div class="col-md-3">
             <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name for team in vm.teams">

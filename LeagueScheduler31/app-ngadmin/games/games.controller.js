@@ -3,10 +3,10 @@
 
     angular.module('eliteApp').controller('GamesCtrl', GamesCtrl);
 
-    GamesCtrl.$inject = ['$modal', '$stateParams', '$filter', 'initialData', 'eliteApi', 'dialogsService'];
+    GamesCtrl.$inject = ['$modal', '$stateParams', '$filter', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
 
     /* @ngInject */
-    function GamesCtrl($modal, $stateParams, $filter, initialData, eliteApi, dialogs) {
+    function GamesCtrl($modal, $stateParams, $filter, initialData, eliteApi, dialogs, leagueValidator) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -21,6 +21,7 @@
         vm.locationsLookup = {};
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
+        vm.validateAll = validateAll;
 
         vm.calendarConfig = {
             height: 550,
@@ -166,6 +167,16 @@
 
             if (vm.filterTeamId) {
                 return game.team1Id === vm.filterTeamId || game.team2Id === vm.filterTeamId;
+            }
+        }
+
+        function validateAll() {
+            var validations = leagueValidator.validateAll(vm.teams, vm.games, 4);
+
+            if (validations.length > 0) {
+                dialogs.alert(validations, 'Invalid!');
+            } else {
+                dialogs.alert(['All tests passed.'], 'Valid!');
             }
         }
     }

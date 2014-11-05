@@ -101,6 +101,15 @@ namespace LeagueScheduler.Controllers
             return this.Ok(new { result = "success" });
         }
 
+        [Route("api/leagues/{id}/reset-games")]
+        public IHttpActionResult PostResetGames(int id)
+        {
+            var gameRepository = new GameRepository();
+            gameRepository.DeleteGamesForLeague(id);
+            gameRepository.Save();
+            return this.Ok(new { result = "success" });
+        }
+
         [Route("api/leagues/{id}/home-screen")]
         public IHttpActionResult GetHomeScreen(int id)
         {

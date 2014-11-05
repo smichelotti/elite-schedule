@@ -56,6 +56,11 @@ namespace LeagueScheduler.Models
             leagueRepository.MarkDirty(game.LeagueId);
         }
 
+        public void DeleteGamesForLeague(int leagueId)
+        {
+            this.context.Database.ExecuteSqlCommand("DELETE FROM GAMES WHERE LeagueId = " + leagueId);
+        }
+
         public void Save()
         {
             context.SaveChanges();
