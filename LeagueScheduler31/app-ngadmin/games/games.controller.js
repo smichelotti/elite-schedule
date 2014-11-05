@@ -16,7 +16,8 @@
         vm.editItem = editItem;
         vm.editScores = editScores;
         vm.gameFilter = gameFilter;
-        vm.games = initialData.games;
+        //vm.games = initialData.games;
+        vm.games = _.sortBy(initialData.games, 'gameTime');
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
         vm.teams = initialData.teams;
@@ -124,6 +125,7 @@
                         vm.eventSources[0].push(mapToGameEvent(data));
                     }
                     //TODO: need to re-sort here (remove angular filter in markup)
+                    vm.games = _.sortBy(vm.games, 'gameTime');
                 });
             });
         }

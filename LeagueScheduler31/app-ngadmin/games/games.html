@@ -29,7 +29,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="game in vm.games | orderBy:'time' | filter: vm.gameFilter">
+        <!--<tr ng-repeat="game in vm.games | orderBy:'time' | filter: vm.gameFilter">-->
+        <tr ng-repeat="game in vm.games | filter: vm.gameFilter">
             <td>{{game.gameTime | date: 'short'}}</td>
             <td>
                 <span ng-class="{'text-success': game.team1Score > game.team2Score}">{{vm.teamsLookup[game.team1Id]}}</span>
