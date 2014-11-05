@@ -109,11 +109,28 @@
                     }
                 }
             }
+        })
+
+        .state('league.games', {
+            url: '/games',
+            views: {
+                'tabContent': {
+                    templateUrl: '/app-ngadmin/games/games.html',
+                    controller: 'GamesCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        initialData: ['$stateParams', 'gamesInitialDataService',
+                            function ($stateParams, gamesInitialDataService) {
+                                return gamesInitialDataService.getData($stateParams.leagueId);
+                            }]
+                    }
+                }
+            }
         });
-        
+
+
         $urlRouterProvider.otherwise('/');//{ redirectTo: '/' });
 
-       
     }
 
     //function xconfigRoutes($routeProvider) {

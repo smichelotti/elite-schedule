@@ -8,14 +8,17 @@
     function eliteApi($http, $rootScope, appSpinner) {
         var service = {
             addLeague: addLeague,
+            deleteGame: deleteGame,
             deleteLeague: deleteLeague,
             deleteSlot: deleteSlot,
             deleteTeam: deleteTeam,
+            getGames: getGames,
             getLeague: getLeague,
             getLeagues: getLeagues,
             getLocations: getLocations,
             getSlots: getSlots,
             getTeams: getTeams,
+            saveGame: saveGame,
             saveLeague: saveLeague,
             saveSlot: saveSlot,
             saveTeam: saveTeam
@@ -28,6 +31,10 @@
             return httpPost('/api/leagues', league);
         }
 
+        function deleteGame(id) {
+            return httpDelete('/api/games/' + id);
+        }
+
         function deleteLeague(id) {
             return httpDelete('/api/leagues/' + id);
         }
@@ -38,6 +45,10 @@
 
         function deleteTeam(id) {
             return httpDelete('/api/teams/' + id);
+        }
+
+        function getGames(leagueId) {
+            return httpGet('/api/games?leagueId=' + leagueId);
         }
 
         function getLeague(leagueId) {
@@ -66,6 +77,10 @@
             } else {
                 return httpPost(url, item);
             }
+        }
+
+        function saveGame(game) {
+            return saveItem('/api/games', game);
         }
 
         function saveLeague(league) {

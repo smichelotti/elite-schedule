@@ -1,0 +1,23 @@
+﻿<div class="modal-header">
+    <h4>Game Score</h4>
+</div>
+<div class="modal-body">
+    <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-9 control-label">{{vm.properties.team1Name}} Score:</label>
+            <div class="col-sm-3">
+                <input class="form-control" ng-model="vm.editableItem.team1Score"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-9 control-label">{{vm.properties.team2Name}} Score:</label>
+            <div class="col-sm-3">
+                <input class="form-control" ng-model="vm.editableItem.team2Score" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="vm.save()">Save</button>
+    <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+</div>

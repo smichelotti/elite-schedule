@@ -239,6 +239,14 @@
     <Content Include="app-ngadmin\app.js" />
     <Content Include="app-ngadmin\directives\automaticfocus.directive.js" />
     <Content Include="app-ngadmin\directives\spinner.directive.js" />
+    <Content Include="app-ngadmin\games\edit-game.controller.js" />
+    <Content Include="app-ngadmin\games\edit-game.html" />
+    <Content Include="app-ngadmin\games\edit-scores.controller.js" />
+    <Content Include="app-ngadmin\games\edit-scores.html" />
+    <Content Include="app-ngadmin\games\games-calendar.html" />
+    <Content Include="app-ngadmin\games\games-initial-data.service.js" />
+    <Content Include="app-ngadmin\games\games.controller.js" />
+    <Content Include="app-ngadmin\games\games.html" />
     <Content Include="app-ngadmin\generation\generation-initial-data.service.js" />
     <Content Include="app-ngadmin\generation\generation.ctrl.js" />
     <Content Include="app-ngadmin\generation\generation.html" />
@@ -254,6 +262,7 @@
     <Content Include="app-ngadmin\services\app-spinner.service.js" />
     <Content Include="app-ngadmin\services\dialogs.service.js" />
     <Content Include="app-ngadmin\services\elite-api.service.js" />
+    <Content Include="app-ngadmin\services\utils.service.js" />
     <Content Include="app-ngadmin\shared\confirm-modal.controller.js" />
     <Content Include="app-ngadmin\shared\confirm-modal.html" />
     <Content Include="app-ngadmin\slots\slots-initial-data.service.js" />
