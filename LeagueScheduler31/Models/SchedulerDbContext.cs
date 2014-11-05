@@ -21,5 +21,7 @@ namespace LeagueScheduler.Models
         public DbSet<Game> Games { get; set; }
 
         public DbSet<Slot> Slots { get; set; }
+
+        public DbSet<SpecialRequest> SpecialRequests { get; set; }
     }
 }

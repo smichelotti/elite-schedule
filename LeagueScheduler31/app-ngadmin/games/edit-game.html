@@ -21,13 +21,13 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">Home Team</label>
             <div class="col-sm-9">
-                <select class="form-control" ng-model="vm.editableItem.team1Id" ng-options="team.id as team.name for team in vm.properties.teams"></select>
+                <select class="form-control" ng-model="vm.editableItem.team1Id" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.properties.teams"></select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">Away Team</label>
             <div class="col-sm-9">
-                <select class="form-control" ng-model="vm.editableItem.team2Id" ng-options="team.id as team.name for team in vm.properties.teams"></select>
+                <select class="form-control" ng-model="vm.editableItem.team2Id" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.properties.teams"></select>
             </div>
         </div>
         <div class="form-group">

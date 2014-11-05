@@ -6,7 +6,7 @@
             <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
         </div>
         <div class="col-md-3">
-            <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name for team in vm.teams">
+            <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">
                 <option value="" selected>(Select Team Filter)</option>
             </select>
         </div>

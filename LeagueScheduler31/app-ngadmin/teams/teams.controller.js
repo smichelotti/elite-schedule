@@ -16,6 +16,7 @@
         vm.divisions = [];
         vm.editItem = editItem;
         vm.showImport = showImport;
+        vm.specialRequest = specialRequest;
         vm.teams = initialData;
         vm.toggleExpand = toggleExpand;
 
@@ -103,6 +104,35 @@
                 $q.all(promises).then(function () {
                     initializeGroups();
                     //console.log('**after initGroups', vm.groups, vm.teams);
+                });
+            });
+        }
+
+        function specialRequest(team) {
+            console.log("**inside specialRequest");
+
+            var modalInstance = $modal.open({
+                templateUrl: '/app-ngadmin/teams/special-requests.html',
+                controller: 'SpecialRequestsCtrl',
+                controllerAs: 'vm',
+                resolve: {
+                    data: function () {
+                        return {
+                            itemToEdit: {}//need to put specialRequest entity here
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                result.leagueId = $stateParams.leagueId;
+                eliteApi.saveSpecialRequest(result).then(function (data) {
+                    //if (team) {
+                    //    _.assign(team, data);
+                    //} else {
+                    //    vm.teams.push(data);
+                    //}
+                    //initializeGroups();
                 });
             });
         }

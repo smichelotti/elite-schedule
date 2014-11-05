@@ -183,6 +183,7 @@
     <Compile Include="Controllers\api\GamesController.cs" />
     <Compile Include="Controllers\api\IdentityController.cs" />
     <Compile Include="Controllers\api\SlotsController.cs" />
+    <Compile Include="Controllers\api\SpecialRequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\api\LeagueDataController.cs" />
     <Compile Include="Controllers\api\LeaguesController.cs" />
@@ -208,6 +209,8 @@
     <Compile Include="Models\ScheduleTableContext.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\SlotRepository.cs" />
+    <Compile Include="Models\SpecialRequest.cs" />
+    <Compile Include="Models\SpecialRequestRepository.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

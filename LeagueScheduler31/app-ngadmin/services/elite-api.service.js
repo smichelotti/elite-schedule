@@ -17,11 +17,13 @@
             getLeagues: getLeagues,
             getLocations: getLocations,
             getSlots: getSlots,
+            getSpecialRequests: getSpecialRequests,
             getTeams: getTeams,
             resetGames: resetGames,
             saveGame: saveGame,
             saveLeague: saveLeague,
             saveSlot: saveSlot,
+            saveSpecialRequest: saveSpecialRequest,
             saveTeam: saveTeam
         };
 
@@ -68,6 +70,10 @@
             return httpGet('/api/slots?leagueId=' + leagueId);
         }
 
+        function getSpecialRequests(leagueId) {
+            return httpGet('/api/specialrequests?leagueId=' + leagueId);
+        }
+
         function getTeams(leagueId) {
             return httpGet('/api/teams?leagueId=' + leagueId);
         }
@@ -94,6 +100,10 @@
 
         function saveSlot(slot) {
             return saveItem('/api/slots', slot);
+        }
+
+        function saveSpecialRequest(specialRequest) {
+            return saveItem('/api/specialrequests', specialRequest);
         }
 
         function saveTeam(team) {
