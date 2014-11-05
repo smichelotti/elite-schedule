@@ -15,29 +15,85 @@
         return service;
 
         function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup) {
+            var minTimeBetweenGames = 60;
             var availableSlots = generateSlots(slotRanges);
             var matchups = generateMatchUps(teams, numberOfRounds);
             matchups = _.sortBy(matchups, ['round', 'division']);
+
+            console.log('***AVAILABLE SLOTS***');
+            console.table(availableSlots);
+            console.log('***MATCH UPS***');
             console.table(matchups);
 
             var games = [];
 
             _.forEach(matchups, function (mu) {
-                var slot = availableSlots.shift();
-                var game = {
-                    startTime: slot.startTime,
-                    locationId: slot.locationId,
-                    locationName: locationsLookup[slot.locationId],
-                    division: mu.division,
-                    round: mu.round,
-                    display: mu.display,
-                    team1Id: mu.team1,
-                    team2Id: mu.team2
-                };
-                games.push(game);
+                //var slot = availableSlots.shift();
+                var slot = getNextValidSlotForMatchUp(mu);
+                if (slot) {
+                    var game = {
+                        startTime: slot.startTime,
+                        locationId: slot.locationId,
+                        locationName: locationsLookup[slot.locationId],
+                        division: mu.division,
+                        round: mu.round,
+                        display: mu.display,
+                        team1Id: mu.team1,
+                        team2Id: mu.team2
+                    };
+                    games.push(game);
+                } else {
+                    console.log("***SLOT NOT FOUND FOR GAME!!!", mu);
+                }
             });
 
+            console.log("**generation complete! Remaining availableslots?");
+            console.table(availableSlots);
+
             return games;
+
+            function getNextValidSlotForMatchUp(matchup) {
+                // Find previous games for both teams in this match up
+                var team1LastGame = findLastGameForTeam(matchup.team1);
+                var team2LastGame = findLastGameForTeam(matchup.team2);
+                var team1LastGameStart, team2LastGameStart;
+                if (team1LastGame) {
+                    team1LastGameStart = moment(team1LastGame.startTime);
+                }
+
+                if (team2LastGame) {
+                    team2LastGameStart = moment(team2LastGame.startTime);
+                }
+
+                // Make sure the difference is greater than the minimum time threshold
+                var nextSlotIndex = _.findIndex(availableSlots, function (slot) {
+                    var slotStart = moment(slot.startTime);
+
+                    var team1Diff = (team1LastGame ? slotStart.diff(team1LastGameStart, 'minutes') : minTimeBetweenGames);
+                    var team2Diff = (team2LastGame ? slotStart.diff(team2LastGameStart, 'minutes') : minTimeBetweenGames);
+
+                    return team1Diff >= minTimeBetweenGames && team2Diff >= minTimeBetweenGames;
+                });
+
+                //TODO: probably need a check if no valid slot is found (index: -1)
+                // Get the slot so we can return it
+                if (nextSlotIndex === -1) {
+                    console.log("######nextSlotIndex", nextSlotIndex, matchup);
+                }
+                var nextSlot = availableSlots[nextSlotIndex];
+
+                // Remove it before we return
+                availableSlots.splice(nextSlotIndex, 1);
+
+                return nextSlot;
+            }
+
+            function findLastGameForTeam(teamId) {
+                // consider using _.max() instead of _.findLast()
+                return _.findLast(games, function (game) {
+                    return game.team1Id === teamId || game.team2Id === teamId;
+                });
+            }
         }
 
         function generateMatchUps(teams, numberOfRounds) {

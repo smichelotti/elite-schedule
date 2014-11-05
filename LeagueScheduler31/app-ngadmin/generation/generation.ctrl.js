@@ -88,9 +88,9 @@
 
         function generate() {
             console.log('***about to generate');
-            console.table(initialData.slotRanges);
+            //console.table(initialData.slotRanges);
             var availableSlots = generationService.generateSlots(initialData.slotRanges);
-            console.table(availableSlots);
+            //console.table(availableSlots);
 
             validationsCheck(availableSlots);
             if (vm.alerts.length > 0) {

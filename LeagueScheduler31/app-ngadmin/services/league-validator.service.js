@@ -37,7 +37,7 @@
             }
 
             var minTimeBetweenGames = 60,
-                maxTimeBetweenGames = 240;
+                maxTimeBetweenGames = 260;//240;
 
             for (var i = 0; i < teamGames.length; i++) {
                 if (i === 0) {
@@ -51,7 +51,7 @@
                 var gameTimes = previousStart.format(formatString) + ' and ' + currentStart.format(formatString);
 
                 if (previousStart.isSame(currentStart, 'day')) {
-                    if (previousStart.isSame(currentStart, 'day') && diff < minTimeBetweenGames) {
+                    if (diff < minTimeBetweenGames) {
                         validations.push(fullTeamName + ' - Insufficient time between games: ' +
                             diff + ' minutes. Should be at least: ' + minTimeBetweenGames +
                             '. Game times: ' + gameTimes);
