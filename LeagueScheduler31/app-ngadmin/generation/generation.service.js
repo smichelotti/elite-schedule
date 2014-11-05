@@ -17,6 +17,8 @@
         function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup) {
             var availableSlots = generateSlots(slotRanges);
             var matchups = generateMatchUps(teams, numberOfRounds);
+            matchups = _.sortBy(matchups, ['round', 'division']);
+            console.table(matchups);
 
             var games = [];
 

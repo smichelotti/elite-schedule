@@ -98,6 +98,7 @@
             }
 
             var generatedMatchUps = generationService.generateMatchUps(vm.teams, vm.numberOfRounds);
+            //TODO: need to remove this
             vm.allMatchUps = generatedMatchUps;
 
 

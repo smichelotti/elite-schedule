@@ -50,14 +50,16 @@
                 var diff = currentStart.diff(previousStart, 'minutes');
                 var gameTimes = previousStart.format(formatString) + ' and ' + currentStart.format(formatString);
 
-                if (diff < minTimeBetweenGames) {
-                    validations.push(fullTeamName + ' - Insufficient time between games: ' +
-                        diff + ' minutes. Should be at least: ' + minTimeBetweenGames +
-                        '. Game times: ' + gameTimes);
-                } else if (diff > maxTimeBetweenGames) {
-                    validations.push(fullTeamName + ' - Too much time between games: ' +
-                        diff + ' minutes. Should be at most: ' + maxTimeBetweenGames +
-                        '. Game times: ' + gameTimes);
+                if (previousStart.isSame(currentStart, 'day')) {
+                    if (previousStart.isSame(currentStart, 'day') && diff < minTimeBetweenGames) {
+                        validations.push(fullTeamName + ' - Insufficient time between games: ' +
+                            diff + ' minutes. Should be at least: ' + minTimeBetweenGames +
+                            '. Game times: ' + gameTimes);
+                    } else if (diff > maxTimeBetweenGames) {
+                        validations.push(fullTeamName + ' - Too much time between games: ' +
+                            diff + ' minutes. Should be at most: ' + maxTimeBetweenGames +
+                            '. Game times: ' + gameTimes);
+                    }
                 }
             }
         }
