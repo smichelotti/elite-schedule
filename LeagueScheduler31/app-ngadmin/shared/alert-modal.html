@@ -4,7 +4,7 @@
 
 <div class="modal-body">
     <ul>
-        <li ng-repeat="msg in vm.properties.messages">{{msg}}</li>
+        <li ng-repeat="msg in vm.properties.messages track by $index">{{msg}}</li>
     </ul>
 </div>
 

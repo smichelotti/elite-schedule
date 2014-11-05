@@ -30,13 +30,35 @@
                 return game.team1Id === team.id || game.team2Id === team.id;
             });
 
-            console.log(fullTeamName, teamGames.length);
-
-            //var messages = [];
 
             if (teamGames.length !== numberOfRounds) {
-                validations.push('Number of games for ' + fullTeamName + ' is: ' +
+                validations.push(fullTeamName + ' - Number of games is: ' +
                     teamGames.length + '. Should be: ' + numberOfRounds);
+            }
+
+            var minTimeBetweenGames = 60,
+                maxTimeBetweenGames = 240;
+
+            for (var i = 0; i < teamGames.length; i++) {
+                if (i === 0) {
+                    continue;
+                }
+
+                var formatString = 'MM/DD/YYYY h:mm a';
+                var previousStart = moment(teamGames[i - 1].gameTime);
+                var currentStart = moment(teamGames[i].gameTime);
+                var diff = currentStart.diff(previousStart, 'minutes');
+                var gameTimes = previousStart.format(formatString) + ' and ' + currentStart.format(formatString);
+
+                if (diff < minTimeBetweenGames) {
+                    validations.push(fullTeamName + ' - Insufficient time between games: ' +
+                        diff + ' minutes. Should be at least: ' + minTimeBetweenGames +
+                        '. Game times: ' + gameTimes);
+                } else if (diff > maxTimeBetweenGames) {
+                    validations.push(fullTeamName + ' - Too much time between games: ' +
+                        diff + ' minutes. Should be at most: ' + maxTimeBetweenGames +
+                        '. Game times: ' + gameTimes);
+                }
             }
         }
     }
