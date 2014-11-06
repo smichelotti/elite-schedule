@@ -28,8 +28,8 @@
         function activate() {
             console.log('**vm.editableItem', vm.editableItem, data);
             if (data.itemToEdit) {
-                vm.gameDate = data.itemToEdit.time;
-                vm.gameTime = moment(data.itemToEdit.time).toDate();
+                vm.gameDate = data.itemToEdit.gameTime;
+                vm.gameTime = moment(data.itemToEdit.gameTime).toDate();
             } else {
                 vm.gameDate = moment().format('MM/DD/YYYY');
                 vm.gameTime = moment('18:00', 'HH:mm').toDate();
