@@ -4,6 +4,7 @@
         <div class="col-md-4">
             <button class="btn btn-primary" ng-click="vm.editItem()">Add New Game</button>
             <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
+            <button class="btn btn-primary" ng-show="vm.selected.length === 2" ng-click="vm.swapGames()">Swap</button>
         </div>
         <div class="col-md-3">
             <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">
@@ -21,6 +22,7 @@
     <table class="table table-striped table-hover table-condensed">
         <thead>
         <tr>
+            <th></th>
             <th>Game Time</th>
             <th>Home Team</th>
             <th>Away Team</th>
@@ -30,7 +32,12 @@
         </thead>
         <tbody>
             <tr ng-repeat="game in vm.games | filter: vm.gameFilter"
-                ng-class="{'warning': vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]}">
+                ng-class="{'info': vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id], 'danger': vm.selectedRows[game.id]}">
+                <td>
+                    <button class="btn btn-default" ng-model="vm.selectedRows[game.id]" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-change="vm.selectRow()">
+                        <span class="glyphicon" ng-class="{'glyphicon-check': vm.selectedRows[game.id], 'glyphicon-unchecked': !vm.selectedRows[game.id]}"></span>
+                    </button>
+                </td>
                 <td>{{game.gameTime | date: 'short'}}</td>
                 <td>
                     <span ng-class="{'text-success': game.team1Score > game.team2Score}">{{vm.teamsLookup[game.team1Id]}}</span>
@@ -51,8 +58,8 @@
                             <li><a ng-click="vm.editScores(game)">Scores</a></li>
                             <li><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
                             <!--<li ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]">
-                                <a ng-click="vm.viewScheduleRequests(game)">View Schedule Requests</a>
-                            </li>-->
+                        <a ng-click="vm.viewScheduleRequests(game)">View Schedule Requests</a>
+                    </li>-->
                         </ul>
                     </div>
                     <button ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]"
@@ -60,6 +67,10 @@
                             popover="View Schedule Request" popover-trigger="mouseenter" popover-placement="left">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </button>
+
+                    <!--<button class="btn btn-success">
+                <span class="glyphicon glyphicon-unchecked"></span>
+            </button>-->
                 </td>
             </tr>
         </tbody>

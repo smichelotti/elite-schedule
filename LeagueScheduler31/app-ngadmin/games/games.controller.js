@@ -3,10 +3,10 @@
 
     angular.module('eliteApp').controller('GamesCtrl', GamesCtrl);
 
-    GamesCtrl.$inject = ['$modal', '$stateParams', '$filter', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
+    GamesCtrl.$inject = ['$modal', '$stateParams', '$filter', '$q', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
 
     /* @ngInject */
-    function GamesCtrl($modal, $stateParams, $filter, initialData, eliteApi, dialogs, leagueValidator) {
+    function GamesCtrl($modal, $stateParams, $filter, $q, initialData, eliteApi, dialogs, leagueValidator) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -20,12 +20,16 @@
         vm.games = _.sortBy(initialData.games, 'gameTime');
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
+        vm.selectRow = selectRow;
         vm.specialRequests = initialData.specialRequests;
         vm.specialRequestsLookup = {};
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
         vm.validateAll = validateAll;
         vm.viewScheduleRequests = viewScheduleRequests;
+        vm.selected = [];
+        vm.selectedRows = {};
+        vm.swapGames = swapGames;
 
         vm.calendarConfig = {
             height: 550,
@@ -177,6 +181,67 @@
             if (vm.filterTeamId) {
                 return game.team1Id === vm.filterTeamId || game.team2Id === vm.filterTeamId;
             }
+        }
+        
+
+        function swapGames() {
+            var game1 = _.find(vm.games, { 'id': Number(vm.selected[0]) });
+            var game2 = _.find(vm.games, { 'id': Number(vm.selected[1]) });
+            var game1Temp = { gameTime: game1.gameTime, locationId: game1.locationId };
+            var game2Temp = { gameTime: game2.gameTime, locationId: game2.locationId };
+            game1.gameTime = game2Temp.gameTime;
+            game1.locationId = game2Temp.locationId;
+            game2.gameTime = game1Temp.gameTime;
+            game2.locationId = game1Temp.locationId;
+
+            return $q.all([
+            eliteApi.saveGame(game1),
+            eliteApi.saveGame(game2)
+            ]).then(function (results) {
+                _.assign(game1, results[0]);
+                _.assign(game2, results[1]);
+                vm.games = _.sortBy(vm.games, 'gameTime');
+            });
+        }
+
+        function selectRow() {
+            //var selected = [];
+            vm.selected = [];
+            var result = _.forOwn(vm.selectedRows, function (value, key, obj) {
+                if (value) {
+                    //selected.push(key);
+                    vm.selected.push(key);
+                }
+            });
+            //console.log("result", selected, selected.length);
+
+            //if (selected.length === 2) {
+            //    dialogs.confirm('Swap these 2 games?', 'Swap?', ['Yes', 'No'])
+            //     .then(function () {
+            //         var game1 = _.find(vm.games, { 'id': Number(selected[0]) });
+            //         var game2 = _.find(vm.games, { 'id': Number(selected[1]) });
+            //         var game1Temp = { gameTime: game1.gameTime, locationId: game1.locationId };
+            //         var game2Temp = { gameTime: game2.gameTime, locationId: game2.locationId };
+            //         game1.gameTime = game2Temp.gameTime;
+            //         game1.locationId = game2Temp.locationId;
+            //         game2.gameTime = game1Temp.gameTime;
+            //         game2.locationId = game1Temp.locationId;
+
+            //         return $q.all([
+            //            eliteApi.saveGame(game1),
+            //            eliteApi.saveGame(game2)
+            //         ]).then(function (results) {
+            //             _.assign(game1, results[0]);
+            //             _.assign(game2, results[1]);
+            //             vm.games = _.sortBy(vm.games, 'gameTime');
+            //         });
+            //     }, function () {
+            //        // No, do not swap
+            //        _.forEach(selected, function (id) {
+            //            vm.selectedRows[id] = 0;
+            //        });
+            //     });
+            //}
         }
 
         function validateAll() {

@@ -17,6 +17,7 @@
         function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup) {
             var minTimeBetweenGames = 60;
             var availableSlots = generateSlots(slotRanges);
+            availableSlots = _.sortBy(availableSlots, 'startTime');
             var matchups = generateMatchUps(teams, numberOfRounds);
             matchups = _.sortBy(matchups, ['round', 'division']);
 
