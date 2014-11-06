@@ -50,11 +50,16 @@
                             <li><a ng-click="vm.editItem(game)">Edit</a></li>
                             <li><a ng-click="vm.editScores(game)">Scores</a></li>
                             <li><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
-                            <li ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]">
+                            <!--<li ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]">
                                 <a ng-click="vm.viewScheduleRequests(game)">View Schedule Requests</a>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
+                    <button ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]"
+                            class="btn btn-danger" ng-click="vm.viewScheduleRequests(game)"
+                            popover="View Schedule Request" popover-trigger="mouseenter" popover-placement="left">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </button>
                 </td>
             </tr>
         </tbody>

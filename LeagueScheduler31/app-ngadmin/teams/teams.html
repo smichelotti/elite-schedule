@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="team in group.teams" ng-class="{'warning': vm.specialRequestsLookup[team.id]}">
+                    <tr ng-repeat="team in group.teams" ng-class="{'info': vm.specialRequestsLookup[team.id]}">
                         <td>{{$index + 1}}</td>
                         <td>{{team.name}}</td>
                         <td>{{team.coach}}</td>
