@@ -20,14 +20,28 @@ namespace LeagueScheduler.Controllers
 
         public SpecialRequest Post(SpecialRequest item)
         {
-            this.repository.InsertOrUpdate(item);
+            if (string.IsNullOrEmpty(item.RequestText))
+            {
+                this.repository.Delete(item.Id);
+            }
+            else
+            {
+                this.repository.InsertOrUpdate(item);
+            }
             this.repository.Save();
             return item;
         }
 
         public SpecialRequest Put(SpecialRequest item)
         {
-            this.repository.InsertOrUpdate(item);
+            if (string.IsNullOrEmpty(item.RequestText))
+            {
+                this.repository.Delete(item.Id);
+            }
+            else
+            {
+                this.repository.InsertOrUpdate(item);
+            }
             this.repository.Save();
             return item;
         }

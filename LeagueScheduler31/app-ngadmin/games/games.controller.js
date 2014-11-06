@@ -20,9 +20,12 @@
         vm.games = _.sortBy(initialData.games, 'gameTime');
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
+        vm.specialRequests = initialData.specialRequests;
+        vm.specialRequestsLookup = {};
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
         vm.validateAll = validateAll;
+        vm.viewScheduleRequests = viewScheduleRequests;
 
         vm.calendarConfig = {
             height: 550,
@@ -49,6 +52,10 @@
 
             _.forEach(vm.locations, function(location){
                vm.locationsLookup[location.id] = location.name;
+            });
+
+            _.forEach(vm.specialRequests, function (specialReq) {
+                vm.specialRequestsLookup[specialReq.teamId] = specialReq;
             });
 
             // set up event sources for calendar control
@@ -180,6 +187,23 @@
                 dialogs.alert(validations, 'Violations Detected! (' + validations.length + ')');
             } else {
                 dialogs.alert(['All tests passed.'], 'Valid!');
+            }
+        }
+
+        function viewScheduleRequests(game) {
+            var messages = [];
+
+            createMessageForTeam(game.team1Id);
+            createMessageForTeam(game.team2Id);
+
+            dialogs.alert(messages, 'Schedule Requests');
+
+            function createMessageForTeam(teamId) {
+                var teamReq = vm.specialRequestsLookup[teamId];
+                if (teamReq) {
+                    var teamName = vm.teamsLookup[teamId];
+                    messages.push(teamName + ': ' + teamReq.requestText);
+                }
             }
         }
     }

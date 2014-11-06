@@ -3,10 +3,10 @@
 
     angular.module('eliteApp').controller('TeamsCtrl', TeamsCtrl);
 
-    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'eliteApi', 'dialogsService'];
+    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'initialSpecRequests', 'eliteApi', 'dialogsService'];
 
     /* @ngInject */
-    function TeamsCtrl($modal, $stateParams, $q, initialData, eliteApi, dialogs) {
+    function TeamsCtrl($modal, $stateParams, $q, initialData, initialSpecRequests, eliteApi, dialogs) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -16,7 +16,9 @@
         vm.divisions = [];
         vm.editItem = editItem;
         vm.showImport = showImport;
-        vm.specialRequest = specialRequest;
+        vm.specialRequests = initialSpecRequests;
+        vm.specialRequestsLookup = {};
+        vm.editSpecialRequest = editSpecialRequest;
         vm.teams = initialData;
         vm.toggleExpand = toggleExpand;
 
@@ -26,6 +28,10 @@
 
         function activate() {
             initializeGroups();
+
+            _.forEach(vm.specialRequests, function (specialReq) {
+                vm.specialRequestsLookup[specialReq.teamId] = specialReq;
+            });
         }
 
         function deleteItem(id) {
@@ -108,9 +114,7 @@
             });
         }
 
-        function specialRequest(team) {
-            console.log("**inside specialRequest");
-
+        function editSpecialRequest(team) {
             var modalInstance = $modal.open({
                 templateUrl: '/app-ngadmin/teams/special-requests.html',
                 controller: 'SpecialRequestsCtrl',
@@ -118,7 +122,8 @@
                 resolve: {
                     data: function () {
                         return {
-                            itemToEdit: {}//need to put specialRequest entity here
+                            team: team,
+                            itemToEdit: vm.specialRequestsLookup[team.id]
                         };
                     }
                 }
@@ -126,13 +131,13 @@
 
             modalInstance.result.then(function (result) {
                 result.leagueId = $stateParams.leagueId;
+                result.teamId = team.id;
                 eliteApi.saveSpecialRequest(result).then(function (data) {
-                    //if (team) {
-                    //    _.assign(team, data);
-                    //} else {
-                    //    vm.teams.push(data);
-                    //}
-                    //initializeGroups();
+                    if (data.requestText) {
+                        vm.specialRequestsLookup[team.id] = data;
+                    } else {
+                        delete vm.specialRequestsLookup[team.id];
+                    }
                 });
             });
         }

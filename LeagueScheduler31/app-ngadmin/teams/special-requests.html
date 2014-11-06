@@ -2,9 +2,10 @@
     <h2>Special Scheduling Requests</h2>
 </div>
 <div class="modal-body">
-
+    <h3>{{vm.properties.team.name}}</h3>
+    <textarea cols="30" rows="10" ng-model="vm.editableItem.requestText" style="width:100%"></textarea>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="vm.Save()">Save</button>
+    <button class="btn btn-primary" ng-click="vm.save()">Save</button>
     <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
 </div>

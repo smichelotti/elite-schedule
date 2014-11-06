@@ -277,6 +277,8 @@
     <Content Include="app-ngadmin\teams\edit-team.html" />
     <Content Include="app-ngadmin\teams\import-teams.controller.js" />
     <Content Include="app-ngadmin\teams\import-teams.html" />
+    <Content Include="app-ngadmin\teams\special-requests-controller.js" />
+    <Content Include="app-ngadmin\teams\special-requests.html" />
     <Content Include="app-ngadmin\teams\teams.controller.js" />
     <Content Include="app-ngadmin\teams\teams.html" />
     <Content Include="app-ng\app.js" />

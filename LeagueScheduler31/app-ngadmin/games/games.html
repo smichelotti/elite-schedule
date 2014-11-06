@@ -29,30 +29,34 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="game in vm.games | filter: vm.gameFilter">
-            <td>{{game.gameTime | date: 'short'}}</td>
-            <td>
-                <span ng-class="{'text-success': game.team1Score > game.team2Score}">{{vm.teamsLookup[game.team1Id]}}</span>
-                <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
-            </td>
-            <td>
-                <span ng-class="{'text-success': game.team2Score > game.team1Score}">{{vm.teamsLookup[game.team2Id]}}</span>
-                <span ng-show="game.team2Score"><strong>({{game.team2Score}})</strong></span>
-            </td>
-            <td>{{vm.locationsLookup[game.locationId]}}</td>
-            <td>
-                <div class="btn-group" dropdown>
-                    <button class="btn btn-success dropdown-toggle" type="button">
-                        Action <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a ng-click="vm.editItem(game)">Edit</a></li>
-                        <li><a ng-click="vm.editScores(game)">Scores</a></li>
-                        <li><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
+            <tr ng-repeat="game in vm.games | filter: vm.gameFilter"
+                ng-class="{'warning': vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]}">
+                <td>{{game.gameTime | date: 'short'}}</td>
+                <td>
+                    <span ng-class="{'text-success': game.team1Score > game.team2Score}">{{vm.teamsLookup[game.team1Id]}}</span>
+                    <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
+                </td>
+                <td>
+                    <span ng-class="{'text-success': game.team2Score > game.team1Score}">{{vm.teamsLookup[game.team2Id]}}</span>
+                    <span ng-show="game.team2Score"><strong>({{game.team2Score}})</strong></span>
+                </td>
+                <td>{{vm.locationsLookup[game.locationId]}}</td>
+                <td>
+                    <div class="btn-group" dropdown>
+                        <button class="btn btn-success dropdown-toggle" type="button">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="vm.editItem(game)">Edit</a></li>
+                            <li><a ng-click="vm.editScores(game)">Scores</a></li>
+                            <li><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
+                            <li ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]">
+                                <a ng-click="vm.viewScheduleRequests(game)">View Schedule Requests</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 

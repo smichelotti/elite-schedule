@@ -72,6 +72,10 @@
                     resolve: {
                         initialData: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
                             return eliteApi.getTeams($stateParams.leagueId);
+                        }],
+                        //TODO: combine this to a init data service
+                        initialSpecRequests: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
+                            return eliteApi.getSpecialRequests($stateParams.leagueId);
                         }]
                     }
                 }

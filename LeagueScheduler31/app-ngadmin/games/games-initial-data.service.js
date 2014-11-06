@@ -20,13 +20,15 @@
             return $q.all([
                 eliteApi.getTeams(leagueId),
                 eliteApi.getGames(leagueId),
+                eliteApi.getSpecialRequests(leagueId),
                 eliteApi.getLocations()
             ]).then(function(results){
-                console.log('***initial data results', results);
+                //console.log('***initial data results', results);
                 return {
                     teams: results[0],
                     games: results[1],
-                    locations: results[2]
+                    specialRequests: results[2],
+                    locations: results[3]
                 };
             });
         }

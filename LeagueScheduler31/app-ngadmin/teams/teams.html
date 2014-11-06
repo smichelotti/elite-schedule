@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="team in group.teams">
+                    <tr ng-repeat="team in group.teams" ng-class="{'warning': vm.specialRequestsLookup[team.id]}">
                         <td>{{$index + 1}}</td>
                         <td>{{team.name}}</td>
                         <td>{{team.coach}}</td>
@@ -44,7 +44,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a ng-click="vm.editItem(team)">Edit</a></li>
                                     <li><a ng-click="vm.deleteItem(team.id)">Delete</a></li>
-                                    <li><a ng-click="vm.specialRequest(team)">Special Requests</a></li>
+                                    <li><a ng-click="vm.editSpecialRequest(team)">Special Requests</a></li>
                                 </ul>
                             </div>
                         </td>
