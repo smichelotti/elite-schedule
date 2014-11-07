@@ -16,6 +16,7 @@
 
         function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup) {
             var minTimeBetweenGames = 60;
+            var maxTimeBetweenGames = 260;
             var availableSlots = generateSlots(slotRanges);
             availableSlots = _.sortBy(availableSlots, 'startTime');
             var matchups = generateMatchUps(teams, numberOfRounds);
@@ -72,8 +73,15 @@
 
                     var team1Diff = (team1LastGame ? slotStart.diff(team1LastGameStart, 'minutes') : minTimeBetweenGames);
                     var team2Diff = (team2LastGame ? slotStart.diff(team2LastGameStart, 'minutes') : minTimeBetweenGames);
+                    var doDiffCheckForTeam1 = (team1LastGame && team1LastGameStart.isSame(slotStart, 'day'));
+                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day'));
 
-                    return team1Diff >= minTimeBetweenGames && team2Diff >= minTimeBetweenGames;
+                    var team1Valid = doDiffCheckForTeam1 ?
+                        (team1Diff >= minTimeBetweenGames && team1Diff <= maxTimeBetweenGames) : true;
+                    var team2Valid = doDiffCheckForTeam2 ?
+                        (team2Diff >= minTimeBetweenGames && team2Diff <= maxTimeBetweenGames) : true;
+
+                    return team1Valid && team2Valid;
                 });
 
                 //TODO: probably need a check if no valid slot is found (index: -1)
