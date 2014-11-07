@@ -66,34 +66,19 @@
 
             // set up event sources for calendar control
             var colors = ['primary', 'success', 'warning', 'danger', 'info', 'default'];
+            var uniqLocations = _(vm.games).uniq('locationId').map('locationId').value();
             _.forEach(vm.locations, function (loc, index) {
-                vm.locationsList.push({
-                    locationId: loc.id,
-                    name: loc.name,
-                    color: colors[index % 6],
-                    active: true
-                });
+                if (_.contains(uniqLocations, loc.id)) {
+                    vm.locationsList.push({
+                        locationId: loc.id,
+                        name: loc.name,
+                        color: colors[index % 6],
+                        active: true
+                    });
+                }
             });
 
             setEventSources();
-
-            //var gameEvents = [];
-            //_.forEach(vm.games, function(game){
-            //    var gameEvent = mapToGameEvent(game);
-            //    gameEvents.push(gameEvent);
-            //});
-
-            //var groups = _.groupBy(gameEvents, 'locationId');
-            //var sources = [];
-            //_.forOwn(groups, function (value, key) {
-            //    var loc = _.find(vm.locationsList, { 'locationId': Number(key) });
-            //    sources.push({ className: 'bg-' + loc.color, events: value });
-            //});
-            //console.log('**groups', groups);
-
-            //console.table(gameEvents);
-            ////vm.eventSources = [gameEvents];
-            //vm.eventSources = sources;
         }
 
         function setEventSources() {
@@ -108,13 +93,12 @@
             _.forOwn(groups, function (value, key) {
                 var loc = _.find(vm.locationsList, { 'locationId': Number(key) });
                 if (loc.active) {
-                    //sources.push({ className: 'bg-' + loc.color, events: value });
                     sources.push({ className: 'btn-' + loc.color, events: value });
                 }
             });
             console.log('**groups', groups);
 
-            console.table(gameEvents);
+            //console.table(gameEvents);
             //vm.eventSources = [gameEvents];
             console.log('***about to set event sources!!', sources);
             vm.eventSources = sources;
