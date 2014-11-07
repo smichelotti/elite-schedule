@@ -15,7 +15,7 @@
             { text: 'Time Slots', state: 'league.slots' },
             { text: 'Generation', state: 'league.generation' },
             { text: 'Games', state: 'league.games' },
-            { text: 'Games Calendar', state: 'league.games-calendar', disabled: true },
+            { text: 'Games Calendar', state: 'league.games-calendar' },
             { text: 'Home', state: 'league.home', disabled: true },
             { text: 'Rules', state: 'league.rules', disabled: true }
         ];

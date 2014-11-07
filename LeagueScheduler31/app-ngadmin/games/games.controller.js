@@ -3,23 +3,25 @@
 
     angular.module('eliteApp').controller('GamesCtrl', GamesCtrl);
 
-    GamesCtrl.$inject = ['$modal', '$stateParams', '$filter', '$q', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
+    GamesCtrl.$inject = ['$scope', '$modal', '$stateParams', '$filter', '$q', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
 
     /* @ngInject */
-    function GamesCtrl($modal, $stateParams, $filter, $q, initialData, eliteApi, dialogs, leagueValidator) {
+    function GamesCtrl($scope, $modal, $stateParams, $filter, $q, initialData, eliteApi, dialogs, leagueValidator) {
         /* jshint validthis: true */
         var vm = this;
 
         vm.orderBy = $filter('orderBy');
         vm.activate = activate;
+        //vm.colors = ['active', 'success', 'warning', 'danger', 'info', 'default'];
         vm.deleteItem = deleteItem;
         vm.editItem = editItem;
         vm.editScores = editScores;
         vm.gameFilter = gameFilter;
-        //vm.games = initialData.games;
         vm.games = _.sortBy(initialData.games, 'gameTime');
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
+        vm.locationsList = [];
+        vm.locationCalendarChanged = locationCalendarChanged;
         vm.selectRow = selectRow;
         vm.specialRequests = initialData.specialRequests;
         vm.specialRequestsLookup = {};
@@ -63,23 +65,83 @@
             });
 
             // set up event sources for calendar control
+            var colors = ['primary', 'success', 'warning', 'danger', 'info', 'default'];
+            _.forEach(vm.locations, function (loc, index) {
+                vm.locationsList.push({
+                    locationId: loc.id,
+                    name: loc.name,
+                    color: colors[index % 6],
+                    active: true
+                });
+            });
+
+            setEventSources();
+
+            //var gameEvents = [];
+            //_.forEach(vm.games, function(game){
+            //    var gameEvent = mapToGameEvent(game);
+            //    gameEvents.push(gameEvent);
+            //});
+
+            //var groups = _.groupBy(gameEvents, 'locationId');
+            //var sources = [];
+            //_.forOwn(groups, function (value, key) {
+            //    var loc = _.find(vm.locationsList, { 'locationId': Number(key) });
+            //    sources.push({ className: 'bg-' + loc.color, events: value });
+            //});
+            //console.log('**groups', groups);
+
+            //console.table(gameEvents);
+            ////vm.eventSources = [gameEvents];
+            //vm.eventSources = sources;
+        }
+
+        function setEventSources() {
             var gameEvents = [];
-            _.forEach(vm.games, function(game){
+            _.forEach(vm.games, function (game) {
                 var gameEvent = mapToGameEvent(game);
                 gameEvents.push(gameEvent);
             });
 
-            vm.eventSources = [gameEvents];
+            var groups = _.groupBy(gameEvents, 'locationId');
+            var sources = [];
+            _.forOwn(groups, function (value, key) {
+                var loc = _.find(vm.locationsList, { 'locationId': Number(key) });
+                if (loc.active) {
+                    //sources.push({ className: 'bg-' + loc.color, events: value });
+                    sources.push({ className: 'btn-' + loc.color, events: value });
+                }
+            });
+            console.log('**groups', groups);
+
+            console.table(gameEvents);
+            //vm.eventSources = [gameEvents];
+            console.log('***about to set event sources!!', sources);
+            vm.eventSources = sources;
+        }
+
+        function locationCalendarChanged(loc) {
+            console.log('**in locationCalendarChanged()', loc, $scope.rawCalendar.fullCalendar);
+            _.forEach(vm.eventSources, function (es) {
+                $scope.rawCalendar.fullCalendar('removeEventSource', es);
+            });
+
+            setEventSources();
+
+            _.forEach(vm.eventSources, function (es) {
+                $scope.rawCalendar.fullCalendar('addEventSource', es);
+            });
         }
 
         function mapToGameEvent(game){
             return {
                 id: game.id,
-                start: game.time,
+                start: moment(game.gameTime).format('YYYY-MM-DDTHH:mm:00'),
                 title: vm.teamsLookup[game.team1Id] + ' vs. ' + vm.teamsLookup[game.team2Id],
                 allDay: false,
                 durationEditable: false,
-                end: moment(game.time).add(1, 'hour').toDate()
+                end: moment(game.gameTime).add(1, 'hour').toDate(),
+                locationId: game.locationId
             };
         }
 
@@ -182,7 +244,6 @@
                 return game.team1Id === vm.filterTeamId || game.team2Id === vm.filterTeamId;
             }
         }
-        
 
         function swapGames() {
             var game1 = _.find(vm.games, { 'id': Number(vm.selected[0]) });

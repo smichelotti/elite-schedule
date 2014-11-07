@@ -11,7 +11,8 @@
         'ui.router',
         'ui.grid',
         'ui.grid.edit',
-        'ui.grid.importer'
+        'ui.grid.importer',
+        'ui.calendar'
 //        'ui.select'
     ]);
 
@@ -120,6 +121,23 @@
             views: {
                 'tabContent': {
                     templateUrl: '/app-ngadmin/games/games.html',
+                    controller: 'GamesCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        initialData: ['$stateParams', 'gamesInitialDataService',
+                            function ($stateParams, gamesInitialDataService) {
+                                return gamesInitialDataService.getData($stateParams.leagueId);
+                            }]
+                    }
+                }
+            }
+        })
+
+        .state('league.games-calendar', {
+            url: '/games-calendar',
+            views: {
+                'tabContent': {
+                    templateUrl: '/app-ngadmin/games/games-calendar.html',
                     controller: 'GamesCtrl',
                     controllerAs: 'vm',
                     resolve: {

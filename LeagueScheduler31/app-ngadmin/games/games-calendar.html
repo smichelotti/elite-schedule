@@ -3,9 +3,24 @@
     <div class="row">
         <div class="col-md-4">
             <button class="btn btn-primary" ng-click="vm.editItem()">Add New Game</button>
+            <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
         </div>
     </div>
     <p></p>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="location in vm.locationsList">
+                    <button class="btn btn-xs" ng-class="'btn-' + location.color" ng-model="location.active" btn-checkbox ng-change="vm.locationCalendarChanged(location)">
+                        <span class="glyphicon" ng-class="{'glyphicon-check': location.active, 'glyphicon-unchecked': !location.active}"></span>
+                    </button>
+                    <span class="small">{{location.name}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources" calendar="rawCalendar"></div>
+        </div>
+    </div>
 
-    <div ui-calendar="vm.calendarConfig" ng-model="vm.eventSources"></div>
 </div>
