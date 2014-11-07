@@ -80,10 +80,7 @@
         }
 
         function generate() {
-            console.log('***about to generate');
-            //console.table(initialData.slotRanges);
             var availableSlots = generationService.generateSlots(initialData.slotRanges);
-            //console.table(availableSlots);
 
             validationsCheck(availableSlots);
             if (vm.alerts.length > 0) {
@@ -96,9 +93,6 @@
 
 
             vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup);
-
-            //console.table(vm.allMatchUps);
-            //validateMatchUps();
             validateAll();
         }
 
@@ -119,37 +113,9 @@
             var validations = leagueValidator.validateAll(vm.teams, vm.allGames, 4);
 
             if (validations.length > 0) {
-                //console.table(validations);
                 dialogs.alert(validations, 'Violations Detected! (' + validations.length + ')');
             } else {
                 dialogs.alert(['All tests passed.'], 'Valid!');
-            }
-        }
-
-        function validateMatchUps() {
-            _.forEach(vm.teams, function (team) {
-                validateTeam(team);
-            });
-
-            if (vm.alerts.length === 0) {
-                vm.alerts.push({ type: 'success', mainMessage: 'Congrats! No violations detected!' });
-            }
-        }
-
-        function validateTeam(team) {
-            var teamGames = _.filter(vm.allMatchUps, function (mu) {
-                return mu.team1 === team.id || mu.team2 === team.id;
-            });
-
-            var messages = [];
-
-            if (teamGames.length !== vm.numberOfRounds) {
-                messages.push('Number of games: ' + teamGames.length + '. Should be: ' + vm.numberOfRounds);
-            }
-
-            if (messages.length > 0) {
-                var msg = 'Violoations for: ' + team.name + ' (Division: ' + team.division + ')';
-                vm.alerts.push({ type: 'warning', mainMessage: msg, messages: messages });
             }
         }
 

@@ -22,10 +22,10 @@
             var matchups = generateMatchUps(teams, numberOfRounds);
             matchups = _.sortBy(matchups, ['round', 'division']);
 
-            console.log('***AVAILABLE SLOTS***');
-            console.table(availableSlots);
-            console.log('***MATCH UPS***');
-            console.table(matchups);
+            //console.log('***AVAILABLE SLOTS***');
+            //console.table(availableSlots);
+            //console.log('***MATCH UPS***');
+            //console.table(matchups);
 
             var games = [];
 
@@ -50,8 +50,8 @@
                 }
             });
 
-            console.log("**generation complete! Remaining availableslots?");
-            console.table(availableSlots);
+            console.log('**Generation complete! Remaining availableslots: ' + availableSlots.length);
+            //console.table(availableSlots);
 
             return games;
 
@@ -75,10 +75,7 @@
                     var team1Diff = (team1LastGame ? slotStart.diff(team1LastGameStart, 'minutes') : minTimeBetweenGames);
                     var team2Diff = (team2LastGame ? slotStart.diff(team2LastGameStart, 'minutes') : minTimeBetweenGames);
                     var doDiffCheckForTeam1 = (team1LastGame && team1LastGameStart.isSame(slotStart, 'day'));
-                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day')) ? true : false;
-                    if (team2LastGame) {
-                        var isSame = team2LastGameStart.isSame(slotStart, 'day');
-                    }
+                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day'));
 
                     var team1Valid = doDiffCheckForTeam1 ?
                         (team1Diff >= minTimeBetweenGames && team1Diff <= maxTimeBetweenGames) : true;
@@ -129,7 +126,7 @@
         }
 
         function generateMatchUpsForDivision(divisionGroup, numberOfRounds, allMatchUps) {
-            console.log('divisionGroup', divisionGroup, numberOfRounds);
+            //console.log('divisionGroup', divisionGroup, numberOfRounds);
             var bye = 'BYE';
             var oddTeamsInDivision = (divisionGroup.teams.length % 2 !== 0);
             if (oddTeamsInDivision) {
