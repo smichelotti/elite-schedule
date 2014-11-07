@@ -34,7 +34,8 @@
                 var slot = getNextValidSlotForMatchUp(mu);
                 if (slot) {
                     var game = {
-                        startTime: slot.startTime,
+                        //
+                        gameTime: slot.startTime,
                         locationId: slot.locationId,
                         locationName: locationsLookup[slot.locationId],
                         division: mu.division,
@@ -60,11 +61,11 @@
                 var team2LastGame = findLastGameForTeam(matchup.team2);
                 var team1LastGameStart, team2LastGameStart;
                 if (team1LastGame) {
-                    team1LastGameStart = moment(team1LastGame.startTime);
+                    team1LastGameStart = moment(team1LastGame.gameTime);
                 }
 
                 if (team2LastGame) {
-                    team2LastGameStart = moment(team2LastGame.startTime);
+                    team2LastGameStart = moment(team2LastGame.gameTime);
                 }
 
                 // Make sure the difference is greater than the minimum time threshold
@@ -74,7 +75,10 @@
                     var team1Diff = (team1LastGame ? slotStart.diff(team1LastGameStart, 'minutes') : minTimeBetweenGames);
                     var team2Diff = (team2LastGame ? slotStart.diff(team2LastGameStart, 'minutes') : minTimeBetweenGames);
                     var doDiffCheckForTeam1 = (team1LastGame && team1LastGameStart.isSame(slotStart, 'day'));
-                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day'));
+                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day')) ? true : false;
+                    if (team2LastGame) {
+                        var isSame = team2LastGameStart.isSame(slotStart, 'day');
+                    }
 
                     var team1Valid = doDiffCheckForTeam1 ?
                         (team1Diff >= minTimeBetweenGames && team1Diff <= maxTimeBetweenGames) : true;

@@ -3,9 +3,9 @@
 
     angular.module('eliteApp').controller('GenerationCtrl', GenerationCtrl);
 
-    GenerationCtrl.$inject = ['$q', '$stateParams', 'initialData', 'generationService', 'uiGridConstants', 'eliteApi', 'dialogsService'];
+    GenerationCtrl.$inject = ['$q', '$stateParams', 'initialData', 'generationService', 'uiGridConstants', 'eliteApi', 'dialogsService', 'leagueValidator'];
 
-    function GenerationCtrl($q, $stateParams, initialData, generationService, uiGridConstants, eliteApi, dialogs) {
+    function GenerationCtrl($q, $stateParams, initialData, generationService, uiGridConstants, eliteApi, dialogs, leagueValidator) {
         /* jshint validthis:true */
         var vm = this;
         vm.alerts = [];
@@ -23,17 +23,12 @@
         vm.teamsLookup = {};
 
         vm.gridOptions = {
-            //data: 'vm.allMatchUps',
             data: 'vm.allGames',
             enableFiltering: true,
             enableColumnResizing: true,
             columnDefs: [
-                //{ name: 'Round', field: 'round', maxWidth: '50' },
-                { name: 'Start Time', field: 'startTime', cellFilter: 'date:\'MM/d/y h:mm a\'', maxWidth: '50' },
-                //{ name: 'Location', field: 'locationId', maxWidth: '50' },
+                { name: 'Game Time', field: 'gameTime', cellFilter: 'date:\'MM/d/y h:mm a\'', maxWidth: '50' },
                 { name: 'Location', field: 'locationName', maxWidth: '50' },
-                //{ name: 'Home Team', field: 'team1Name' },
-                //{ name: 'Away Team', field: 'team2Name' },
                 {
                     name: 'Home vs. Away', field: 'display', filter: {
                         condition: uiGridConstants.filter.CONTAINS
@@ -47,12 +42,12 @@
 
         function activate() {
             // 1st try:
-            //     * GENERATE game match-ups (based on # of rounds)
-            //     * GENERATE slots (from ranges)
-            //     * ASSIGN games to slots
+            //     X GENERATE game match-ups (based on # of rounds)
+            //     X GENERATE slots (from ranges)
+            //     X ASSIGN games to slots
             //     * VERIFY logic: 1) no back-to-back games, 2) no break between games > 3 hours
             //     - ignore team seeding order (add later)
-            //     - ignore slot range associations with division (add later)
+            //     - ignore location(s) associations with division (add later)
             var groups = _.chain(vm.teams)
                           .groupBy('division')
                           .pairs()
@@ -65,8 +60,6 @@
                 group.numberOfRounds = 4;
             });
 
-            //vm.divisions = groups;
-            //console.log("divisions", vm.divisions);
 
             _.forEach(vm.teams, function (team) {
                 vm.teamsLookup[team.id] = team.name;
@@ -105,7 +98,8 @@
             vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup);
 
             //console.table(vm.allMatchUps);
-            validateMatchUps();
+            //validateMatchUps();
+            validateAll();
         }
 
         function validationsCheck(availableSlots) {
@@ -118,6 +112,17 @@
                     vm.teams.length + ' teams. However there are currently only ' +
                     availableSlots.length + ' slots currently available!';
                 vm.alerts.push({ type: 'danger', mainMessage: msg });
+            }
+        }
+
+        function validateAll() {
+            var validations = leagueValidator.validateAll(vm.teams, vm.allGames, 4);
+
+            if (validations.length > 0) {
+                //console.table(validations);
+                dialogs.alert(validations, 'Violations Detected! (' + validations.length + ')');
+            } else {
+                dialogs.alert(['All tests passed.'], 'Valid!');
             }
         }
 
@@ -159,7 +164,7 @@
                     var game = {
                         leagueId: $stateParams.leagueId,
                         locationId: gameRow.locationId,
-                        gameTime: gameRow.startTime,
+                        gameTime: gameRow.gameTime,
                         team1Id: gameRow.team1Id,
                         team2Id: gameRow.team2Id
                     };
