@@ -119,6 +119,7 @@
                 templateUrl: '/app-ngadmin/teams/special-requests.html',
                 controller: 'SpecialRequestsCtrl',
                 controllerAs: 'vm',
+                size: 'lg',
                 resolve: {
                     data: function () {
                         return {

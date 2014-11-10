@@ -44,7 +44,8 @@
             eventClick: eventClick,
             eventDrop: eventDrop,
             firstHour: 7,
-            defaultView: 'agendaDay'
+            defaultView: 'agendaDay',
+            eventRender: eventRender
         };
 
         activate();
@@ -53,7 +54,7 @@
 
         function activate() {
             _.forEach(vm.teams, function(team){
-               vm.teamsLookup[team.id] = team.name;
+                vm.teamsLookup[team.id] = team;//.name;
             });
 
             _.forEach(vm.locations, function(location){
@@ -79,6 +80,11 @@
             });
 
             setEventSources();
+        }
+
+        function eventRender(event, element) {
+            element.find('.fc-event-title').css({ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: 'inherit', display: 'block' });
+            element.attr('title', event.tooltip);
         }
 
         function setEventSources() {
@@ -117,11 +123,15 @@
             });
         }
 
-        function mapToGameEvent(game){
+        function mapToGameEvent(game) {
+            var team1 = vm.teamsLookup[game.team1Id];
+            var team2 = vm.teamsLookup[game.team2Id];
+
             return {
                 id: game.id,
                 start: moment(game.gameTime).format('YYYY-MM-DDTHH:mm:00'),
-                title: vm.teamsLookup[game.team1Id] + ' vs. ' + vm.teamsLookup[game.team2Id],
+                title: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
+                tooltip: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
                 allDay: false,
                 durationEditable: false,
                 end: moment(game.gameTime).add(1, 'hour').toDate(),

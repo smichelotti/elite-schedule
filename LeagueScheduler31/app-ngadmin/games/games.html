@@ -40,11 +40,17 @@
                 </td>
                 <td>{{game.gameTime | date: 'short'}}</td>
                 <td>
-                    <span ng-class="{'text-success': game.team1Score > game.team2Score}">{{vm.teamsLookup[game.team1Id]}}</span>
+                    <span ng-class="{'text-success': game.team1Score > game.team2Score}">
+                        {{vm.teamsLookup[game.team1Id].name}}
+                        ({{vm.teamsLookup[game.team1Id].division}})
+                    </span>
                     <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
                 </td>
                 <td>
-                    <span ng-class="{'text-success': game.team2Score > game.team1Score}">{{vm.teamsLookup[game.team2Id]}}</span>
+                    <span ng-class="{'text-success': game.team2Score > game.team1Score}">
+                        {{vm.teamsLookup[game.team2Id].name}}
+                        ({{vm.teamsLookup[game.team2Id].division}})
+                    </span>
                     <span ng-show="game.team2Score"><strong>({{game.team2Score}})</strong></span>
                 </td>
                 <td>{{vm.locationsLookup[game.locationId]}}</td>
