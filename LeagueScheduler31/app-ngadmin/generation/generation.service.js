@@ -33,9 +33,10 @@
                 //var slot = availableSlots.shift();
                 var slot = getNextValidSlotForMatchUp(mu);
                 if (slot) {
+                    console.log("slot startTime", slot.startTime, moment(slot.startTime).format('YYYY-MM-DDTHH:mm:00'));
                     var game = {
-                        //
-                        gameTime: slot.startTime,
+                        //gameTime: slot.startTime,
+                        gameTime: moment.utc(slot.startTime).format('YYYY-MM-DDTHH:mm:00'),
                         locationId: slot.locationId,
                         locationName: locationsLookup[slot.locationId],
                         division: mu.division,
@@ -61,11 +62,13 @@
                 var team2LastGame = findLastGameForTeam(matchup.team2);
                 var team1LastGameStart, team2LastGameStart;
                 if (team1LastGame) {
-                    team1LastGameStart = moment(team1LastGame.gameTime);
+                    //team1LastGameStart = moment(team1LastGame.gameTime);
+                    team1LastGameStart = moment.utc(team1LastGame.gameTime);//.format('YYYY-MM-DDTHH:mm:00');
                 }
 
                 if (team2LastGame) {
-                    team2LastGameStart = moment(team2LastGame.gameTime);
+                    //team2LastGameStart = moment(team2LastGame.gameTime);
+                    team2LastGameStart = moment.utc(team2LastGame.gameTime);//.format('YYYY-MM-DDTHH:mm:00');
                 }
 
                 // Make sure the difference is greater than the minimum time threshold

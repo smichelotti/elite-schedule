@@ -99,7 +99,7 @@
             _.forOwn(groups, function (value, key) {
                 var loc = _.find(vm.locationsList, { 'locationId': Number(key) });
                 if (loc.active) {
-                    sources.push({ className: 'btn-' + loc.color, events: value });
+                    sources.push({ className: 'btn-' + loc.color, locationId: Number(key), events: value });
                 }
             });
             console.log('**groups', groups);
@@ -126,15 +126,16 @@
         function mapToGameEvent(game) {
             var team1 = vm.teamsLookup[game.team1Id];
             var team2 = vm.teamsLookup[game.team2Id];
+            var startTime = moment.utc(game.gameTime).format('YYYY-MM-DDTHH:mm:00');
 
             return {
                 id: game.id,
-                start: moment(game.gameTime).format('YYYY-MM-DDTHH:mm:00'),
+                start: startTime,
                 title: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
                 tooltip: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
                 allDay: false,
                 durationEditable: false,
-                end: moment(game.gameTime).add(1, 'hour').toDate(),
+                end: moment(startTime).add(1, 'hour').toDate(),
                 locationId: game.locationId
             };
         }
@@ -156,7 +157,7 @@
         function eventDrop(calEvent){
             console.log('***in eventDrop', calEvent);
             var game = _.find(vm.games, { 'id': calEvent.id });
-            game.time = moment(calEvent.start).format('YYYY-MM-DDTHH:mm:00');
+            game.gameTime = moment(calEvent.start).format('YYYY-MM-DDTHH:mm:00');
             eliteApi.saveGame(game).then(function(data){
                 //_.assign(game, data);
                 //var index = _.findIndex(vm.eventSources[0], { 'id': game.id });
@@ -186,10 +187,11 @@
                     if (game){
                         _.assign(game, data);
                         var index = _.findIndex(vm.eventSources[0], { 'id': game.id });
-                        vm.eventSources[0][index] = mapToGameEvent(game);
+                        //vm.eventSources[0][index] = mapToGameEvent(game);
+                        console.log('**after save eventSources', vm.eventSources);
                     } else{
                         vm.games.push(data);
-                        vm.eventSources[0].push(mapToGameEvent(data));
+                        //vm.eventSources[0].push(mapToGameEvent(data));
                     }
                     //TODO: need to re-sort here (remove angular filter in markup)
                     vm.games = _.sortBy(vm.games, 'gameTime');
@@ -208,8 +210,8 @@
                     data: function () {
                         return {
                             itemToEdit: game,
-                            team1Name: vm.teamsLookup[game.team1Id],
-                            team2Name: vm.teamsLookup[game.team2Id]
+                            team1Name: vm.teamsLookup[game.team1Id].name,
+                            team2Name: vm.teamsLookup[game.team2Id].name
                         };
                     }
                 }

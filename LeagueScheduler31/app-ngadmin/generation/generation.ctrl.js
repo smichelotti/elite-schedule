@@ -110,7 +110,7 @@
         }
 
         function validateAll() {
-            var validations = leagueValidator.validateAll(vm.teams, vm.allGames, 4);
+            var validations = leagueValidator.validateAll(vm.teams, vm.allGames, vm.numberOfRounds);
 
             if (validations.length > 0) {
                 dialogs.alert(validations, 'Violations Detected! (' + validations.length + ')');
@@ -130,7 +130,8 @@
                     var game = {
                         leagueId: $stateParams.leagueId,
                         locationId: gameRow.locationId,
-                        gameTime: gameRow.gameTime,
+                        //gameTime: gameRow.gameTime,
+                        gameTime: moment(gameRow.gameTime).format('YYYY-MM-DDTHH:mm:00'),
                         team1Id: gameRow.team1Id,
                         team2Id: gameRow.team2Id
                     };

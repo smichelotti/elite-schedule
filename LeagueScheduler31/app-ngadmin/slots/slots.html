@@ -63,8 +63,8 @@
                     <!--<td>{{slot.locationName}}</td>-->
                     <td>{{vm.locationsLookup[slot.locationId]}}</td>
                     <td>{{slot.startTime | date: 'M/d/yyyy'}}</td>
-                    <td>{{slot.startTime | date: 'shortTime'}}</td>
-                    <td>{{slot.endTime | date: 'shortTime'}}</td>
+                    <td>{{slot.startTime | date: 'shortTime' : 'UTC' }}</td>
+                    <td>{{slot.endTime | date: 'shortTime' : 'UTC' }}</td>
                     <td>{{slot.gameDuration}}</td>
                     <td>
                         <button class="btn btn-danger" ng-click="vm.removeSlot(slot.id)">

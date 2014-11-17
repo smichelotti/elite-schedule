@@ -1,5 +1,8 @@
 ﻿<div>
     <div class="row" style="padding-top:20px;padding-bottom:10px;">
+        <div class="col-md-2">
+            <input type="text" value="" placeholder="# Rounds" class="form-control" ng-model="vm.numberOfRounds" />
+        </div>
         <div class="col-md-6">
             <button class="btn btn-primary" ng-click="vm.generate()">Generate</button>
             <button class="btn btn-success" ng-click="vm.saveAll()">Save All</button>

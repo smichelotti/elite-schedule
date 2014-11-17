@@ -38,7 +38,7 @@
                         <span class="glyphicon" ng-class="{'glyphicon-check': vm.selectedRows[game.id], 'glyphicon-unchecked': !vm.selectedRows[game.id]}"></span>
                     </button>
                 </td>
-                <td>{{game.gameTime | date: 'short'}}</td>
+                <td>{{game.gameTime | date: 'short': 'UTC' }}</td>
                 <td>
                     <span ng-class="{'text-success': game.team1Score > game.team2Score}">
                         {{vm.teamsLookup[game.team1Id].name}}

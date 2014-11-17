@@ -3,9 +3,9 @@
 
     angular.module('eliteApp').controller('SlotsCtrl', SlotsCtrl);
 
-    SlotsCtrl.$inject = ['$stateParams', 'initialData', 'eliteApi', 'dialogsService'];
+    SlotsCtrl.$inject = ['$stateParams', 'initialData', 'eliteApi', 'dialogsService', 'utils'];
 
-    function SlotsCtrl($stateParams, initialData, eliteApi, dialogs) {
+    function SlotsCtrl($stateParams, initialData, eliteApi, dialogs, utils) {
         /* jshint validthis:true */
         var vm = this;
         console.log('in slotsCtrl', initialData);
@@ -46,8 +46,10 @@
         function add() {
             var slot = {
                 locationId: vm.newLocation.id,
-                startTime: combine(vm.newDate, vm.newStartTime),
-                endTime: combine(vm.newDate, vm.newEndTime),
+                //startTime: combine(vm.newDate, vm.newStartTime),
+                //endTime: combine(vm.newDate, vm.newEndTime),
+                startTime: utils.combineDateTime(vm.newDate, vm.newStartTime),
+                endTime: utils.combineDateTime(vm.newDate, vm.newEndTime),
                 gameDuration: vm.newDuration,
                 leagueId: $stateParams.leagueId
             };

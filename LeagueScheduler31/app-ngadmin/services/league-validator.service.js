@@ -15,6 +15,7 @@
 
 
         function validateAll(allTeams, allGames, numberOfRounds) {
+            numberOfRounds = Number(numberOfRounds);
             var validations = [];
 
             _.forEach(allTeams, function (team) {

@@ -21,7 +21,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator'], function (sy
     system.debug(true);
     //>>excludeEnd("build");
 
-    app.title = 'HC Middle School JV';
+    app.title = 'Elite Schedule';
 
     app.configurePlugins({
         router: true,

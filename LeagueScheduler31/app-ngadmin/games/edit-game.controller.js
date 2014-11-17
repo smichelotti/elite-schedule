@@ -28,8 +28,8 @@
         function activate() {
             console.log('**vm.editableItem', vm.editableItem, data);
             if (data.itemToEdit) {
-                vm.gameDate = data.itemToEdit.gameTime;
-                vm.gameTime = moment(data.itemToEdit.gameTime).toDate();
+                vm.gameDate = utils.momentNoTS(data.itemToEdit.gameTime);
+                vm.gameTime = utils.momentNoTS(data.itemToEdit.gameTime);
             } else {
                 vm.gameDate = moment().format('MM/DD/YYYY');
                 vm.gameTime = moment('18:00', 'HH:mm').toDate();
@@ -50,6 +50,7 @@
             console.log('**about to save game', vm.editableItem);
 
             vm.editableItem.gameTime = utils.combineDateTime(vm.gameDate, vm.gameTime);
+            console.log("**about to save game with time:", vm.editableItem.gameTime);
             $modalInstance.close(vm.editableItem);
         }
     }
