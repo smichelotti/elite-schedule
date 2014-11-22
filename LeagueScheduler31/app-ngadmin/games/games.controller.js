@@ -323,8 +323,8 @@
             function createMessageForTeam(teamId) {
                 var teamReq = vm.specialRequestsLookup[teamId];
                 if (teamReq) {
-                    var teamName = vm.teamsLookup[teamId];
-                    messages.push(teamName + ': ' + teamReq.requestText);
+                    var team = vm.teamsLookup[teamId];
+                    messages.push(team.name + ': ' + teamReq.requestText);
                 }
             }
         }
