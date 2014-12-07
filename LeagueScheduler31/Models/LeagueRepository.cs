@@ -68,7 +68,7 @@ namespace LeagueScheduler.Models
 
         public void MarkClean(int id)
         {
-            context.Database.ExecuteSqlCommand("UPDATE Leagues SET IsDirty = 0 WHERE Id = @p0", id);
+            context.Database.ExecuteSqlCommand("UPDATE Leagues SET IsDirty = 0, IsActive = 1 WHERE Id = @p0", id);
         }
 
         public void Delete(int id)

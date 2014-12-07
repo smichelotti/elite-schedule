@@ -10,10 +10,12 @@ using System.Web.Http.Results;
 
 namespace LeagueScheduler.Controllers
 {
+    [Authorize]
     public class LeaguesController : ApiController
     {
         private ILeagueRepository repository = new LeagueRepository();
 
+        [AllowAnonymous]
         public List<League> Get()
         {
             try
