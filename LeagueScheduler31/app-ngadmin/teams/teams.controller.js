@@ -78,7 +78,7 @@
                 .groupBy('division')
                 .pairs()
                 .map(function (item) {
-                    return { division: item[0], teams: item[1], isOpen: true };
+                    return { division: (item[0] === 'null' ? '(No Division)' : item[0]), teams: item[1], isOpen: true };
                 })
                 .sortBy('division')
                 .value();

@@ -7,7 +7,8 @@
             <button class="btn btn-primary" ng-show="vm.selected.length === 2" ng-click="vm.swapGames()">Swap</button>
         </div>
         <div class="col-md-3">
-            <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">
+            <!--<select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">-->
+            <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + (team.division === null ? '' : ' (' + team.division + ')') for team in vm.teams">
                 <option value="" selected>(Select Team Filter)</option>
             </select>
         </div>
@@ -42,14 +43,14 @@
                 <td>
                     <span ng-class="{'text-success': game.team1Score > game.team2Score}">
                         {{vm.teamsLookup[game.team1Id].name}}
-                        ({{vm.teamsLookup[game.team1Id].division}})
+                        <span ng-show="vm.teamsLookup[game.team1Id].division">({{vm.teamsLookup[game.team1Id].division}})</span>
                     </span>
                     <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
                 </td>
                 <td>
                     <span ng-class="{'text-success': game.team2Score > game.team1Score}">
                         {{vm.teamsLookup[game.team2Id].name}}
-                        ({{vm.teamsLookup[game.team2Id].division}})
+                        <span ng-show="vm.teamsLookup[game.team2Id].division">({{vm.teamsLookup[game.team2Id].division}})</span>
                     </span>
                     <span ng-show="game.team2Score"><strong>({{game.team2Score}})</strong></span>
                 </td>
