@@ -26,6 +26,8 @@
             data: 'vm.allGames',
             enableFiltering: true,
             enableColumnResizing: true,
+            enableGridMenu: true,
+            exporterCsvFilename: 'generated-schedule.csv',
             columnDefs: [
                 { name: 'Game Time', field: 'gameTime', cellFilter: 'date:\'MM/d/y h:mm a\'', maxWidth: '50' },
                 { name: 'Location', field: 'locationName', maxWidth: '50' },
@@ -35,7 +37,11 @@
                     }
                 },
                 { name: 'Division', field: 'division', maxWidth: '50' }
-            ]
+            ],
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+                onRegisterApi: function (gridApi) {
+                    //$scope.gridApi = gridApi;
+                }
         };
 
         activate();

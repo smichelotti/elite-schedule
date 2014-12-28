@@ -12,6 +12,8 @@
         'ui.grid',
         'ui.grid.edit',
         'ui.grid.importer',
+        'ui.grid.selection',
+        'ui.grid.exporter',
         'ui.calendar'
 //        'ui.select'
     ]);
