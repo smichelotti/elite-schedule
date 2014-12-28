@@ -362,8 +362,6 @@
     <Content Include="lib\angular-ui-grid\ui-grid.min.css" />
     <Content Include="lib\angular-ui-grid\ui-grid.min.js" />
     <Content Include="lib\angular-ui-grid\ui-grid.svg" />
-    <Content Include="lib\angular-ui-grid\ui-grid.v3.0.0-rc.12-c280b35.min.css" />
-    <Content Include="lib\angular-ui-grid\ui-grid.v3.0.0-rc.12-c280b35.min.js" />
     <Content Include="lib\angular-ui-router\release\angular-ui-router.js" />
     <Content Include="lib\angular-ui-router\release\angular-ui-router.min.js" />
     <Content Include="lib\angular-ui-router\src\common.js" />
