@@ -11,6 +11,13 @@
     </div>
     <textarea cols="30" rows="3" ng-model="vm.editableItem.requestText" style="width:100%"></textarea>
 
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="vm.editableItem.resolved" />Resolved?
+        </label>
+    </div>
+
+
     <hr />
     <div class="alert alert-info">
         <h4>Available Hours</h4>
@@ -23,7 +30,7 @@
         <thead>
             <tr>
                 <th></th>
-                <th class="col-md-1 text-center small" ng-repeat="hour in vm.potentialHours">{{hour | date:'ha'}}</th>
+                <th class=" text-center small" style="width: 55px" ng-repeat="hour in vm.potentialHours">{{hour | date:'ha'}}</th>
             </tr>
         </thead>
         <tbody>

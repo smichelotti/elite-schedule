@@ -12,6 +12,7 @@
         vm.allGames = [];
         vm.allMatchUps = [];
         vm.closeAlert = closeAlert;
+        vm.deleteBeforeSave = false;
         vm.generate = generate;
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
@@ -126,30 +127,43 @@
         }
 
         function saveAll() {
-            var promises = [];
+            console.log("***deleteBeforeSave", vm.deleteBeforeSave);
 
-            eliteApi.resetGames($stateParams.leagueId).then(function () {
-                _.forEach(vm.allGames, function (gameRow) {
-                    var deferred = $q.defer();
-                    promises.push(deferred.promise);
-
-                    var game = {
-                        leagueId: $stateParams.leagueId,
-                        locationId: gameRow.locationId,
-                        //gameTime: gameRow.gameTime,
-                        gameTime: moment(gameRow.gameTime).format('YYYY-MM-DDTHH:mm:00'),
-                        team1Id: gameRow.team1Id,
-                        team2Id: gameRow.team2Id
-                    };
-
-                    eliteApi.saveGame(game).then(function (data) {
-                        deferred.resolve();
+            if (vm.deleteBeforeSave) {
+                dialogs.confirm('This will delete all of your existing games. Are you sure you want to continue?', 'Continue?', ['Yes (Delete All)', 'Cancel'])
+                .then(function () {
+                    eliteApi.resetGames($stateParams.leagueId).then(function () {
+                        saveAllGames();
                     });
                 });
+            } else {
+                saveAllGames();
+            }
+        }
 
-                $q.all(promises).then(function () {
-                    dialogs.alert(['All games have been successfully saved.'], 'Complete!');
+        function saveAllGames() {
+            var promises = [];
+
+            _.forEach(vm.allGames, function (gameRow) {
+                var deferred = $q.defer();
+                promises.push(deferred.promise);
+
+                var game = {
+                    leagueId: $stateParams.leagueId,
+                    locationId: gameRow.locationId,
+                    //gameTime: gameRow.gameTime,
+                    gameTime: moment(gameRow.gameTime).format('YYYY-MM-DDTHH:mm:00'),
+                    team1Id: gameRow.team1Id,
+                    team2Id: gameRow.team2Id
+                };
+
+                eliteApi.saveGame(game).then(function (data) {
+                    deferred.resolve();
                 });
+            });
+
+            $q.all(promises).then(function () {
+                dialogs.alert(['All games have been successfully saved.'], 'Complete!');
             });
         }
     }

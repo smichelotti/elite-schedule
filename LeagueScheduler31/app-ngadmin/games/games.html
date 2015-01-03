@@ -6,16 +6,41 @@
             <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
             <button class="btn btn-primary" ng-show="vm.selected.length === 2" ng-click="vm.swapGames()">Swap</button>
         </div>
-        <div class="col-md-3">
-            <!--<select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">-->
-            <select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + (team.division === null ? '' : ' (' + team.division + ')') for team in vm.teams">
-                <option value="" selected>(Select Team Filter)</option>
-            </select>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Date Filter..."
+                   datepicker-popup="MM/dd/yyyy" ng-model="vm.dateFilter" is-open="vm.opened" ng-click="vm.open($event)"
+                   datepicker-options="vm.dateOptions" close-text="Close" />
         </div>
         <div class="col-md-3">
-            <select class="form-control" ng-model="vm.filterLocationId" ng-options="loc.id as loc.name for loc in vm.locations">
+            <!--<select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + ' (' + team.division + ')' for team in vm.teams">-->
+            <!--<select class="form-control" ng-model="vm.filterTeamId" ng-options="team.id as team.name + (team.division === null ? '' : ' (' + team.division + ')') for team in vm.teams">
+                <option value="" selected>(Select Team Filter)</option>
+            </select>-->
+
+            <ui-select multiple reset-search-input="true" ng-model="vm.filterTeamId" theme="bootstrap">
+                <ui-select-match placeholder="Select teams to filter...">
+                    {{$item.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="team in vm.teams | filter:$select.search">
+                    <span ng-bind-html="team.name | highlight: $select.search"></span>
+                    <span><small>({{team.division}})</small></span>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+        <div class="col-md-3">
+            <!--<select class="form-control" ng-model="vm.filterLocationId" ng-options="loc.id as loc.name for loc in vm.locations">
                 <option value="" selected>(Select Location Filter)</option>
-            </select>
+            </select>-->
+
+            <ui-select multiple reset-search-input="true" ng-model="vm.filterLocationId" theme="bootstrap">
+                <ui-select-match placeholder="Select locations to filter...">
+                    {{$item.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="location in vm.locations | filter:$select.search">
+                    <span ng-bind-html="location.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
         </div>
     </div>
     <p></p>
@@ -32,25 +57,26 @@
         </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="game in vm.games | filter: vm.gameFilter"
-                ng-class="{'info': vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id], 'danger': vm.selectedRows[game.id]}">
+            <tr ng-repeat="game in vm.games | filter: vm.gameFilter | orderBy:'gameTime'"
+                >
+                <!--ng-class="{'info': vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id], 'danger': vm.selectedRows[game.id]}"-->
                 <td>
                     <button class="btn btn-default" ng-model="vm.selectedRows[game.id]" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-change="vm.selectRow()">
                         <span class="glyphicon" ng-class="{'glyphicon-check': vm.selectedRows[game.id], 'glyphicon-unchecked': !vm.selectedRows[game.id]}"></span>
                     </button>
                 </td>
                 <td>{{game.gameTime | date: 'short': 'UTC' }}</td>
-                <td>
+                <td ng-class="vm.specialRequestCss(game.team1Id)">
                     <span ng-class="{'text-success': game.team1Score > game.team2Score}">
                         {{vm.teamsLookup[game.team1Id].name}}
-                        <span ng-show="vm.teamsLookup[game.team1Id].division">({{vm.teamsLookup[game.team1Id].division}})</span>
+                        <small><span ng-show="vm.teamsLookup[game.team1Id].division">({{vm.teamsLookup[game.team1Id].division}})</span></small>
                     </span>
                     <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
                 </td>
-                <td>
+                <td ng-class="vm.specialRequestCss(game.team2Id)">
                     <span ng-class="{'text-success': game.team2Score > game.team1Score}">
                         {{vm.teamsLookup[game.team2Id].name}}
-                        <span ng-show="vm.teamsLookup[game.team2Id].division">({{vm.teamsLookup[game.team2Id].division}})</span>
+                        <small><span ng-show="vm.teamsLookup[game.team2Id].division">({{vm.teamsLookup[game.team2Id].division}})</span></small>
                     </span>
                     <span ng-show="game.team2Score"><strong>({{game.team2Score}})</strong></span>
                 </td>

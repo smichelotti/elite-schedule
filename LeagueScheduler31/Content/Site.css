@@ -118,3 +118,6 @@ input[type="checkbox"].input-validation-error {
 }
 /*#endregion*/
 
+.table>tbody>tr>td.bg-yellow{
+    background-color: yellow;
+}

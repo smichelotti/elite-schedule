@@ -4,7 +4,7 @@
         // Angular modules 
         'ngAnimate',        // animations
         //'ngRoute',          // routing
-        //'ngSanitize',
+        'ngSanitize',
 
         // 3rd Party Modules
         'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
@@ -14,8 +14,8 @@
         'ui.grid.importer',
         'ui.grid.selection',
         'ui.grid.exporter',
-        'ui.calendar'
-//        'ui.select'
+        'ui.calendar',
+        'ui.select'
     ]);
 
     //app.config(['$routeProvider', configRoutes]);
@@ -79,7 +79,11 @@
                         //TODO: combine this to a init data service
                         initialSpecRequests: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
                             return eliteApi.getSpecialRequests($stateParams.leagueId);
-                        }]
+                        }],
+                        timeSlots: ['$stateParams', 'eliteApi',
+                            function ($stateParams, eliteApi) {
+                                return eliteApi.getSlots($stateParams.leagueId)
+                            }]
                     }
                 }
             }

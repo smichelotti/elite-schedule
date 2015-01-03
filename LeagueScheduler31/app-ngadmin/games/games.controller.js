@@ -22,6 +22,8 @@
         vm.locationsLookup = {};
         vm.locationsList = [];
         vm.locationCalendarChanged = locationCalendarChanged;
+        vm.open = openDatePicker;
+        vm.opened = false;
         vm.selectRow = selectRow;
         vm.specialRequests = initialData.specialRequests;
         vm.specialRequestsLookup = {};
@@ -31,6 +33,7 @@
         vm.viewScheduleRequests = viewScheduleRequests;
         vm.selected = [];
         vm.selectedRows = {};
+        vm.specialRequestCss = specialRequestCss;
         vm.swapGames = swapGames;
 
         vm.calendarConfig = {
@@ -131,8 +134,8 @@
             return {
                 id: game.id,
                 start: startTime,
-                title: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
-                tooltip: team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')',
+                title: (team1 ?  team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')' : '[Empty]'),
+                tooltip: (team1 ? team1.name + ' (' + team1.division + ') vs. ' + team2.name + ' (' + team2.division + ')' : '[Empty]'),
                 allDay: false,
                 durationEditable: false,
                 end: moment(startTime).add(1, 'hour').toDate(),
@@ -175,7 +178,9 @@
                         return {
                             locations: _.sortBy(vm.locations, 'name'),
                             teams: _.sortBy(vm.teams, 'divisionName, name'),
-                            itemToEdit: game
+                            leagueId: $stateParams.leagueId,
+                            itemToEdit: game,
+                            allGames: vm.games
                         };
                     }
                 }
@@ -194,7 +199,7 @@
                         //vm.eventSources[0].push(mapToGameEvent(data));
                     }
                     //TODO: need to re-sort here (remove angular filter in markup)
-                    vm.games = _.sortBy(vm.games, 'gameTime');
+                    //vm.games = _.sortBy(vm.games, 'gameTime');
                 });
             });
         }
@@ -228,17 +233,45 @@
         }
 
         function gameFilter(game) {
-            if (!vm.filterLocationId && !vm.filterTeamId) {
+            var dateFilterSet = vm.dateFilter;
+            var locationFilterSet = (vm.filterLocationId && vm.filterLocationId.length > 0);
+            var teamFilterSet = (vm.filterTeamId && vm.filterTeamId.length > 0);
+
+            if (!dateFilterSet && !locationFilterSet && !teamFilterSet) {
                 return true;
             }
 
-            if (vm.filterLocationId) {
-                return game.locationId === vm.filterLocationId;
+            var results = [];
+            var dateFilterHit = false;
+            var locationFilterHit = false;
+            var teamFilterHit = false;
+
+            if (dateFilterSet) {
+                dateFilterHit = moment(vm.dateFilter).isSame(game.gameTime, 'day');
+                results.push(dateFilterHit);
             }
 
-            if (vm.filterTeamId) {
-                return game.team1Id === vm.filterTeamId || game.team2Id === vm.filterTeamId;
+            if (locationFilterSet) {
+                locationFilterHit = _.some(vm.filterLocationId, function (filter) {
+                    return game.locationId === filter.id;
+                });
+                results.push(locationFilterHit);
             }
+
+            if (teamFilterSet) {
+                teamFilterHit = _.some(vm.filterTeamId, function(filter){
+                    return game.team1Id === filter.id || game.team2Id === filter.id;
+                });
+                results.push(teamFilterHit);
+            }
+
+            return _.every(results);
+        }
+
+        function openDatePicker($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.opened = true;
         }
 
         function swapGames() {
@@ -299,6 +332,15 @@
             //        });
             //     });
             //}
+        }
+
+        function specialRequestCss(teamId) {
+            var specialRequest = vm.specialRequestsLookup[teamId];
+            if (specialRequest) {
+                return specialRequest.resolved ? 'success' : 'bg-yellow';
+            } else {
+                return '';
+            }
         }
 
         function validateAll() {

@@ -180,6 +180,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\api\DocsController.cs" />
     <Compile Include="Controllers\api\GamesController.cs" />
     <Compile Include="Controllers\api\IdentityController.cs" />
     <Compile Include="Controllers\api\SlotsController.cs" />
@@ -193,6 +194,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DocumentRepository.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -354,6 +356,8 @@
     <Content Include="lib\angular-bootstrap\ui-bootstrap.min.js" />
     <Content Include="lib\angular-route\angular-route.js" />
     <Content Include="lib\angular-route\angular-route.min.js" />
+    <Content Include="lib\angular-sanitize\angular-sanitize.js" />
+    <Content Include="lib\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="lib\angular-touch\angular-touch.js" />
     <Content Include="lib\angular-touch\angular-touch.min.js" />
     <Content Include="lib\angular-ui-calendar\src\calendar.js" />
@@ -375,6 +379,10 @@
     <Content Include="lib\angular-ui-router\src\view.js" />
     <Content Include="lib\angular-ui-router\src\viewDirective.js" />
     <Content Include="lib\angular-ui-router\src\viewScroll.js" />
+    <Content Include="lib\angular-ui-select\dist\select.css" />
+    <Content Include="lib\angular-ui-select\dist\select.js" />
+    <Content Include="lib\angular-ui-select\dist\select.min.css" />
+    <Content Include="lib\angular-ui-select\dist\select.min.js" />
     <Content Include="lib\angular-ui-utils\ui-utils-ieshiv.js" />
     <Content Include="lib\angular-ui-utils\ui-utils-ieshiv.min.js" />
     <Content Include="lib\angular-ui-utils\ui-utils.js" />
@@ -1499,6 +1507,16 @@
     <Content Include="lib\angular-touch\bower.json" />
     <Content Include="lib\angular-touch\package.json" />
     <Content Include="lib\angular-touch\README.md" />
+    <Content Include="lib\angular-ui-select\.bower.json" />
+    <Content Include="lib\angular-ui-select\bower.json" />
+    <Content Include="lib\angular-ui-select\LICENSE" />
+    <Content Include="lib\angular-ui-select\package.json" />
+    <Content Include="lib\angular-ui-select\README.md" />
+    <Content Include="lib\angular-sanitize\.bower.json" />
+    <Content Include="lib\angular-sanitize\angular-sanitize.min.js.map" />
+    <Content Include="lib\angular-sanitize\bower.json" />
+    <Content Include="lib\angular-sanitize\package.json" />
+    <Content Include="lib\angular-sanitize\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

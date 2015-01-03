@@ -3,10 +3,10 @@
 
     angular.module('eliteApp').controller('TeamsCtrl', TeamsCtrl);
 
-    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'initialSpecRequests', 'eliteApi', 'dialogsService'];
+    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'initialSpecRequests', 'timeSlots', 'eliteApi', 'dialogsService'];
 
     /* @ngInject */
-    function TeamsCtrl($modal, $stateParams, $q, initialData, initialSpecRequests, eliteApi, dialogs) {
+    function TeamsCtrl($modal, $stateParams, $q, initialData, initialSpecRequests, timeSlots, eliteApi, dialogs) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -32,7 +32,18 @@
             _.forEach(vm.specialRequests, function (specialReq) {
                 vm.specialRequestsLookup[specialReq.teamId] = specialReq;
             });
+
+            vm.distinctDays = getDistinctDays();
+
+            var ddays = _.chain(timeSlots)
+                .map(function (slot) {
+                    return moment(slot.startTime).format('MM/DD/YYYY');;
+                })
+                .uniq()
+                .value();
+            console.log('***ddays', ddays, vm.distinctDays);
         }
+
 
         function deleteItem(id) {
             dialogs.confirm('Are you sure you want to Delete this item?', 'Delete?', ['OK', 'Cancel'])
@@ -70,6 +81,16 @@
                     initializeGroups();
                 });
             });
+        }
+
+        function getDistinctDays() {
+            var distinctDays = _.chain(timeSlots)
+                .map(function (slot) {
+                    return moment(slot.startTime).format('MM/DD/YYYY');;
+                })
+                .uniq()
+                .value();
+            return distinctDays;
         }
 
         function initializeGroups() {
@@ -124,7 +145,9 @@
                     data: function () {
                         return {
                             team: team,
-                            itemToEdit: vm.specialRequestsLookup[team.id]
+                            itemToEdit: vm.specialRequestsLookup[team.id],
+                            distinctDays: getDistinctDays(),
+                            distinctDays2: vm.distinctDays
                         };
                     }
                 }

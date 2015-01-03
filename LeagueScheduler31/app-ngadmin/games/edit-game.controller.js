@@ -3,10 +3,10 @@
 
     angular.module('eliteApp').controller('EditGameCtrl', EditGameCtrl);
 
-    EditGameCtrl.$inject = ['$modalInstance', 'data', 'utils'];
+    EditGameCtrl.$inject = ['$modalInstance', 'eliteApi', 'data', 'utils'];
 
     /* @ngInject */
-    function EditGameCtrl($modalInstance, data, utils) {
+    function EditGameCtrl($modalInstance, eliteApi, data, utils) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -19,6 +19,7 @@
         vm.opened = false;
         vm.properties = data;
         vm.save = save;
+        vm.saveAndAddAnother = saveAndAddAnother;
         vm.title = (data.itemToEdit ? 'Edit Game' : 'Add New Game');
 
         activate();
@@ -47,11 +48,21 @@
         }
 
         function save() {
-            console.log('**about to save game', vm.editableItem);
-
             vm.editableItem.gameTime = utils.combineDateTime(vm.gameDate, vm.gameTime);
-            console.log("**about to save game with time:", vm.editableItem.gameTime);
             $modalInstance.close(vm.editableItem);
+        }
+
+        function saveAndAddAnother() {
+            vm.editableItem.gameTime = utils.combineDateTime(vm.gameDate, vm.gameTime);
+            vm.editableItem.leagueId = data.leagueId;
+
+            eliteApi.saveGame(vm.editableItem).then(function (result) {
+                data.allGames.push(result);
+
+                vm.gameTime = moment(vm.editableItem.gameTime).add(1, 'hour').toDate();
+                vm.editableItem.team1Id = null;
+                vm.editableItem.team2Id = null;
+            });
         }
     }
 })();

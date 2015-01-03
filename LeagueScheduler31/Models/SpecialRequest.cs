@@ -11,5 +11,6 @@ namespace LeagueScheduler.Models
         public string RequestText { get; set; }
         public int TeamId { get; set; }
         public int LeagueId { get; set; }
+        public bool Resolved { get; set; }
     }
 }
