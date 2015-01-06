@@ -1,4 +1,5 @@
 ﻿using LeagueScheduler.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -9,7 +10,33 @@ namespace LeagueScheduler.Controllers.api
     [RoutePrefix("api/docs")]
     public class DocsController : ApiController
     {
-        [Route("doc/{*path}")]
+        [Route("list")]
+        public List<string> GetList(string path)
+        {
+            var docsRepo = new DocumentRepository();
+            var list = docsRepo.GetWithPrefix(path);
+            return list;
+            //var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            //response.Content = new StringContent(doc, Encoding.UTF8, "application/json");
+
+            //return response;
+        }
+
+        //[Route("schedule-requests-list")]
+        [Route("schedule-requests-list/league-{leagueId}")]
+        public List<string> GetScheduleRequestList(string leagueId)
+        {
+            var docsRepo = new DocumentRepository();
+            var list = docsRepo.GetWithPrefix("schedule-requests/league-" + leagueId +"/");
+            return list;
+            //var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            //response.Content = new StringContent(doc, Encoding.UTF8, "application/json");
+
+            //return response;
+        }
+
+        //[Route("doc/{*path}")]
+        [Route("{*path}")]
         public HttpResponseMessage Get(string path)
         {
             var docsRepo = new DocumentRepository();
@@ -20,7 +47,8 @@ namespace LeagueScheduler.Controllers.api
             return response;
         }
 
-        [Route("doc/{*path}")]
+        //[Route("doc/{*path}")]
+        [Route("{*path}")]
         public HttpResponseMessage Post(string path, [FromBody]dynamic body)
         {
             if (body == null)

@@ -18,6 +18,7 @@
             getLocations: getLocations,
             getSlots: getSlots,
             getSpecialRequests: getSpecialRequests,
+            getSpecialRequests2: getSpecialRequests2,
             getTeams: getTeams,
             resetGames: resetGames,
             saveGame: saveGame,
@@ -72,6 +73,15 @@
 
         function getSpecialRequests(leagueId) {
             return httpGet('/api/specialrequests?leagueId=' + leagueId);
+        }
+
+        function getSpecialRequest(leagueId, teamId) {
+            return httpGet('/api/docs/schedule-requests/league-' + leagueId + '/' + teamId);
+        }
+
+        function getSpecialRequests2(leagueId) {
+            return httpGet('/api/docs/schedule-requests-list/league-' + leagueId);
+            //return httpGet('/api/docs/schedule-requests-list?leagueId=' + leagueId);
         }
 
         function getTeams(leagueId) {

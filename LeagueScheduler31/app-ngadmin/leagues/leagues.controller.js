@@ -14,12 +14,15 @@
         vm.deleteItem = deleteItem;
         vm.editItem = editItem;
         vm.itemToEdit = {};
-        vm.leagues = initialData;
+        vm.leagues = [];//initialData;
         vm.saveItem = saveItem;
 
         activate();
 
-        function activate() { }
+        function activate() {
+            vm.leagues = _.filter(initialData, { 'isArchived': false });
+            vm.archivedLeagues = _.filter(initialData, 'isArchived');
+        }
 
         function addItem() {
             var newLeague = {

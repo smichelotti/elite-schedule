@@ -21,7 +21,7 @@
                 </td>
             </tr>
 
-            <tr ng-repeat="league in vm.leagues">
+            <tr ng-repeat="league in vm.leagues | orderBy:'name'">
                 <td ng-hide="vm.currentEdit[league.id]">{{league.name}}</td>
                 <td ng-show="vm.currentEdit[league.id]">
                     <input type="text" class="form-control" ng-model="vm.itemToEdit.name" />
@@ -48,6 +48,14 @@
                 </td>
             </tr>
 
-        </tbody>
+            <tr class="danger" ng-show="vm.archivedLeagues">
+                <td colspan="2">Archived Leagues</td>
+            </tr>
+            <tr ng-repeat="league in vm.archivedLeagues | orderBy:'name'">
+                <td ng-hide="vm.currentEdit[league.id]">{{league.name}}</td>
+                <td></td>
+            </tr>
+
+</tbody>
     </table>
 </div>

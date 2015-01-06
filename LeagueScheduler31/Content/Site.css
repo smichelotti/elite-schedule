@@ -11,7 +11,7 @@
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /* styles for validation helpers */
@@ -120,4 +120,8 @@ input[type="checkbox"].input-validation-error {
 
 .table>tbody>tr>td.bg-yellow{
     background-color: yellow;
+}
+
+.text-white{
+    color: white;
 }
