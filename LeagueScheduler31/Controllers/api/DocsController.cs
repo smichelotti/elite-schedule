@@ -1,4 +1,5 @@
 ﻿using LeagueScheduler.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -56,7 +57,7 @@ namespace LeagueScheduler.Controllers.api
                 throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Body cannot be empty."));
             }
 
-            var content = body.ToString();
+            var content = body.ToString(Formatting.None);
             var docsRepo = new DocumentRepository();
             docsRepo.Put(path, content);
             var response = this.Request.CreateResponse(HttpStatusCode.OK);

@@ -29,8 +29,10 @@
         function activate() {
             initializeGroups();
 
+            console.log('***vm.specialRequests', vm.specialRequests);
             _.forEach(vm.specialRequests, function (specialReq) {
-                vm.specialRequestsLookup[specialReq.teamId] = specialReq;
+                //vm.specialRequestsLookup[specialReq.teamId] = specialReq;
+                vm.specialRequestsLookup[specialReq] = true;
             });
 
             vm.distinctDays = getDistinctDays();
@@ -146,23 +148,30 @@
                         return {
                             team: team,
                             itemToEdit: vm.specialRequestsLookup[team.id],
-                            distinctDays: getDistinctDays(),
-                            distinctDays2: vm.distinctDays
+                            distinctDays: vm.distinctDays, //getDistinctDays(),
+                            //distinctDays2: vm.distinctDays
                         };
-                    }
+                    },
+                    itemToEdit: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
+                        if (vm.specialRequestsLookup[team.id]) {
+                            return eliteApi.getSpecialRequest($stateParams.leagueId, team.id);
+                        } else {
+                            return null;
+                        }
+                    }]
                 }
             });
 
             modalInstance.result.then(function (result) {
-                result.leagueId = $stateParams.leagueId;
-                result.teamId = team.id;
-                eliteApi.saveSpecialRequest(result).then(function (data) {
-                    if (data.requestText) {
-                        vm.specialRequestsLookup[team.id] = data;
-                    } else {
-                        delete vm.specialRequestsLookup[team.id];
-                    }
-                });
+                //result.leagueId = $stateParams.leagueId;
+                //result.teamId = team.id;
+                //eliteApi.saveSpecialRequest(result).then(function (data) {
+                //    if (data.requestText) {
+                //        vm.specialRequestsLookup[team.id] = data;
+                //    } else {
+                //        delete vm.specialRequestsLookup[team.id];
+                //    }
+                //});
             });
         }
 

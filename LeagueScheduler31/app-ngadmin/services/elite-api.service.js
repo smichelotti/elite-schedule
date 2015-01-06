@@ -17,6 +17,7 @@
             getLeagues: getLeagues,
             getLocations: getLocations,
             getSlots: getSlots,
+            getSpecialRequest: getSpecialRequest,
             getSpecialRequests: getSpecialRequests,
             getSpecialRequests2: getSpecialRequests2,
             getTeams: getTeams,
@@ -25,6 +26,7 @@
             saveLeague: saveLeague,
             saveSlot: saveSlot,
             saveSpecialRequest: saveSpecialRequest,
+            saveSpecialRequest2: saveSpecialRequest2,
             saveTeam: saveTeam
         };
 
@@ -114,6 +116,10 @@
 
         function saveSpecialRequest(specialRequest) {
             return saveItem('/api/specialrequests', specialRequest);
+        }
+
+        function saveSpecialRequest2(leagueId, teamId, specialRequest) {
+            return saveItem('/api/docs/schedule-requests/league-' + leagueId + '/' + teamId, specialRequest);
         }
 
         function saveTeam(team) {

@@ -78,7 +78,8 @@
                         }],
                         //TODO: combine this to a init data service
                         initialSpecRequests: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
-                            return eliteApi.getSpecialRequests($stateParams.leagueId);
+                            //return eliteApi.getSpecialRequests($stateParams.leagueId);
+                            return eliteApi.getSpecialRequests2($stateParams.leagueId);
                         }],
                         timeSlots: ['$stateParams', 'eliteApi',
                             function ($stateParams, eliteApi) {
