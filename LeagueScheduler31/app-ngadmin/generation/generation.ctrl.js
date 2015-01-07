@@ -94,12 +94,12 @@
                 return;
             }
 
-            var generatedMatchUps = generationService.generateMatchUps(vm.teams, vm.numberOfRounds);
+            //var generatedMatchUps = generationService.generateMatchUps(vm.teams, vm.numberOfRounds);
             //TODO: need to remove this
-            vm.allMatchUps = generatedMatchUps;
+            //vm.allMatchUps = generatedMatchUps;
 
 
-            vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup);
+            vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup, initialData.scheduleRequests);
             validateAll();
         }
 

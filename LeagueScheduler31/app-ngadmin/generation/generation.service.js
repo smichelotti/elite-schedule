@@ -14,7 +14,7 @@
 
         return service;
 
-        function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup) {
+        function generateGameAssignments(teams, slotRanges, numberOfRounds, locationsLookup, specialRequests) {
             var minTimeBetweenGames = 60;
             var maxTimeBetweenGames = 260;
             var availableSlots = generateSlots(slotRanges);
@@ -24,18 +24,17 @@
 
             //console.log('***AVAILABLE SLOTS***');
             //console.table(availableSlots);
+            //console.table(teams);
             //console.log('***MATCH UPS***');
             //console.table(matchups);
 
             var games = [];
 
             _.forEach(matchups, function (mu) {
-                //var slot = availableSlots.shift();
                 var slot = getNextValidSlotForMatchUp(mu);
                 if (slot) {
-                    console.log("slot startTime", slot.startTime, moment(slot.startTime).format('YYYY-MM-DDTHH:mm:00'));
+                    ////console.log("slot startTime", slot.startTime, moment(slot.startTime).format('YYYY-MM-DDTHH:mm:00'));
                     var game = {
-                        //gameTime: slot.startTime,
                         gameTime: moment.utc(slot.startTime).format('YYYY-MM-DDTHH:mm:00'),
                         locationId: slot.locationId,
                         locationName: locationsLookup[slot.locationId],
@@ -62,31 +61,42 @@
                 var team2LastGame = findLastGameForTeam(matchup.team2);
                 var team1LastGameStart, team2LastGameStart;
                 if (team1LastGame) {
-                    //team1LastGameStart = moment(team1LastGame.gameTime);
-                    team1LastGameStart = moment.utc(team1LastGame.gameTime);//.format('YYYY-MM-DDTHH:mm:00');
+                    team1LastGameStart = moment.utc(team1LastGame.gameTime);
                 }
 
                 if (team2LastGame) {
-                    //team2LastGameStart = moment(team2LastGame.gameTime);
-                    team2LastGameStart = moment.utc(team2LastGame.gameTime);//.format('YYYY-MM-DDTHH:mm:00');
+                    team2LastGameStart = moment.utc(team2LastGame.gameTime);
                 }
 
-                // Make sure the difference is greater than the minimum time threshold
+                // Make sure the difference is greater than the minimum (and less than maximum) time threshold
                 var nextSlotIndex = _.findIndex(availableSlots, function (slot) {
-                    var slotStart = moment(slot.startTime);
+                    var slotStart = moment.utc(slot.startTime);
 
-                    var team1Diff = (team1LastGame ? slotStart.diff(team1LastGameStart, 'minutes') : minTimeBetweenGames);
-                    var team2Diff = (team2LastGame ? slotStart.diff(team2LastGameStart, 'minutes') : minTimeBetweenGames);
-                    var doDiffCheckForTeam1 = (team1LastGame && team1LastGameStart.isSame(slotStart, 'day'));
-                    var doDiffCheckForTeam2 = (team2LastGame && team2LastGameStart.isSame(slotStart, 'day'));
+                    var team1Valid = checkTeamMaxMinValid(team1LastGameStart, slotStart, matchup.team1);
+                    var team2Valid = checkTeamMaxMinValid(team2LastGameStart, slotStart, matchup.team2);
 
-                    var team1Valid = doDiffCheckForTeam1 ?
-                        (team1Diff >= minTimeBetweenGames && team1Diff <= maxTimeBetweenGames) : true;
-                    var team2Valid = doDiffCheckForTeam2 ?
-                        (team2Diff >= minTimeBetweenGames && team2Diff <= maxTimeBetweenGames) : true;
+                    var team1Available = isTimeAvailableForTeam(matchup.team1, slotStart);
+                    var team2Available = isTimeAvailableForTeam(matchup.team2, slotStart);
 
-                    return team1Valid && team2Valid;
+                    return team1Valid && team2Valid && team1Available && team2Available;
                 });
+
+                /***************************/
+                function checkTeamMaxMinValid(teamLastGameStart, slotStart, teamId, logit) {
+                    if (teamLastGameStart) {
+                        var teamDiff = slotStart.diff(teamLastGameStart, 'minutes');
+                        var sameDayAsLastGame = teamLastGameStart.isSame(slotStart, 'day');
+                        return
+                            (teamDiff > minTimeBetweenGames) &&
+                            (sameDayAsLastGame ? teamDiff <= maxTimeBetweenGames : true);
+                    } else {
+
+                        return true; // it's their first game
+                    }
+                }
+                /***************************/
+
+
 
                 //TODO: probably need a check if no valid slot is found (index: -1)
                 // Get the slot so we can return it
@@ -102,10 +112,35 @@
             }
 
             function findLastGameForTeam(teamId) {
-                // consider using _.max() instead of _.findLast()
-                return _.findLast(games, function (game) {
+                var teamGames = _.filter(games, function (game) {
                     return game.team1Id === teamId || game.team2Id === teamId;
                 });
+
+                if (teamGames.length === 0) {
+                    return null;
+                } else {
+                    return _.max(teamGames, function (item) {
+                        return moment(item.gameTime, 'YYYY-MM-DDTHH:mm:00').toDate().getTime();
+                    });
+                }
+            }
+
+            function isTimeAvailableForTeam(teamId, slotStart) {
+                var teamRequest = _.find(specialRequests, { 'teamId': teamId });
+                if (teamRequest) {
+                    var requestDay = _.find(teamRequest.scheduleRequests, function (item) {
+                        return moment(item.date, 'MM-DD-YYYY').isSame(slotStart, 'day');
+                    });
+                    if (requestDay) {
+                        var unavailHours = _.chain(requestDay.unavailableHours).filter('selected').map('hour').value();
+                        if (unavailHours.length > 0) {
+                            var slotHour = slotStart.hour();
+                            var hourMatch = _.contains(unavailHours, slotHour);
+                            return !hourMatch;
+                        }
+                    }
+                }
+                return true;
             }
         }
 

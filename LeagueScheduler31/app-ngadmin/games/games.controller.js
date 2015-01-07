@@ -338,31 +338,18 @@
         }
 
         function specialRequestCss(teamId, game) {
-            //var specialRequest = vm.specialRequestsLookup[teamId];
-            //if (specialRequest) {
-            //    var gameDate = moment(game.gameTime).format('MM/DD/YYYY');
-            //    var dayRequest = _.find(specialRequest.scheduleRequests, function (item) {
-            //        return item.date === gameDate;
-            //    });
-            //    if (dayRequest) {
-            //        return dayRequest.resolved ? 'success' : 'bg-yellow';
-            //    } else {
-            //        return '';
-            //    }
-            //} else {
-            //    return '';
-            //}
-
             var specialRequest = getSpecialRequestForGame(teamId, game);
             if (specialRequest) {
                 return specialRequest.resolved ? 'success' : 'bg-yellow';
             } else {
                 return '';
             }
-
         }
 
-        function scheduleRequestCss(scheduleRequest) {
+        function scheduleRequestCss(scheduleRequest, teamId) {
+            if (teamId == 546 || teamId == 600) {
+                console.log('***schedule request for: ', teamId, scheduleRequest);
+            }
             if (scheduleRequest) {
                 return scheduleRequest.resolved ? 'success' : 'bg-yellow';
             } else {
@@ -371,22 +358,23 @@
         }
 
         function getSpecialRequestForGame(teamId, game, extra) {
-            var temp = null;
-
             var specialRequest = vm.specialRequestsLookup[teamId];
+            if (teamId == 546) {
+                console.log('***getspecrequest for team: ', teamId, specialRequest);
+            }
+
             if (specialRequest) {
                 var gameDate = moment(game.gameTime).format('MM/DD/YYYY');
-                temp = _.find(specialRequest.scheduleRequests, function (item) {
+                var temp = _.find(specialRequest.scheduleRequests, function (item) {
                     return item.date === gameDate;
                 });
+                if (teamId == 546) {
+                    console.log('***getspecrequest for team2: ', teamId, temp, gameDate);
+                }
+                return temp;
             } else {
-                //return null;
+                return null;
             }
-
-            if (teamId == 524 && extra) {
-                console.log('***request for team 524', extra, temp, game);
-            }
-            return temp;
         }
 
         function validateAll() {
@@ -427,10 +415,8 @@
 
             function createMessageForTeam(teamId, schedReq) {
                 if (schedReq) {
-                    console.log('***schedReq', schedReq, teamId);
                     var team = vm.teamsLookup[teamId];
                     var unavailHours = _.chain(schedReq.unavailableHours).filter('selected').map('hour').value();
-                    console.log('***unavailHours', unavailHours);
                     var reqs = (unavailHours.length > 0 ? 'Not available: ' + unavailHours.join(', ') + '. ' : '') +
                                (schedReq.extraRequest ? 'Extra: ' + schedReq.extraRequest : '');
                     messages.push(team.name + ': ' + reqs);

@@ -17,13 +17,15 @@
             return $q.all([
                 eliteApi.getTeams(leagueId),
                 eliteApi.getSlots(leagueId),
-                eliteApi.getLocations()
+                eliteApi.getLocations(),
+                eliteApi.getSpecialRequestsFull(leagueId)
             ]).then(function (results) {
                 // Hide spinner
                 return {
                     teams: results[0],
                     slotRanges: results[1],
-                    locations: results[2]
+                    locations: results[2],
+                    scheduleRequests: results[3]
                 };
             });
         }
