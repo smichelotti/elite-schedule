@@ -18,6 +18,7 @@
         vm.editScores = editScores;
         vm.gameFilter = gameFilter;
         vm.games = _.sortBy(initialData.games, 'gameTime');
+        vm.getSpecialRequestForGame = getSpecialRequestForGame;
         vm.locations = initialData.locations;
         vm.locationsLookup = {};
         vm.locationsList = [];
@@ -31,6 +32,8 @@
         vm.teamsLookup = {};
         vm.validateAll = validateAll;
         vm.viewScheduleRequests = viewScheduleRequests;
+        vm.viewScheduleRequests2 = viewScheduleRequests2;
+        vm.scheduleRequestCss = scheduleRequestCss;
         vm.selected = [];
         vm.selectedRows = {};
         vm.specialRequestCss = specialRequestCss;
@@ -334,13 +337,56 @@
             //}
         }
 
-        function specialRequestCss(teamId) {
-            var specialRequest = vm.specialRequestsLookup[teamId];
+        function specialRequestCss(teamId, game) {
+            //var specialRequest = vm.specialRequestsLookup[teamId];
+            //if (specialRequest) {
+            //    var gameDate = moment(game.gameTime).format('MM/DD/YYYY');
+            //    var dayRequest = _.find(specialRequest.scheduleRequests, function (item) {
+            //        return item.date === gameDate;
+            //    });
+            //    if (dayRequest) {
+            //        return dayRequest.resolved ? 'success' : 'bg-yellow';
+            //    } else {
+            //        return '';
+            //    }
+            //} else {
+            //    return '';
+            //}
+
+            var specialRequest = getSpecialRequestForGame(teamId, game);
             if (specialRequest) {
                 return specialRequest.resolved ? 'success' : 'bg-yellow';
             } else {
                 return '';
             }
+
+        }
+
+        function scheduleRequestCss(scheduleRequest) {
+            if (scheduleRequest) {
+                return scheduleRequest.resolved ? 'success' : 'bg-yellow';
+            } else {
+                return '';
+            }
+        }
+
+        function getSpecialRequestForGame(teamId, game, extra) {
+            var temp = null;
+
+            var specialRequest = vm.specialRequestsLookup[teamId];
+            if (specialRequest) {
+                var gameDate = moment(game.gameTime).format('MM/DD/YYYY');
+                temp = _.find(specialRequest.scheduleRequests, function (item) {
+                    return item.date === gameDate;
+                });
+            } else {
+                //return null;
+            }
+
+            if (teamId == 524 && extra) {
+                console.log('***request for team 524', extra, temp, game);
+            }
+            return temp;
         }
 
         function validateAll() {
@@ -367,6 +413,27 @@
                 if (teamReq) {
                     var team = vm.teamsLookup[teamId];
                     messages.push(team.name + ': ' + teamReq.requestText);
+                }
+            }
+        }
+
+        function viewScheduleRequests2(team1Id, schedReq1, team2Id, schedReq2) {
+            var messages = [];
+
+            createMessageForTeam(team1Id, schedReq1);
+            createMessageForTeam(team2Id, schedReq2);
+
+            dialogs.alert(messages, 'Schedule Requests');
+
+            function createMessageForTeam(teamId, schedReq) {
+                if (schedReq) {
+                    console.log('***schedReq', schedReq, teamId);
+                    var team = vm.teamsLookup[teamId];
+                    var unavailHours = _.chain(schedReq.unavailableHours).filter('selected').map('hour').value();
+                    console.log('***unavailHours', unavailHours);
+                    var reqs = (unavailHours.length > 0 ? 'Not available: ' + unavailHours.join(', ') + '. ' : '') +
+                               (schedReq.extraRequest ? 'Extra: ' + schedReq.extraRequest : '');
+                    messages.push(team.name + ': ' + reqs);
                 }
             }
         }

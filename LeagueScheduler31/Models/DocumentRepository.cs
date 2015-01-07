@@ -1,8 +1,10 @@
 ﻿using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 
 namespace LeagueScheduler.Models
 {
@@ -26,6 +28,21 @@ namespace LeagueScheduler.Models
             //var list = blobs.Select(x => x.Uri.ToString()).ToList();
             var list = blobs.Select(x => x.Uri.Segments[x.Uri.Segments.Length - 1]).ToList();
             return list;
+        }
+
+        public string GetFullWithPrefix(string prefix)
+        {
+            var container = GetContainer();
+            var client = GetBlobClient();
+            var blobs = client.ListBlobsWithPrefix(containerName + "/" + prefix);
+
+            var fullBlob = new List<string>();
+            foreach (var item in blobs)
+            {
+                var blob = container.GetBlobReference(item.Uri.ToString());
+                fullBlob.Add(blob.DownloadText());
+            }
+            return "[" + string.Join(",", fullBlob.ToArray()) + "]";
         }
 
         public void Put(string key, string value)

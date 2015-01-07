@@ -11,16 +11,14 @@ namespace LeagueScheduler.Controllers.api
     [RoutePrefix("api/docs")]
     public class DocsController : ApiController
     {
+        private DocumentRepository docsRepo = new DocumentRepository();
+
         [Route("list")]
         public List<string> GetList(string path)
         {
             var docsRepo = new DocumentRepository();
             var list = docsRepo.GetWithPrefix(path);
             return list;
-            //var response = this.Request.CreateResponse(HttpStatusCode.OK);
-            //response.Content = new StringContent(doc, Encoding.UTF8, "application/json");
-
-            //return response;
         }
 
         //[Route("schedule-requests-list")]
@@ -28,12 +26,17 @@ namespace LeagueScheduler.Controllers.api
         public List<string> GetScheduleRequestList(string leagueId)
         {
             var docsRepo = new DocumentRepository();
-            var list = docsRepo.GetWithPrefix("schedule-requests/league-" + leagueId +"/");
+            var list = docsRepo.GetWithPrefix("schedule-requests/league-" + leagueId + "/");
             return list;
-            //var response = this.Request.CreateResponse(HttpStatusCode.OK);
-            //response.Content = new StringContent(doc, Encoding.UTF8, "application/json");
+        }
 
-            //return response;
+        [Route("schedule-requests-full/league-{leagueId}")]
+        public HttpResponseMessage GetScheduleRequestsFull(string leagueId)
+        {
+            var json = docsRepo.GetFullWithPrefix("schedule-requests/league-" + leagueId + "/");
+            var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            return response;
         }
 
         //[Route("doc/{*path}")]
