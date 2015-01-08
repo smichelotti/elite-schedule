@@ -420,12 +420,26 @@
             function createMessageForTeam(teamId, schedReq) {
                 if (schedReq) {
                     var team = vm.teamsLookup[teamId];
-                    var unavailHours = _.chain(schedReq.unavailableHours).filter('selected').map('hour').value();
-                    var reqs = (unavailHours.length > 0 ? 'Not available: ' + unavailHours.join(', ') + '. ' : '') +
-                               (schedReq.extraRequest ? 'Extra: ' + schedReq.extraRequest : '');
-                    messages.push(team.name + ': ' + reqs);
+                    var unavailHours = _.chain(schedReq.unavailableHours)
+                        .filter('selected')
+                        .map(function (item) {
+                            return getHourLabel(item.hour);
+                        }).value();
+
+                    if (unavailHours.length > 0) {
+                        messages.push(team.name + ': ' + 'Not available: ' + unavailHours.join(', '));
+                    }
+                    if (schedReq.extraRequest) {
+                        messages.push(team.name + ': ' + 'Extra Request: ' + schedReq.extraRequest);
+                    }
                 }
             }
+        }
+
+        //TODO: need to clean this up later
+        function getHourLabel(hour) {
+            var amPm = hour < 12 ? 'AM' : 'PM';
+            return (hour < 13 ? hour + amPm : (hour - 12) + amPm);
         }
     }
 })();
