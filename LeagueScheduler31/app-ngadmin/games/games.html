@@ -56,7 +56,7 @@
                 </td>
                 <td>{{game.gameTime | date: 'short': 'UTC' }}</td>
                 <!--<td ng-class="vm.specialRequestCss(game.team1Id, game)">-->
-                <td ng-class="vm.scheduleRequestCss(team1SpecReq, game.team1Id)">
+                <td ng-class="vm.scheduleRequestCss(team1SpecReq, game)">
                     <span ng-class="{'text-success': game.team1Score > game.team2Score}">
                         {{vm.teamsLookup[game.team1Id].name}}
                         <small><span ng-show="vm.teamsLookup[game.team1Id].division">({{vm.teamsLookup[game.team1Id].division}})</span></small>
@@ -64,7 +64,7 @@
                     <span ng-show="game.team1Score"><strong>({{game.team1Score}})</strong></span>
                 </td>
                 <!--<td ng-class="vm.specialRequestCss(game.team2Id, game)">-->
-                <td ng-class="vm.scheduleRequestCss(team2SpecReq)">
+                <td ng-class="vm.scheduleRequestCss(team2SpecReq, game)">
                     <span ng-class="{'text-success': game.team2Score > game.team1Score}">
                         {{vm.teamsLookup[game.team2Id].name}}
                         <small><span ng-show="vm.teamsLookup[game.team2Id].division">({{vm.teamsLookup[game.team2Id].division}})</span></small>

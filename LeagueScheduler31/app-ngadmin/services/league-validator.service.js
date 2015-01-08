@@ -7,12 +7,39 @@
 
     function leagueValidator() {
         var service = {
+            isTimeAvailableForTeam: isTimeAvailableForTeam,
             validateAll: validateAll
         };
 
         return service;
 
 
+        function isTimeAvailableForTeam(requestDay, slotStart) {
+            //var teamRequest = _.find(specialRequests, { 'teamId': teamId });
+            //if (teamRequest) {
+            //    var requestDay = _.find(teamRequest.scheduleRequests, function (item) {
+            //        return moment(item.date, 'MM-DD-YYYY').isSame(slotStart, 'day');
+            //    });
+            //    if (requestDay) {
+            //        var unavailHours = _.chain(requestDay.unavailableHours).filter('selected').map('hour').value();
+            //        if (unavailHours.length > 0) {
+            //            var slotHour = slotStart.hour();
+            //            var hourMatch = _.contains(unavailHours, slotHour);
+            //            return !hourMatch;
+            //        }
+            //    }
+            //}
+
+            if (requestDay) {
+                var unavailHours = _.chain(requestDay.unavailableHours).filter('selected').map('hour').value();
+                if (unavailHours.length > 0) {
+                    var slotHour = slotStart.hour();
+                    var hourMatch = _.contains(unavailHours, slotHour);
+                    return !hourMatch;
+                }
+            }
+            return true;
+        }
 
         function validateAll(allTeams, allGames, numberOfRounds) {
             numberOfRounds = Number(numberOfRounds);

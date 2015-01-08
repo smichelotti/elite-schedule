@@ -89,7 +89,13 @@
         }
 
         function eventRender(event, element) {
-            element.find('.fc-event-title').css({ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: 'inherit', display: 'block' });
+            element.find('.fc-event-title').css({
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                width: 'inherit',
+                display: 'block'
+            });
             element.attr('title', event.tooltip);
         }
 
@@ -346,12 +352,16 @@
             }
         }
 
-        function scheduleRequestCss(scheduleRequest, teamId) {
-            if (teamId == 546 || teamId == 600) {
-                console.log('***schedule request for: ', teamId, scheduleRequest);
-            }
+        function scheduleRequestCss(scheduleRequest, game) {
             if (scheduleRequest) {
-                return scheduleRequest.resolved ? 'success' : 'bg-yellow';
+                var isTimeAvail = leagueValidator.isTimeAvailableForTeam(scheduleRequest, moment.utc(game.gameTime));
+                if (scheduleRequest.resolved) {
+                    return 'success';
+                } else if (!scheduleRequest.extraRequest && isTimeAvail) {
+                    return 'success';
+                } else {
+                    return 'bg-yellow';
+                }
             } else {
                 return '';
             }
@@ -359,18 +369,12 @@
 
         function getSpecialRequestForGame(teamId, game, extra) {
             var specialRequest = vm.specialRequestsLookup[teamId];
-            if (teamId == 546) {
-                console.log('***getspecrequest for team: ', teamId, specialRequest);
-            }
 
             if (specialRequest) {
                 var gameDate = moment(game.gameTime).format('MM/DD/YYYY');
                 var temp = _.find(specialRequest.scheduleRequests, function (item) {
                     return item.date === gameDate;
                 });
-                if (teamId == 546) {
-                    console.log('***getspecrequest for team2: ', teamId, temp, gameDate);
-                }
                 return temp;
             } else {
                 return null;

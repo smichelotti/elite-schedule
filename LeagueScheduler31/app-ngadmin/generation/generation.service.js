@@ -46,7 +46,7 @@
                     };
                     games.push(game);
                 } else {
-                    console.log("***SLOT NOT FOUND FOR GAME!!!", mu);
+                    console.log('***SLOT NOT FOUND FOR GAME!!!', mu);
                 }
             });
 
@@ -86,8 +86,7 @@
                     if (teamLastGameStart) {
                         var teamDiff = slotStart.diff(teamLastGameStart, 'minutes');
                         var sameDayAsLastGame = teamLastGameStart.isSame(slotStart, 'day');
-                        return
-                            (teamDiff > minTimeBetweenGames) &&
+                        return (teamDiff > minTimeBetweenGames) &&
                             (sameDayAsLastGame ? teamDiff <= maxTimeBetweenGames : true);
                     } else {
 
@@ -101,7 +100,7 @@
                 //TODO: probably need a check if no valid slot is found (index: -1)
                 // Get the slot so we can return it
                 if (nextSlotIndex === -1) {
-                    console.log("######nextSlotIndex", nextSlotIndex, matchup);
+                    console.log('######nextSlotIndex', nextSlotIndex, matchup);
                 }
                 var nextSlot = availableSlots[nextSlotIndex];
 
