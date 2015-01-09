@@ -1,0 +1,16 @@
+﻿<div>
+
+    <p></p>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-primary" ng-click="vm.save()">Save</button>
+            <button class="btn btn-default" ng-click="vm.reset()" ng-disabled="vm.isClean()">Reset</button>
+        </div>
+    </div>
+    <p></p>
+
+    <div ui-ace="{ showGutter: true, mode: 'markdown', theme: 'dreamweaver' }" ng-model="vm.contentText"></div>
+
+    <h3>Live Preview:</h3>
+    <div data-markdown="{{vm.contentText}}"></div>
+</div>

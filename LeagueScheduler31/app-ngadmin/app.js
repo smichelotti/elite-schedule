@@ -15,7 +15,8 @@
         'ui.grid.selection',
         'ui.grid.exporter',
         'ui.calendar',
-        'ui.select'
+        'ui.select',
+        'ui.ace'
     ]);
 
     //app.config(['$routeProvider', configRoutes]);
@@ -151,6 +152,46 @@
                         initialData: ['$stateParams', 'gamesInitialDataService',
                             function ($stateParams, gamesInitialDataService) {
                                 return gamesInitialDataService.getData($stateParams.leagueId);
+                            }]
+                    }
+                }
+            }
+        })
+
+        .state('league.league-home', {
+            url: '/league-home',
+            data: {
+                contentType: 'home'
+            },
+            views: {
+                'tabContent': {
+                    templateUrl: '/app-ngadmin/content-edit/content-edit.html',
+                    controller: 'ContentEditCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        initialData: ['$stateParams', 'eliteApi',
+                            function ($stateParams, eliteApi) {
+                                return eliteApi.getLeague($stateParams.leagueId);
+                            }]
+                    }
+                }
+            }
+        })
+
+        .state('league.rules', {
+            url: '/rules',
+            data: {
+                contentType: 'rules'
+            },
+            views: {
+                'tabContent': {
+                    templateUrl: '/app-ngadmin/content-edit/content-edit.html',
+                    controller: 'ContentEditCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        initialData: ['$stateParams', 'eliteApi',
+                            function ($stateParams, eliteApi) {
+                                return eliteApi.getLeague($stateParams.leagueId);
                             }]
                     }
                 }

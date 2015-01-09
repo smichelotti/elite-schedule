@@ -125,3 +125,7 @@ input[type="checkbox"].input-validation-error {
 .text-white{
     color: white;
 }
+
+.ace_editor {
+    height: 200px;
+}

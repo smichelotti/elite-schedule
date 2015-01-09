@@ -16,8 +16,8 @@
             { text: 'Generation', state: 'league.generation' },
             { text: 'Games', state: 'league.games' },
             { text: 'Games Calendar', state: 'league.games-calendar' },
-            { text: 'Home', state: 'league.home', disabled: true },
-            { text: 'Rules', state: 'league.rules', disabled: true }
+            { text: 'Home', state: 'league.league-home' },
+            { text: 'Rules', state: 'league.rules' }
         ];
 
         activate();

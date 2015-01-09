@@ -23,6 +23,7 @@
             getSpecialRequestsFull: getSpecialRequestsFull,
             getTeams: getTeams,
             resetGames: resetGames,
+            saveContentScreen: saveContentScreen,
             saveGame: saveGame,
             saveLeague: saveLeague,
             saveSlot: saveSlot,
@@ -97,6 +98,11 @@
 
         function resetGames(leagueId) {
             return httpPost('/api/leagues/' + leagueId + '/reset-games');
+        }
+
+        function saveContentScreen(contentType, leagueId, text) {
+            var url = "/api/leagues/" + leagueId + "/" + contentType + "-screen";
+            return httpPut(url, { text: text });
         }
 
         function saveItem(url, item) {

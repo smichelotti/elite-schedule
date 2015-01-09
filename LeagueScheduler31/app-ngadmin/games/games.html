@@ -3,7 +3,19 @@
     <div class="row">
         <div class="col-md-4">
             <button class="btn btn-primary" ng-click="vm.editItem()">Add New Game</button>
-            <button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>
+            <!--<button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>-->
+
+            <div class="btn-group" dropdown>
+                <button class="btn btn-primary dropdown-toggle" type="button">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="vm.validateAll()">Validate</a></li>
+                    <li><a>View Unused Slots</a></li>
+                    <li><a>View Team Opponent Matrix</a></li>
+                </ul>
+            </div>
+
             <button class="btn btn-primary" ng-show="vm.selected.length === 2" ng-click="vm.swapGames()">Swap</button>
         </div>
         <div class="col-md-2">
