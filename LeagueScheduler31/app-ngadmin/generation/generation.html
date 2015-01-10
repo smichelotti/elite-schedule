@@ -7,14 +7,17 @@
             <button class="btn btn-primary" ng-click="vm.generate()">Generate</button>
             <button class="btn btn-success" ng-click="vm.saveAll()">Save All</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" ng-model="vm.deleteBeforeSave">Delete All Before Save?
                 </label>
             </div>
         </div>
-    </div>
+        <div class="col-md-4">
+            <button class="btn btn-danger" ng-click="vm.showUnassignedMatchups()" ng-show="vm.unassignedMatchups.length > 0">Unassigned Matchups</button>
+        </div>
+        </div>
     <div class="row">
         <!--<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.closeAlert($index)">{{alert.msg}}</alert>-->
         <alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.closeAlert($index)">

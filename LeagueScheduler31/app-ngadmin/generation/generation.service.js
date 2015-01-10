@@ -21,6 +21,7 @@
             availableSlots = _.sortBy(availableSlots, 'startTime');
             var matchups = generateMatchUps(teams, numberOfRounds);
             matchups = _.sortBy(matchups, ['round', 'division']);
+            var unassignedMatchups = [];
 
             //console.log('***AVAILABLE SLOTS***');
             //console.table(availableSlots);
@@ -47,13 +48,19 @@
                     games.push(game);
                 } else {
                     console.log('***SLOT NOT FOUND FOR GAME!!!', mu);
+                    unassignedMatchups.push(mu);
                 }
             });
 
             console.log('**Generation complete! Remaining availableslots: ' + availableSlots.length);
             //console.table(availableSlots);
+            //console.table(unassignedMatchups);
 
-            return games;
+            //return games;
+            return {
+                games: games,
+                unassignedMatchups: unassignedMatchups
+            };
 
             function getNextValidSlotForMatchUp(matchup) {
                 // Find previous games for both teams in this match up

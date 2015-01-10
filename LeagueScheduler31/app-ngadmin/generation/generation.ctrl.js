@@ -19,9 +19,11 @@
         vm.onGameSlotClicked = onGameSlotClicked;
         vm.numberOfRounds = 4;
         vm.saveAll = saveAll;
+        vm.showUnassignedMatchups = showUnassignedMatchups;
         vm.slotRanges = initialData.slotRanges;
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
+        vm.unassignedMatchups = [];
 
         vm.gridOptions = {
             data: 'vm.allGames',
@@ -98,8 +100,10 @@
             //TODO: need to remove this
             //vm.allMatchUps = generatedMatchUps;
 
-
-            vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup, initialData.scheduleRequests);
+            var result = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup, initialData.scheduleRequests);
+            vm.allGames = result.games;
+            vm.unassignedMatchups = result.unassignedMatchups;
+            //vm.allGames = generationService.generateGameAssignments(vm.teams, initialData.slotRanges, vm.numberOfRounds, vm.locationsLookup, initialData.scheduleRequests);
             validateAll();
         }
 
@@ -165,6 +169,13 @@
             $q.all(promises).then(function () {
                 dialogs.alert(['All games have been successfully saved.'], 'Complete!');
             });
+        }
+
+        function showUnassignedMatchups() {
+            var messages = _.map(vm.unassignedMatchups, function (item) {
+                return item.display + (item.division ? ' (Division: ' + item.division + ')' : '');
+            });
+            dialogs.alert(messages, 'Unassigned Matchups');
         }
     }
 })();
