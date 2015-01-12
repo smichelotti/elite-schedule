@@ -255,6 +255,8 @@
     <Content Include="app-ngadmin\games\games-initial-data.service.js" />
     <Content Include="app-ngadmin\games\games.controller.js" />
     <Content Include="app-ngadmin\games\games.html" />
+    <Content Include="app-ngadmin\games\opponent-matrix.controller.js" />
+    <Content Include="app-ngadmin\games\opponent-matrix.html" />
     <Content Include="app-ngadmin\generation\generation-initial-data.service.js" />
     <Content Include="app-ngadmin\generation\generation.ctrl.js" />
     <Content Include="app-ngadmin\generation\generation.html" />
@@ -271,6 +273,7 @@
     <Content Include="app-ngadmin\services\dialogs.service.js" />
     <Content Include="app-ngadmin\services\elite-api.service.js" />
     <Content Include="app-ngadmin\services\league-validator.service.js" />
+    <Content Include="app-ngadmin\services\state-watcher.service.js" />
     <Content Include="app-ngadmin\services\utils.service.js" />
     <Content Include="app-ngadmin\shared\alert-modal.html" />
     <Content Include="app-ngadmin\shared\confirm-modal.controller.js" />

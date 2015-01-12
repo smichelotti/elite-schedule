@@ -31,6 +31,7 @@
         vm.teams = initialData.teams;
         vm.teamsLookup = {};
         vm.validateAll = validateAll;
+        vm.viewOpponentMatrix = viewOpponentMatrix;
         vm.viewScheduleRequests = viewScheduleRequests;
         vm.viewScheduleRequests2 = viewScheduleRequests2;
         vm.scheduleRequestCss = scheduleRequestCss;
@@ -38,6 +39,7 @@
         vm.selectedRows = {};
         vm.specialRequestCss = specialRequestCss;
         vm.swapGames = swapGames;
+        vm.viewUnusedSlots = viewUnusedSlots;
 
         vm.calendarConfig = {
             height: 550,
@@ -440,6 +442,72 @@
         function getHourLabel(hour) {
             var amPm = hour < 12 ? 'AM' : 'PM';
             return (hour < 13 ? hour + amPm : (hour - 12) + amPm);
+        }
+
+        function viewUnusedSlots() {
+            eliteApi.getSlots($stateParams.leagueId).then(function (data) {
+                var generatedSlots = generateSlots(data);
+
+                var unusedSlots = _.filter(generatedSlots, function (slot) {
+                    var slotStart = moment(slot.startTime);
+                    var matchingGame = _.find(vm.games, function (game) {
+                        var gameStart = moment(game.gameTime);
+                        return gameStart.isSame(slotStart) && (game.locationId === slot.locationId);
+                    });
+
+                    return !matchingGame;
+                });
+
+                //console.log("***unused slots", unusedSlots);
+                var messages = _.chain(unusedSlots).sortBy('startTime').map(function (item) {
+                    return moment.utc(item.startTime).format('MM/DD/YYYY h:mma') + ' - Location: ' + vm.locationsLookup[item.locationId];
+                }).value();
+
+                dialogs.alert(messages, 'Unused Slots');
+            });
+        }
+
+        function generateSlots(slotRanges) {
+            var generatedSlots = [];
+
+            _.each(slotRanges, function (slot) {
+                var rangeStart = moment(slot.startTime);
+                var rangeEnd = moment(slot.endTime);
+                var diff = rangeEnd.diff(rangeStart, 'minutes');
+                var nextStart = rangeStart;
+
+                while (diff >= slot.gameDuration) {
+                    var gameSlot = {
+                        startTime: nextStart.clone().toDate(),
+                        locationId: slot.locationId
+                    };
+                    generatedSlots.push(gameSlot);
+                    nextStart.add(slot.gameDuration, 'minutes');
+                    diff = rangeEnd.diff(nextStart, 'minutes');
+                }
+            });
+
+            return generatedSlots;
+        }
+
+        function viewOpponentMatrix() {
+            var modalInstance = $modal.open({
+                templateUrl: '/app-ngadmin/games/opponent-matrix.html',
+                controller: 'OpponentMatrixCtrl',
+                size: 'lg',
+                controllerAs: 'vm',
+                resolve: {
+                    data: function () {
+                        return {
+                            games: vm.games,
+                            teams: vm.teams,
+                            teamsLookup: vm.teamsLookup
+                        };
+                    }
+                }
+            });
+
+
         }
     }
 })();

@@ -89,7 +89,8 @@
         }
 
         function getSpecialRequestsFull(leagueId) {
-            return httpGet('/api/docs/schedule-requests-full/league-' + leagueId);
+            return null;
+            //return httpGet('/api/docs/schedule-requests-full/league-' + leagueId);
         }
 
         function getTeams(leagueId) {

@@ -24,7 +24,7 @@
 
     // Handle routing errors and success events
     //app.run(['$route', function ($route) {
-    app.run(['$state', function ($state) {
+    app.run(['$state', 'stateWatcherService', function ($state, stateWatcherService) {
         // Include $route to kick start the router.
     }]);
 
