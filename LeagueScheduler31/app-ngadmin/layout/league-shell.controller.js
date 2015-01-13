@@ -11,6 +11,7 @@
         vm.league = currentLeague;
         vm.leagueId = $stateParams.leagueId;
         vm.tabs = [
+            { text: 'Main', state: 'league.main' },
             { text: 'Teams', state: 'league.teams' },
             { text: 'Time Slots', state: 'league.slots' },
             { text: 'Generation', state: 'league.generation' },

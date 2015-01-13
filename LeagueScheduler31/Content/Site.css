@@ -129,3 +129,9 @@ input[type="checkbox"].input-validation-error {
 .ace_editor {
     height: 200px;
 }
+
+
+.padded-row{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -269,6 +269,8 @@
     <Content Include="app-ngadmin\layout\shell.html" />
     <Content Include="app-ngadmin\leagues\leagues.controller.js" />
     <Content Include="app-ngadmin\leagues\leagues.html" />
+    <Content Include="app-ngadmin\main\main.controller.js" />
+    <Content Include="app-ngadmin\main\main.html" />
     <Content Include="app-ngadmin\services\app-spinner.service.js" />
     <Content Include="app-ngadmin\services\dialogs.service.js" />
     <Content Include="app-ngadmin\services\elite-api.service.js" />

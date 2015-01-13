@@ -66,6 +66,22 @@
             }
         })
 
+        .state('league.main', {
+            url: '/main',
+            views: {
+                'tabContent': {
+                    templateUrl: '/app-ngadmin/main/main.html',
+                    controller: 'MainCtrl',
+                    controllerAs: 'vm',
+                    resolve: {
+                        initialData: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
+                            return eliteApi.getLeague($stateParams.leagueId);
+                        }]
+                    }
+                }
+            }
+        })
+
         .state('league.teams', {
             url: '/teams',
             views: {

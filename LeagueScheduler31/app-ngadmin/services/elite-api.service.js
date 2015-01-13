@@ -22,6 +22,7 @@
             getSpecialRequests2: getSpecialRequests2,
             getSpecialRequestsFull: getSpecialRequestsFull,
             getTeams: getTeams,
+            publishLeague: publishLeague,
             resetGames: resetGames,
             saveContentScreen: saveContentScreen,
             saveGame: saveGame,
@@ -89,12 +90,15 @@
         }
 
         function getSpecialRequestsFull(leagueId) {
-            return null;
-            //return httpGet('/api/docs/schedule-requests-full/league-' + leagueId);
+            return httpGet('/api/docs/schedule-requests-full/league-' + leagueId);
         }
 
         function getTeams(leagueId) {
             return httpGet('/api/teams?leagueId=' + leagueId);
+        }
+
+        function publishLeague(leagueId) {
+            return httpPost('/api/leagues/' + leagueId + '/publish');
         }
 
         function resetGames(leagueId) {

@@ -1,0 +1,45 @@
+﻿<div>
+    <h1>Main</h1>
+    <div class="row padded-row">
+        <div class="col-md-3">
+            <span ng-hide="vm.leagueName">Name: {{vm.league.name}}</span>
+            <input type="text" class="form-control" ng-show="vm.leagueName" ng-model="vm.leagueName" />
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-info" ng-hide="vm.leagueName" ng-click="vm.editName()">Edit League Name</button>
+
+            <button class="btn btn-success" ng-show="vm.leagueName" ng-click="vm.saveEdit()">Save</button>
+            <button class="btn btn-danger" ng-show="vm.leagueName" ng-click="vm.cancelEdit()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="row padded-row">
+        <div class="col-md-3">
+            <span ng-hide="vm.league.isDirty">Status: No unsaved changes.</span>
+            <span ng-show="vm.league.isDirty"><strong>Status: You have unpublished changes.</strong></span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-warning" ng-disabled="!vm.league.isDirty" ng-click="vm.publish()">Publish</button>
+        </div>
+    </div>
+
+    <div class="row padded-row">
+        <div class="col-md-3">
+            <span ng-hide="vm.league.isArchived">League is currently NOT archived.</span>
+            <span ng-show="vm.league.isArchived">League is currently archived.</span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-warning" ng-disabled="true" ng-hide="vm.league.isArchived" ng-click="vm.archive()">Archive</button>
+            <button class="btn btn-warning" ng-show="vm.league.isArchived" ng-click="vm.unArchive()">Un-Archive</button>
+        </div>
+    </div>
+
+    <div class="row padded-row">
+        <div class="col-md-3">
+            <span>Delete League</span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-danger" ng-disabled="true" ng-click="vm.delete()">Delete League</button>
+        </div>
+    </div>
+</div>
