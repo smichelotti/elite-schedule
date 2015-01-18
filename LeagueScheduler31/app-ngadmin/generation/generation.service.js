@@ -31,26 +31,26 @@
 
             var games = [];
 
-            //_.forEach(matchups, function (mu) {
-            //    var slot = getNextValidSlotForMatchUp(mu);
-            //    if (slot) {
-            //        ////console.log("slot startTime", slot.startTime, moment(slot.startTime).format('YYYY-MM-DDTHH:mm:00'));
-            //        var game = {
-            //            gameTime: moment.utc(slot.startTime).format('YYYY-MM-DDTHH:mm:00'),
-            //            locationId: slot.locationId,
-            //            locationName: locationsLookup[slot.locationId],
-            //            division: mu.division,
-            //            round: mu.round,
-            //            display: mu.display,
-            //            team1Id: mu.team1,
-            //            team2Id: mu.team2
-            //        };
-            //        games.push(game);
-            //    } else {
-            //        console.log('***SLOT NOT FOUND FOR GAME!!!', mu);
-            //        unassignedMatchups.push(mu);
-            //    }
-            //});
+            _.forEach(matchups, function (mu) {
+                var slot = getNextValidSlotForMatchUp(mu);
+                if (slot) {
+                    ////console.log("slot startTime", slot.startTime, moment(slot.startTime).format('YYYY-MM-DDTHH:mm:00'));
+                    var game = {
+                        gameTime: moment.utc(slot.startTime).format('YYYY-MM-DDTHH:mm:00'),
+                        locationId: slot.locationId,
+                        locationName: locationsLookup[slot.locationId],
+                        division: mu.division,
+                        round: mu.round,
+                        display: mu.display,
+                        team1Id: mu.team1,
+                        team2Id: mu.team2
+                    };
+                    games.push(game);
+                } else {
+                    console.log('***SLOT NOT FOUND FOR GAME!!!', mu);
+                    unassignedMatchups.push(mu);
+                }
+            });
 
             console.log('**Generation complete! Remaining availableslots: ' + availableSlots.length);
             //console.table(availableSlots);
