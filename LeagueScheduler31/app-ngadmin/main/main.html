@@ -28,7 +28,7 @@
             <span ng-hide="vm.league.isArchived">League is currently NOT archived.</span>
             <span ng-show="vm.league.isArchived">League is currently archived.</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3"> 
             <button class="btn btn-warning" ng-disabled="true" ng-hide="vm.league.isArchived" ng-click="vm.archive()">Archive</button>
             <button class="btn btn-warning" ng-show="vm.league.isArchived" ng-click="vm.unArchive()">Un-Archive</button>
         </div>
