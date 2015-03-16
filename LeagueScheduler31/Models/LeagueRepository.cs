@@ -26,9 +26,67 @@ namespace LeagueScheduler.Models
             return query;
         }
 
+        public object GetMyLeagues(string userId)
+        {
+            var leagues = from l in context.Leagues
+                          join lu in context.LeagueUsers on l.Id equals lu.LeagueId
+                          where lu.UserId == userId
+                          select new { l.Id, l.Name, l.IsDirty, l.HomeScreen, l.RulesScreen, l.IsArchived, l.IsActive, lu.Permission };
+            return leagues;
+        }
+
+        public object GetLeagueMembers(int id)
+        {
+            // Have to do 2 independent queries and then join in memory because currently 2 different DBs
+            var leagueMembers = this.context.LeagueUsers.Where(x => x.LeagueId == id).ToList();
+            var userIdList = leagueMembers.Select(x => x.UserId);
+            var identityContext = new ApplicationDbContext();
+            var leagueUsers = identityContext.Users.Where(x => userIdList.Contains(x.Id)).ToList();
+
+            var members = from lm in leagueMembers
+                          join lu in leagueUsers on lm.UserId equals lu.Id
+                          select new { lm.UserId, lm.LeagueId, lm.Permission, lu.UserName, lu.Email };
+            return members;
+        }
+
+        public LeagueUser GetLeagueMember(int leagueId, string memberId)
+        {
+            var member = this.context.LeagueUsers.SingleOrDefault(x => x.LeagueId == leagueId && x.UserId == memberId);
+            return member;
+        }
+
+        public void RemoveLeagueMember(int leagueId, string memberId)
+        {
+            var leagueUser = this.context.LeagueUsers.SingleOrDefault(x => x.LeagueId == leagueId && x.UserId == memberId);
+            if (leagueUser != null)
+            {
+                this.context.LeagueUsers.Remove(leagueUser);
+                this.context.SaveChanges();
+            }
+        }
+
+        public ApplicationUser FindUser(LeagueMemberResource member)
+        {
+            var identityContext = new ApplicationDbContext();
+            var user = identityContext.Users.FirstOrDefault(x => x.UserName == member.Name || x.Email == member.Name);
+            return user;
+        }
+
         public League Find(int id)
         {
             return context.Leagues.Find(id);
+        }
+
+        public void InsertOrUpdate(LeagueUser leagueUser)
+        {
+            if (leagueUser.Id == default(int))
+            {
+                context.LeagueUsers.Add(leagueUser);
+            }
+            else
+            {
+                context.Entry(leagueUser).State = EntityState.Modified;
+            }
         }
 
         public void InsertOrUpdate(League league)
@@ -75,6 +133,7 @@ namespace LeagueScheduler.Models
         {
             var league = context.Leagues.Find(id);
             context.Leagues.Remove(league);
+            context.Database.ExecuteSqlCommand("DELETE FROM LeagueUsers WHERE LeagueId = " + id);
         }
 
         public void Save()
@@ -92,7 +151,13 @@ namespace LeagueScheduler.Models
     {
         IQueryable<League> All { get; }
         IQueryable<League> AllIncluding(params Expression<Func<League, object>>[] includeProperties);
+        object GetMyLeagues(string userId);
+        object GetLeagueMembers(int id);
+        LeagueUser GetLeagueMember(int leagueId, string memberId);
+        void RemoveLeagueMember(int leagueId, string memberId);
         League Find(int id);
+        ApplicationUser FindUser(LeagueMemberResource member);
+        void InsertOrUpdate(LeagueUser leagueUser);
         void InsertOrUpdate(League league);
         void InsertOrUpdateClean(League league);
         void Delete(int id);

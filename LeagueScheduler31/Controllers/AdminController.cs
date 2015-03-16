@@ -14,7 +14,8 @@ namespace LeagueScheduler.Controllers
         public ActionResult Index()
         {
             this.ViewBag.ExtraAppHostCss = "admin-appHost";
-            return View();
+            //return View();
+            return View("IndexNG");
         }
 
         public ActionResult New()

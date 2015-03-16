@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace LeagueScheduler.Controllers
 {
+    [Authorize]
     public class LocationsController : ApiController
     {
         //private const string partitionKey = "2013-14";

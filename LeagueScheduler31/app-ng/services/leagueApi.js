@@ -13,7 +13,6 @@
         };
 
         return service;
-        
 
         function primeData(leagueId, isPreview) {
             //var defer = $q.defer();

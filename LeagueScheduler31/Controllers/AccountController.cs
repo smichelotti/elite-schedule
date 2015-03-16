@@ -7,25 +7,68 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LeagueScheduler.Models;
+using System.Configuration;
 
 namespace LeagueScheduler
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
+            SignInManager = signInManager;
         }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+        //public AccountController()
+        //    : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        //{
+        //}
+
+        //public AccountController(UserManager<ApplicationUser> userManager, ApplicationSignInManager signInManager)
+        //{
+        //    UserManager = userManager;
+        //    this.SignInManager = signInManager;
+        //}
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                var ctx = HttpContext.GetOwinContext();
+                var mgr = ctx.Get<ApplicationSignInManager>();
+                return _signInManager ?? mgr;
+                //return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        //public UserManager<ApplicationUser> UserManager { get; private set; }
 
         //
         // GET: /Account/Login
@@ -202,19 +245,44 @@ namespace LeagueScheduler
                 return RedirectToAction("Login");
             }
 
-            // Sign in the user with this external login provider if the user already has a login
-            var user = await UserManager.FindAsync(loginInfo.Login);
-            if (user != null)
+            bool accountAuthorized = false;
+            var allowedEmails = ConfigurationManager.AppSettings["AllowedEmails"].Split(',');
+            //if (loginInfo.Email != "steve.michelotti@gmail.com")
+            if (allowedEmails.Contains(loginInfo.Email))
             {
-                await SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
+                accountAuthorized = true;
             }
-            else
+
+            // Sign in the user with this external login provider if the user already has a login
+            //var user = await UserManager.FindAsync(loginInfo.Login);
+            //if (user != null)
+            //{
+            //    await SignInAsync(user, isPersistent: false);
+            //    return RedirectToLocal(returnUrl);
+            //}
+            //else
+            //{
+            //    // If the user does not have an account, then prompt the user to create an account
+            //    ViewBag.ReturnUrl = returnUrl;
+            //    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            //    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+            //}
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            switch (result)
             {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                case SignInStatus.Failure:
+                default:
+                    // If the user does not have an account, then prompt the user to create an account
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    ViewBag.AccountAuthorized = accountAuthorized;
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -265,7 +333,7 @@ namespace LeagueScheduler
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

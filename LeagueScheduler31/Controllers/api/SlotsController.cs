@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace LeagueScheduler.Controllers
 {
+    [Authorize]
     public class SlotsController : ApiController
     {
         private ISlotRepository repository = new SlotRepository();

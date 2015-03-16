@@ -23,8 +23,8 @@
     app.config(['$stateProvider', '$urlRouterProvider', /*'uiSelectConfig',*/ configRoutes]);
 
     // Handle routing errors and success events
-    //app.run(['$route', function ($route) {
-    app.run(['$state', 'stateWatcherService', function ($state, stateWatcherService) {
+    app.run(['$state', function ($state) {
+    //app.run(['$state', 'stateWatcherService', function ($state, stateWatcherService) {
         // Include $route to kick start the router.
     }]);
 
@@ -49,6 +49,9 @@
             resolve: {
                 initialData: ['eliteApi', function (eliteApi) {
                     return eliteApi.getLeagues();
+                }],
+                userData: ['userData', function (userData) {
+                    return userData.primeData();
                 }]
             }
         })
@@ -76,6 +79,12 @@
                     resolve: {
                         initialData: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
                             return eliteApi.getLeague($stateParams.leagueId);
+                        }],
+                        leagueMembers: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
+                            return eliteApi.getLeagueMembers($stateParams.leagueId);
+                        }],
+                        userData: ['userData', function (userData) {
+                            return userData.primeData();
                         }]
                     }
                 }

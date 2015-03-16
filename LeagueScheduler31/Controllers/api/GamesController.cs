@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace LeagueScheduler.Controllers
 {
+    [Authorize]
     public class GamesController : ApiController
     {
         private IGameRepository repository = new GameRepository();

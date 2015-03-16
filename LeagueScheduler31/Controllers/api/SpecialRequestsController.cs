@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace LeagueScheduler.Controllers
 {
+    [Authorize]
     public class SpecialRequestsController : ApiController
     {
         private ISpecialRequestRepository repository = new SpecialRequestRepository();

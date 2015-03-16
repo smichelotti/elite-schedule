@@ -8,12 +8,16 @@
     function eliteApi($http, $rootScope, appSpinner) {
         var service = {
             addLeague: addLeague,
+            addLeagueMember: addLeagueMember,
             deleteGame: deleteGame,
             deleteLeague: deleteLeague,
             deleteSlot: deleteSlot,
             deleteTeam: deleteTeam,
+            editLeagueMember: editLeagueMember,
             getGames: getGames,
+            getIdentityInfo: getIdentityInfo,
             getLeague: getLeague,
+            getLeagueMembers: getLeagueMembers,
             getLeagues: getLeagues,
             getLocations: getLocations,
             getSlots: getSlots,
@@ -23,6 +27,7 @@
             getSpecialRequestsFull: getSpecialRequestsFull,
             getTeams: getTeams,
             publishLeague: publishLeague,
+            removeLeagueMember: removeLeagueMember,
             resetGames: resetGames,
             saveContentScreen: saveContentScreen,
             saveGame: saveGame,
@@ -38,6 +43,10 @@
 
         function addLeague(league) {
             return httpPost('/api/leagues', league);
+        }
+
+        function addLeagueMember(leagueId, newMember) {
+            return httpPost('/api/leagues/' + leagueId + '/members', newMember);
         }
 
         function deleteGame(id) {
@@ -56,16 +65,29 @@
             return httpDelete('/api/teams/' + id);
         }
 
+        function editLeagueMember(leagueId, memberId, member) {
+            return httpPut('/api/leagues/' + leagueId + '/members/' + memberId, member);
+        }
+
         function getGames(leagueId) {
             return httpGet('/api/games?leagueId=' + leagueId);
+        }
+
+        function getIdentityInfo() {
+            return httpGet('/api/identity/info');
         }
 
         function getLeague(leagueId) {
             return httpGet('/api/leagues/' + leagueId);
         }
 
+        function getLeagueMembers(leagueId) {
+            return httpGet('/api/leagues/' + leagueId + '/members');
+        }
+
         function getLeagues() {
-            return httpGet('/api/leagues');
+            //return httpGet('/api/leagues');
+            return httpGet('/api/my-leagues');
         }
 
         function getLocations() {
@@ -99,6 +121,10 @@
 
         function publishLeague(leagueId) {
             return httpPost('/api/leagues/' + leagueId + '/publish');
+        }
+
+        function removeLeagueMember(leagueId, memberId) {
+            return httpDelete('/api/leagues/' + leagueId + '/members/' + memberId);
         }
 
         function resetGames(leagueId) {
@@ -156,12 +182,13 @@
                 method: method,
                 data: data
             }).then(function (response) {
-
                 appSpinner.hideSpinner();
                 console.log('**response from EXECUTE', response);
                 return response.data;
             }, function (err) {
+                appSpinner.hideSpinner();
                 console.log('***Error executing HTTP request:', err);
+                return err;
             });
         }
 

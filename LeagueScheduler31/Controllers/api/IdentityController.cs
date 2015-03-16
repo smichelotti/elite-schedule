@@ -15,16 +15,22 @@ namespace LeagueScheduler.Controllers.api
     public class IdentityController : ApiController
     {
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        private CustomClaimsManager claimsManager = new CustomClaimsManager();
 
         [Route("info")]
         public object GetIdentityInfo()
         {
             var userId = this.User.Identity.GetUserId();
+            var customClaims = this.claimsManager.GetCustomClaims(userId);
+            customClaims.AddRange((this.User.Identity as ClaimsIdentity).Claims);
+
             return new
             {
                 name = this.User.Identity.Name,
                 roles = this.userManager.GetRoles(userId),
-                claims = this.userManager.GetClaims(userId).Select(c => new { c.Type, c.Value }).ToList()
+                //claims = this.userManager.GetClaims(userId).Select(c => new { c.Type, c.Value }).ToList()
+                //claims = (this.User.Identity as ClaimsIdentity).Claims.Select(c => new { c.Type, c.Value }).ToList()
+                claims = customClaims.Select(c => new {  c.Type, c.Value }).ToList()
             };
         }
 
@@ -43,5 +49,10 @@ namespace LeagueScheduler.Controllers.api
             var claims = this.userManager.GetClaims("3ddfcdbf-9fed-4809-86d8-e2b88b36193f");
             return claims.Select(c => new { c.Type, c.Value }).ToList();
         }
+
+        #region Private Methods
+
+        #endregion
+
     }
 }

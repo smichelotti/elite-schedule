@@ -34,12 +34,60 @@
         </div>
     </div>
 
-    <div class="row padded-row">
+    <div class="row padded-row"ng-show="vm.canDeleteLeague">
         <div class="col-md-3">
             <span>Delete League</span>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-danger" ng-disabled="true" ng-click="vm.delete()">Delete League</button>
+            <button class="btn btn-danger" ng-click="vm.deleteLeague(vm.league.id)">Delete League</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Members</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Owner: {{vm.leagueOwner.userName}} ({{vm.leagueOwner.email}})</strong>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-striped table-condensed table-bordered">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Add by username or email" ng-model="vm.newUserName" />
+                    </td>
+                    <td>
+                        <select class="form-control" ng-options="perm.value as perm.text for perm in vm.permissionsList" ng-model="vm.newUserPermission"></select>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="vm.addMember()">Add</button>
+                    </td>
+                </tr>
+                <tr ng-repeat="member in vm.leagueMembers">
+                    <td>
+                        {{member.userName}} <small>({{member.email}})</small>
+                    </td>
+                    <td ng-hide="vm.memberCurrentEdit[member.id]">
+                        {{vm.permissionsLookup[member.permission]}}
+                    </td>
+                    <td ng-show="vm.memberCurrentEdit[member.id]">
+                        <select class="form-control" ng-options="perm.value as perm.text for perm in vm.permissionsList" ng-model="member.permission"></select>
+                    </td>
+                    <td>
+                        <button class="btn btn-info" ng-hide="vm.memberCurrentEdit[member.id]" ng-click="vm.editMemberItem(member)">Edit</button>
+                        <button class="btn btn-danger" ng-hide="vm.memberCurrentEdit[member.id]" ng-click="vm.removeMember(member)">Remove</button>
+
+                        <button class="btn btn-success" ng-show="vm.memberCurrentEdit[member.id]" ng-click="vm.saveMemberItem(member)">Save</button>
+                        <button class="btn btn-danger" ng-show="vm.memberCurrentEdit[member.id]" ng-click="vm.cancelMemberEdit(member.id)">Cancel</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

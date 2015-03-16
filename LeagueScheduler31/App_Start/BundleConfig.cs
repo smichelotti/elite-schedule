@@ -36,6 +36,9 @@ namespace LeagueScheduler
                 .Include("~/Content/custom.css")
                 .Include("~/Content/datetimepicker.css")
               );
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                        "~/Scripts/jquery.validate*"));
         }
 
 
