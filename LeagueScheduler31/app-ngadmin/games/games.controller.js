@@ -3,16 +3,17 @@
 
     angular.module('eliteApp').controller('GamesCtrl', GamesCtrl);
 
-    GamesCtrl.$inject = ['$scope', '$modal', '$stateParams', '$filter', '$q', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator'];
+    GamesCtrl.$inject = ['$scope', '$modal', '$stateParams', '$filter', '$q', 'initialData', 'eliteApi', 'dialogsService', 'leagueValidator', 'userData'];
 
     /* @ngInject */
-    function GamesCtrl($scope, $modal, $stateParams, $filter, $q, initialData, eliteApi, dialogs, leagueValidator) {
+    function GamesCtrl($scope, $modal, $stateParams, $filter, $q, initialData, eliteApi, dialogs, leagueValidator, userData) {
         /* jshint validthis: true */
         var vm = this;
 
         vm.orderBy = $filter('orderBy');
         vm.activate = activate;
         //vm.colors = ['active', 'success', 'warning', 'danger', 'info', 'default'];
+        vm.canEditLeague = false;
         vm.deleteItem = deleteItem;
         vm.editItem = editItem;
         vm.editScores = editScores;
@@ -61,6 +62,8 @@
         ////////////////
 
         function activate() {
+            vm.canEditLeague = userData.hasClaimValue('can-edit-league', $stateParams.leagueId);
+
             _.forEach(vm.teams, function(team){
                 vm.teamsLookup[team.id] = team;//.name;
             });

@@ -2,7 +2,7 @@
     <h2>{{vm.league.name}}</h2>
     <tabset>
         <tab ng-repeat="tab in vm.tabs" heading="{{tab.text}}" ui-sref="{{tab.state}}"
-             active="tab.active" disabled="tab.disabled"></tab>
+             active="tab.active" disabled="tab.disabled" ng-show="tab.visible"></tab>
     </tabset>
 
     <div ui-view="tabContent" id="tabContent" class="container-fluid admin-content"></div>

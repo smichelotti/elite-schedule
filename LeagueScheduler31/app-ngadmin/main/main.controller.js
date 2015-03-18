@@ -15,6 +15,7 @@
         vm.cancelEdit = cancelEdit;
         vm.cancelMemberEdit = cancelMemberEdit;
         vm.canDeleteLeague = false;
+        vm.canEditLeague = false;
         vm.deleteLeague = deleteLeague;
         vm.editMemberItem = editMemberItem;
         vm.editName = editName;
@@ -41,6 +42,7 @@
         function activate() {
             //console.log('***league', vm.league, leagueMembers);
             vm.canDeleteLeague = userData.hasClaimValue('can-delete-league', vm.league.id);
+            vm.canEditLeague = userData.hasClaimValue('can-edit-league', vm.league.id);
             vm.leagueOwner = _.find(leagueMembers, { 'permission': 'league-owner' });
             vm.leagueMembers = _.filter(leagueMembers, function (item) {
                 return item.permission !== 'league-owner';

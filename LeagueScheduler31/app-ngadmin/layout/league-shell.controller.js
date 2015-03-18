@@ -3,22 +3,23 @@
 
     angular.module('eliteApp').controller('LeagueShellCtrl', LeagueShellCtrl);
 
-    LeagueShellCtrl.$inject = ['$state', '$stateParams', 'currentLeague']; 
+    LeagueShellCtrl.$inject = ['$state', '$stateParams', 'currentLeague', 'userData'];
 
-    function LeagueShellCtrl($state, $stateParams, currentLeague) {
+    function LeagueShellCtrl($state, $stateParams, currentLeague, userData) {
         /* jshint validthis:true */
         var vm = this;
+        vm.canEditLeague = userData.hasClaimValue('can-edit-league', $stateParams.leagueId);
         vm.league = currentLeague;
         vm.leagueId = $stateParams.leagueId;
         vm.tabs = [
-            { text: 'Main', state: 'league.main' },
-            { text: 'Teams', state: 'league.teams' },
-            { text: 'Time Slots', state: 'league.slots' },
-            { text: 'Generation', state: 'league.generation' },
-            { text: 'Games', state: 'league.games' },
-            { text: 'Games Calendar', state: 'league.games-calendar' },
-            { text: 'Home', state: 'league.league-home' },
-            { text: 'Rules', state: 'league.rules' }
+            { text: 'Main', state: 'league.main', visible: true },
+            { text: 'Teams', state: 'league.teams', visible: true },
+            { text: 'Time Slots', state: 'league.slots', visible: vm.canEditLeague },
+            { text: 'Generation', state: 'league.generation', visible: vm.canEditLeague },
+            { text: 'Games', state: 'league.games', visible: true },
+            { text: 'Games Calendar', state: 'league.games-calendar', visible: vm.canEditLeague },
+            { text: 'Home', state: 'league.league-home', visible: vm.canEditLeague },
+            { text: 'Rules', state: 'league.rules', visible: vm.canEditLeague }
         ];
 
         activate();

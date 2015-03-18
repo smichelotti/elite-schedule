@@ -2,10 +2,10 @@
     <p></p>
     <div class="row">
         <div class="col-md-4">
-            <button class="btn btn-primary" ng-click="vm.editItem()">Add New Game</button>
+            <button class="btn btn-primary" ng-click="vm.editItem()" ng-show="vm.canEditLeague">Add New Game</button>
             <!--<button class="btn btn-primary" ng-click="vm.validateAll()">Validate</button>-->
 
-            <div class="btn-group" dropdown>
+            <div class="btn-group" dropdown ng-show="vm.canEditLeague">
                 <button class="btn btn-primary dropdown-toggle" type="button">
                     Actions <span class="caret"></span>
                 </button>
@@ -62,7 +62,7 @@
             <tr ng-repeat="game in vm.games | filter: vm.gameFilter | orderBy:'gameTime'"
                 ng-init="team1SpecReq = vm.getSpecialRequestForGame(game.team1Id, game); team2SpecReq = vm.getSpecialRequestForGame(game.team2Id, game)">
                 <td>
-                    <button class="btn btn-default" ng-model="vm.selectedRows[game.id]" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-change="vm.selectRow()">
+                    <button class="btn btn-default" ng-model="vm.selectedRows[game.id]" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-change="vm.selectRow()" ng-show="vm.canEditLeague">
                         <span class="glyphicon" ng-class="{'glyphicon-check': vm.selectedRows[game.id], 'glyphicon-unchecked': !vm.selectedRows[game.id]}"></span>
                     </button>
                 </td>
@@ -90,9 +90,9 @@
                             Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="vm.editItem(game)">Edit</a></li>
+                            <li ng-show="vm.canEditLeague"><a ng-click="vm.editItem(game)">Edit</a></li>
                             <li><a ng-click="vm.editScores(game)">Scores</a></li>
-                            <li><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
+                            <li ng-show="vm.canEditLeague"><a ng-click="vm.deleteItem(game.id)">Delete</a></li>
                         </ul>
                     </div>
                     <!--<button ng-show="vm.specialRequestsLookup[game.team1Id] || vm.specialRequestsLookup[game.team2Id]"-->

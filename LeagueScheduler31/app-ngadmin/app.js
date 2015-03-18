@@ -65,6 +65,9 @@
             resolve: {
                 currentLeague: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
                     return eliteApi.getLeague($stateParams.leagueId);
+                }],
+                userData: ['userData', function (userData) {
+                    return userData.primeData();
                 }]
             }
         })
@@ -82,10 +85,10 @@
                         }],
                         leagueMembers: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
                             return eliteApi.getLeagueMembers($stateParams.leagueId);
-                        }],
-                        userData: ['userData', function (userData) {
-                            return userData.primeData();
                         }]
+                        //userData: ['userData', function (userData) {
+                        //    return userData.primeData();
+                        //}]
                     }
                 }
             }

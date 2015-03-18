@@ -3,15 +3,16 @@
 
     angular.module('eliteApp').controller('TeamsCtrl', TeamsCtrl);
 
-    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'initialSpecRequests', 'timeSlots', 'eliteApi', 'dialogsService'];
+    TeamsCtrl.$inject = ['$modal', '$stateParams', '$q', 'initialData', 'initialSpecRequests', 'timeSlots', 'eliteApi', 'dialogsService', 'userData'];
 
     /* @ngInject */
-    function TeamsCtrl($modal, $stateParams, $q, initialData, initialSpecRequests, timeSlots, eliteApi, dialogs) {
+    function TeamsCtrl($modal, $stateParams, $q, initialData, initialSpecRequests, timeSlots, eliteApi, dialogs, userData) {
         /* jshint validthis: true */
         var vm = this;
 
         vm.activate = activate;
         vm.accordionExpanded = true;
+        vm.canEditLeague = false;
         vm.deleteItem = deleteItem;
         vm.divisions = [];
         vm.editItem = editItem;
@@ -27,6 +28,8 @@
         ////////////////
 
         function activate() {
+            vm.canEditLeague = userData.hasClaimValue('can-edit-league', $stateParams.leagueId);
+
             initializeGroups();
 
             console.log('***vm.specialRequests', vm.specialRequests);
