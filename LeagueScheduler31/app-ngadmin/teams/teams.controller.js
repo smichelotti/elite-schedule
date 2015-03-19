@@ -29,7 +29,7 @@
 
         function activate() {
             vm.canEditLeague = userData.hasClaimValue('can-edit-league', $stateParams.leagueId);
-
+            console.log('**can-edit-league', vm.canEditLeague);
             initializeGroups();
 
             console.log('***vm.specialRequests', vm.specialRequests);
