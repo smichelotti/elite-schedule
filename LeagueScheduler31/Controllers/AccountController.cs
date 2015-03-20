@@ -15,6 +15,7 @@ using System.Configuration;
 namespace LeagueScheduler
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
