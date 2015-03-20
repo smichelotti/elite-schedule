@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace LeagueScheduler.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AdminController : Controller
     {
         //

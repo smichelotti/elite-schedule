@@ -39,9 +39,12 @@
 
         function validateTeamGames(team, allGames, numberOfRounds, validations) {
             var fullTeamName = team.name + ' (Division: ' + team.division + ')';
-            var teamGames = _.filter(allGames, function (game) {
+            //var teamGames = _.filter(allGames, function (game) {
+            //    return game.team1Id === team.id || game.team2Id === team.id;
+            //});
+            var teamGames = _.chain(allGames).filter(function (game) {
                 return game.team1Id === team.id || game.team2Id === team.id;
-            });
+            }).sortBy('gameTime').value();
 
 
             if (teamGames.length !== numberOfRounds) {

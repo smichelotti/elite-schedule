@@ -205,6 +205,7 @@
     <Compile Include="Controllers\api\LeaguesController.cs" />
     <Compile Include="Controllers\api\LocationsController.cs" />
     <Compile Include="Controllers\api\TeamsController.cs" />
+    <Compile Include="EnforceDomainAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
