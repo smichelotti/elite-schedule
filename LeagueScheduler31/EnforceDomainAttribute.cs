@@ -20,7 +20,6 @@ namespace LeagueScheduler
 
             var url = filterContext.HttpContext.Request.Url;
             var isAdmin = (filterContext.Controller is AdminController || filterContext.Controller is AccountController);
-            //var isAdmin = url.Segments.Contains("/admin");
             var containsAzureSubdomain = url.Authority.Contains("azurewebsites.net");
             if (!isAdmin && containsAzureSubdomain)
             {
