@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeagueScheduler.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace LeagueScheduler
             }
 
             var url = filterContext.HttpContext.Request.Url;
-            var isAdmin = url.Segments.Contains("/admin");
+            var isAdmin = (filterContext.Controller is AdminController || filterContext.Controller is AccountController);
+            //var isAdmin = url.Segments.Contains("/admin");
             var containsAzureSubdomain = url.Authority.Contains("azurewebsites.net");
             if (!isAdmin && containsAzureSubdomain)
             {
