@@ -60,6 +60,13 @@ namespace LeagueScheduler.Models
             blob.UploadText(value);
         }
 
+        public void Delete(string key)
+        {
+            var blob = GetContainer().GetBlobReference(key);
+            BlobRequestOptions options;
+            blob.Delete();
+        }
+
         private CloudBlobContainer GetContainer()
         {
             // Get a handle on account, create a blob service client and get container proxy

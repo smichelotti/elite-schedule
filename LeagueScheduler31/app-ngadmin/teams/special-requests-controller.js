@@ -11,7 +11,10 @@
         var vm = this;
 
         vm.activate = activate;
+        vm.allHoursBlocked = allHoursBlocked;
+        vm.blockAll = blockAll;
         vm.cancel = cancel;
+        vm.deleteRequests = deleteRequests;
         vm.editableItem = angular.copy(data.itemToEdit);
         vm.properties = data;
         vm.save = save;
@@ -21,7 +24,6 @@
         vm.selectHour = selectHour;
 
         activate();
-        console.log('***data', data, '***itemtoEdit', itemToEdit);
         ////////////////
 
         function activate() {
@@ -46,11 +48,28 @@
             vm.scheduleRequests = _.sortBy(mergedRequests, function (item) {
                 return moment(item.date).toDate().getTime();
             });
-            console.log('***scheduleRequests', vm.scheduleRequests);
+            //console.log('***scheduleRequests', vm.scheduleRequests);
+            //console.log('***vm.editableItem', vm.editableItem, data);
+        }
+
+        function allHoursBlocked(day) {
+            return _.every(day.unavailableHours, 'selected', true);
+        }
+
+        function blockAll(day, block) {
+            _.forEach(day.unavailableHours, function (item) {
+                item.selected = block;
+            });
         }
 
         function cancel() {
             $modalInstance.dismiss();
+        }
+
+        function deleteRequests() {
+            eliteApi.deleteSpecialRequest(data.team.leagueId, data.team.id).then(function () {
+                $modalInstance.close();
+            });
         }
 
         function save() {
@@ -61,9 +80,8 @@
                 })
             };
 
-            console.log('***about to save scheduleRequest', scheduleRequest);
-            eliteApi.saveSpecialRequest2(data.team.leagueId, data.team.id, scheduleRequest).then(function () {
-                $modalInstance.close(vm.editableItem);
+            eliteApi.saveSpecialRequest2(data.team.leagueId, data.team.id, scheduleRequest).then(function (result) {
+                $modalInstance.close(result);
             });
         }
 

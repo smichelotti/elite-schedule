@@ -29,12 +29,9 @@
 
         function activate() {
             vm.canEditLeague = userData.hasClaimValue('can-edit-league', $stateParams.leagueId);
-            console.log('**can-edit-league', vm.canEditLeague);
             initializeGroups();
 
-            console.log('***vm.specialRequests', vm.specialRequests);
             _.forEach(vm.specialRequests, function (specialReq) {
-                //vm.specialRequestsLookup[specialReq.teamId] = specialReq;
                 vm.specialRequestsLookup[specialReq] = true;
             });
 
@@ -46,7 +43,6 @@
                 })
                 .uniq()
                 .value();
-            console.log('***ddays', ddays, vm.distinctDays);
         }
 
 
@@ -135,7 +131,6 @@
 
                 $q.all(promises).then(function () {
                     initializeGroups();
-                    //console.log('**after initGroups', vm.groups, vm.teams);
                 });
             });
         }
@@ -151,8 +146,7 @@
                         return {
                             team: team,
                             itemToEdit: vm.specialRequestsLookup[team.id],
-                            distinctDays: vm.distinctDays, //getDistinctDays(),
-                            //distinctDays2: vm.distinctDays
+                            distinctDays: vm.distinctDays
                         };
                     },
                     itemToEdit: ['$stateParams', 'eliteApi', function ($stateParams, eliteApi) {
@@ -166,15 +160,11 @@
             });
 
             modalInstance.result.then(function (result) {
-                //result.leagueId = $stateParams.leagueId;
-                //result.teamId = team.id;
-                //eliteApi.saveSpecialRequest(result).then(function (data) {
-                //    if (data.requestText) {
-                //        vm.specialRequestsLookup[team.id] = data;
-                //    } else {
-                //        delete vm.specialRequestsLookup[team.id];
-                //    }
-                //});
+                if (result) {
+                    vm.specialRequestsLookup[team.id] = result;
+                } else {
+                    delete vm.specialRequestsLookup[team.id];
+                }
             });
         }
 

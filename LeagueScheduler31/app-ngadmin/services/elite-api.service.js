@@ -12,6 +12,7 @@
             deleteGame: deleteGame,
             deleteLeague: deleteLeague,
             deleteSlot: deleteSlot,
+            deleteSpecialRequest: deleteSpecialRequest,
             deleteTeam: deleteTeam,
             editLeagueMember: editLeagueMember,
             getGames: getGames,
@@ -59,6 +60,10 @@
 
         function deleteSlot(id) {
             return httpDelete('/api/slots/' + id);
+        }
+
+        function deleteSpecialRequest(leagueId, teamId) {
+            return httpDelete('/api/docs/schedule-requests/league-' + leagueId + '/' + teamId);
         }
 
         function deleteTeam(id) {

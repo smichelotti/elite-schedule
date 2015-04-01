@@ -67,5 +67,13 @@ namespace LeagueScheduler.Controllers.api
             response.Content = new StringContent(content, Encoding.UTF8, "application/json");
             return response;
         }
+
+        [Route("{*path}")]
+        public IHttpActionResult Delete(string path)
+        {
+            var docsRepo = new DocumentRepository();
+            docsRepo.Delete(path);
+            return this.StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

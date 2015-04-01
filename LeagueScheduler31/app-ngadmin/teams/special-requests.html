@@ -2,24 +2,6 @@
     <h2>Special Scheduling Requests - {{vm.properties.team.name}}</h2>
 </div>
 <div class="modal-body">
-    <!--<h4>Team: {{vm.properties.team.name}}</h4>-->
-
-    <!--<hr />
-    <div class="alert alert-info">
-        <h4>Special Requests</h4>
-        Type free-form text for the team's special scheduling request.
-        (Long-term we want this text box going away once we automate the scheduling requests)
-    </div>
-    <textarea cols="30" rows="3" ng-model="vm.editableItem.requestText" style="width:100%"></textarea>
-
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" ng-model="vm.editableItem.resolved" />Resolved?
-        </label>
-    </div>-->
-
-
-    <!--<hr />-->
     <div class="alert alert-info">
         <h4>Available Hours</h4>
         <strong>Click</strong> a box to specify times when a team cannot play.
@@ -32,7 +14,10 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>
+                        <button class="btn btn-primary btn-xs" ng-click="vm.blockAll(day, true)" ng-show="!vm.allHoursBlocked(day)">Block All</button>
+                        <button class="btn btn-default btn-xs" ng-click="vm.blockAll(day, false)" ng-show="vm.allHoursBlocked(day)">Unblock All</button>
+                    </th>
                     <th class=" text-center small" style="width: 55px" ng-repeat="hour in vm.potentialHoursLabels">{{hour}}</th>
                 </tr>
             </thead>
@@ -62,13 +47,10 @@
         </div>
         <hr />
     </div>
-
-
-
 </div>
 
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="vm.save()">Save</button>
     <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-    <button class="btn btn-danger" popover="Delete All Schedule Requests for this team" popover-trigger="mouseenter" popover-placement="top">Delete Requests</button>
+    <button class="btn btn-danger" ng-click="vm.deleteRequests()" popover="Delete All Schedule Requests for this team" popover-trigger="mouseenter" popover-placement="top">Delete Requests</button>
 </div>
